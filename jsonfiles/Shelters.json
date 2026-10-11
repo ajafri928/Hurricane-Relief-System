@@ -40,4 +40,47 @@
     ],
     "operationalStatus": "OPEN"
   }
+    ,
+  {
+    "id": "9c8b7a6d-5e4f-4a3b-8c2d-1e0f9a8b7c6d",
+    "name": "Two Notch Road Evacuation Center",
+    "location": {
+      "id": "777e4567-e89b-12d3-a456-426614174333",
+      "street1": "6400 Two Notch Rd",
+      "street2": "Building B",
+      "city": "Columbia",
+      "state": "SC",
+      "zipCode": "29223",
+      "latitude": 34.0563,
+      "longitude": -80.9487
+    },
+    "capacity": 400,
+    "occupancy": 391,
+    "petFriendly": false,
+    "accessible": true,
+    "medicalStaff": false,
+    "vetStaff": false,
+    "amenities": [
+      "Showers",
+      "Charging Stations",
+      "Wi-Fi"
+    ],
+    "shelterResources": [
+      {
+        "type": "Ready-to-Eat Meals",
+        "quantity": 620,
+        "unit": "boxes",
+        "availableUntil": "2026-10-30T12:00:00",
+        "lowStockThreshold": 200
+      },
+      {
+        "type": "Blankets",
+        "quantity": 12,
+        "unit": "individual",
+        "availableUntil": "2026-11-20T12:00:00",
+        "lowStockThreshold": 40
+      }
+    ],
+    "operationalStatus": "AT_CAPACITY"
+  }
 ]
