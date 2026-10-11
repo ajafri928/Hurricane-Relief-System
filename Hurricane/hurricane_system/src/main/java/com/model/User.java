@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 // One person with an account in the system.
 public class User {
     private UUID id;
@@ -17,8 +18,8 @@ public class User {
     private List<EmergencyContact> emergencyContacts;
 
     // Makes a new user with a fresh id. Used for create account.
-    public User(UUID id, String userName, String firstName, String lastName, String password, Location location) {
-        this.id = id;
+    public User(String userName, String firstName, String lastName, String password, Location location) {
+        this.id = UUID.randomUUID();
         this.userName = userName;
         this.firstName = firstName;
         this.lastName = lastName;

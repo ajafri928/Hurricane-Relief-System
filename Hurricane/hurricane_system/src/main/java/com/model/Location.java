@@ -2,8 +2,10 @@ package com.model;
 
 import java.util.UUID;
 
+import java.util.UUID;
+
+
 public class Location {
-    private UUID id;
     private String addressLine1;
     private String addressLine2;
     private String city;
@@ -13,7 +15,6 @@ public class Location {
     private double longitude;
 
     public Location(String addressLine1, String city, String state, String zipCode) {
-        this.id = UUID.randomUUID();
         this.addressLine1 = addressLine1;
         this.city = city;
         this.state = state;
@@ -21,13 +22,11 @@ public class Location {
     }
 
     public Location(double latitude, double longitude) {
-        this.id = UUID.randomUUID();
         this.latitude = latitude;
         this.longitude = longitude;
     }
 
-    public Location(UUID id, String addressLine1, String addressLine2, String city, String state, String zipCode, double latitude, double longitude) {
-        this.id = id;
+    public Location(String addressLine1, String addressLine2, String city, String state, String zipCode, double latitude, double longitude) {
         this.addressLine1 = addressLine1;
         this.addressLine2 = addressLine2;
         this.city = city;
@@ -42,7 +41,6 @@ public class Location {
         return addressLine1 + line2 + ", " + city + ", " + state + " " + zipCode;
     }
 
-    public UUID getId() { return id; }
     public double getLatitude() { return latitude; }
     public double getLongitude() { return longitude; }
     public String getCity() { return city; }

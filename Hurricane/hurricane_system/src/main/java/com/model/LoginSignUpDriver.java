@@ -6,10 +6,10 @@ package com.model;
  * @author Abaan Jafri
  */
 public class LoginSignUpDriver {
-    private ReliefSystemFacade facade;
+    private ReliefSystem facade;
 
     public LoginSignUpDriver() {
-        facade = ReliefSystemFacade.getInstance();
+        facade = ReliefSystem.getInstance();
     }
 
     // Runs each step of the scenario in order.
