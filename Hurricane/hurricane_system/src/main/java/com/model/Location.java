@@ -2,7 +2,6 @@ package com.model;
 
 import java.util.UUID;
 
-import java.util.UUID;
 
 
 public class Location {
@@ -44,6 +43,10 @@ public class Location {
     public double getLatitude() { return latitude; }
     public double getLongitude() { return longitude; }
     public String getCity() { return city; }
+    public String getAddressLine1() { return addressLine1; }
+    public String getAddressLine2() { return addressLine2; }
+    public String getState() { return state; }
+    public String getZipCode() { return zipCode; }
 
     @Override
     public String toString() {
