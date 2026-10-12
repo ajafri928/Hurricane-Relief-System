@@ -243,17 +243,4 @@ public class DataLoader extends DataConstants {
 
         return events;
     }
-
-        public static void main(String[] args) {
-        ArrayList<HurricaneEvent> events = DataLoader.getHurricaneEvents();
-
-        if (events.isEmpty()) {
-            System.out.println("No hurricane events loaded. Check your JSON file path or structure.");
-        } else {
-            System.out.println("Successfully loaded " + events.size() + " hurricane event(s):\n");
-            for (HurricaneEvent event : events) {
-                System.out.println(event);
-            }
-        }
-    }
 }
