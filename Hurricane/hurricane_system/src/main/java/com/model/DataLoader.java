@@ -4,7 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
-
+import java.time.LocalDateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -37,23 +37,41 @@ public class DataLoader extends DataConstants {
                 JSONObject locationJSON = (JSONObject) shelterJSON.get(SHELTER_LOCATION);
                 Location address = null;
                 if (locationJSON != null) {
-                    UUID locId = UUID.fromString((String) locationJSON.get("id"));
-                    String street1 = (String) locationJSON.get("street1");
-                    String street2 = (String) locationJSON.get("street2");
-                    String city = (String) locationJSON.get("city");
-                    String state = (String) locationJSON.get("state");
-                    String zipCode = (String) locationJSON.get("zipCode");
-                    double latitude = (Double) locationJSON.get("latitude");
-                    double longitude = (Double) locationJSON.get("longitude");
+                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
+                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
+                    String city = (String) locationJSON.get(LOCATION_CITY);
+                    String state = (String) locationJSON.get(LOCATION_STATE);
+                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
+                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
+                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
 
-                    address = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
+                    address = new Location(street1, street2, city, state, zipCode, latitude, longitude);
                 }
 
                     Shelter shelter = new Shelter(
-                    id, name, address, capacity, occupancy, 
+                     id, name, address, capacity, occupancy, 
                     petFriendly, accessible, medicalStaff, vetStaff, operationalStatus
                 );
-
+                JSONArray amenitiesJSON = (JSONArray) shelterJSON.get(SHELTER_AMENITIES);
+                if (amenitiesJSON != null){
+                    for (int j = 0; j < amenitiesJSON.size(); j++) {
+                        String amenity = (String) amenitiesJSON.get(j);
+                        shelter.addAmenity(amenity);
+                    }
+                }
+                JSONArray resourcesJSON = (JSONArray) shelterJSON.get(SHELTER_RESOURCES);
+                if (resourcesJSON != null){
+                    for (int j = 0; j < resourcesJSON.size(); j++){
+                        JSONObject resourceType = (JSONObject) resourcesJSON.get(j);
+                        String type = (String) resourceType.get(RESOURCE_TYPE);
+                        String unit = (String) resourceType.get(RESOURCE_UNIT);
+                        int quantity = (int) (long) resourceType.get(RESOURCE_QUANTITY);
+                        String availableUntilStr = (String) resourceType.get(RESOURCE_AVAILABLE_UNTIL);
+                        LocalDateTime availableUntil = LocalDateTime.parse(availableUntilStr);
+                        int lowStockThreshold = (int) (long) resourceType.get(RESOURCE_LOW_STOCK_THRESHOLD);
+                        shelter.addResource(new ShelterResource(type, quantity, availableUntil, lowStockThreshold, unit));
+                    }
+                }
                 shelters.add(shelter);
             }
 
@@ -85,8 +103,8 @@ public class DataLoader extends DataConstants {
             for (int i = 0; i < usersJSON.size(); i++) {
                 JSONObject userJSON = (JSONObject) usersJSON.get(i);
 
-                UUID id = UUID.fromString((String) userJSON.get(USER_USERNAME != null ? USER_ID : "id"));
-                String userName = (String) userJSON.get(USER_USERNAME);
+                UUID id = UUID.fromString((String) userJSON.get(USER_ID));
+                String userName = (String) userJSON.get(USER_ID);
                 String firstName = (String) userJSON.get(USER_FIRST_NAME);
                 String lastName = (String) userJSON.get(USER_LAST_NAME);
                 String password = (String) userJSON.get(USER_PASSWORD);
@@ -94,16 +112,15 @@ public class DataLoader extends DataConstants {
                 JSONObject locationJSON = (JSONObject) userJSON.get(USER_LOCATION);
                 Location location = null;
                 if (locationJSON != null) {
-                    UUID locId = UUID.fromString((String) locationJSON.get("id"));
-                    String street1 = (String) locationJSON.get("street1");
-                    String street2 = (String) locationJSON.get("street2");
-                    String city = (String) locationJSON.get("city");
-                    String state = (String) locationJSON.get("state");
-                    String zipCode = (String) locationJSON.get("zipCode");
-                    double latitude = (Double) locationJSON.get("latitude");
-                    double longitude = (Double) locationJSON.get("longitude");
+                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
+                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
+                    String city = (String) locationJSON.get(LOCATION_CITY);
+                    String state = (String) locationJSON.get(LOCATION_STATE);
+                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
+                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
+                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
 
-                    location = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
+                    location = new Location(street1, street2, city, state, zipCode, latitude, longitude);
                 }
 
                 String safetyString = (String) userJSON.get(USER_SAFETY);
@@ -161,16 +178,15 @@ public class DataLoader extends DataConstants {
                 JSONObject locationJSON = (JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION);
                 Location location = null;
                 if (locationJSON != null) {
-                    UUID locId = UUID.fromString((String) locationJSON.get("id"));
-                    String street1 = (String) locationJSON.get("street1");
-                    String street2 = (String) locationJSON.get("street2");
-                    String city = (String) locationJSON.get("city");
-                    String state = (String) locationJSON.get("state");
-                    String zipCode = (String) locationJSON.get("zipCode");
-                    double latitude = (Double) locationJSON.get("latitude");
-                    double longitude = (Double) locationJSON.get("longitude");
+                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
+                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
+                    String city = (String) locationJSON.get(LOCATION_CITY);
+                    String state = (String) locationJSON.get(LOCATION_STATE);
+                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
+                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
+                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
 
-                    location = new Location(locId, street1, street2, city, state, zipCode, latitude, longitude);
+                    location = new Location(street1, street2, city, state, zipCode, latitude, longitude);
                 }
 
                 // Enums

@@ -4,8 +4,8 @@
     "name": "Columbia High Gym Shelter",
     "location": {
       "id": "555e4567-e89b-12d3-a456-426614174222",
-      "street1": "501 Park St",
-      "street2": "",
+      "addressLine1": "501 Park St",
+      "addressLine2": "",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29201",
@@ -46,8 +46,8 @@
     "name": "Two Notch Road Evacuation Center",
     "location": {
       "id": "777e4567-e89b-12d3-a456-426614174333",
-      "street1": "6400 Two Notch Rd",
-      "street2": "Building B",
+      "addressLine1": "6400 Two Notch Rd",
+      "addressLine2": "Building B",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29223",
