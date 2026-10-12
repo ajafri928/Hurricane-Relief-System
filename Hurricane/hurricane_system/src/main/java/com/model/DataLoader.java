@@ -1,10 +1,9 @@
 package com.model;
 
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
-import java.time.LocalDateTime;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -20,69 +19,43 @@ public class DataLoader extends DataConstants {
             JSONArray sheltersJSON = (JSONArray) parser.parse(reader);
 
             for (int i = 0; i < sheltersJSON.size(); i++) {
-                JSONObject shelterJSON = (JSONObject) sheltersJSON.get(i);
+                JSONObject shelterJSON =
+                        (JSONObject) sheltersJSON.get(i);
 
-                UUID id = UUID.fromString((String) shelterJSON.get(SHELTER_ID));
-                String name = (String) shelterJSON.get(SHELTER_NAME);
-                int capacity = (int) (long) shelterJSON.get(SHELTER_CAPACITY);
-                int occupancy = (int) (long) shelterJSON.get(SHELTER_OCCUPANCY);
+                UUID id = getUuid(shelterJSON, SHELTER_ID);
+                String name = getString(shelterJSON, SHELTER_NAME);
+                int capacity = getInt(shelterJSON, SHELTER_CAPACITY);
+                int occupancy = getInt(shelterJSON, SHELTER_OCCUPANCY);
 
-                boolean petFriendly = (Boolean) shelterJSON.get(SHELTER_PET_FRIENDLY);
-                boolean accessible = Boolean.TRUE.equals(shelterJSON.get(SHELTER_ACCESSIBLE));
-                boolean medicalStaff = Boolean.TRUE.equals(shelterJSON.get(SHELTER_MEDICAL_STAFF));
-                boolean vetStaff = Boolean.TRUE.equals(shelterJSON.get(SHELTER_VET_STAFF));
+                boolean petFriendly =
+                        getBoolean(shelterJSON, SHELTER_PET_FRIENDLY);
+                boolean accessible =
+                        getBoolean(shelterJSON, SHELTER_ACCESSIBLE);
+                boolean medicalStaff =
+                        getBoolean(shelterJSON, SHELTER_MEDICAL_STAFF);
+                boolean vetStaff =
+                        getBoolean(shelterJSON, SHELTER_VET_STAFF);
 
-                String operationalStatus = (String) shelterJSON.get(SHELTER_OPERATIONAL_STATUS);
+                String operationalStatus = getString(
+                        shelterJSON, SHELTER_OPERATIONAL_STATUS);
 
-                Location address = parseLocation((JSONObject) shelterJSON.get(SHELTER_LOCATION));
+                JSONObject locationJSON = (JSONObject) shelterJSON.get(
+                        SHELTER_LOCATION);
 
-                    Shelter shelter = new Shelter(
-                     id, name, address, capacity, occupancy, 
-                    petFriendly, accessible, medicalStaff, vetStaff, operationalStatus
-                );
-                JSONArray amenitiesJSON = (JSONArray) shelterJSON.get(SHELTER_AMENITIES);
-                if (amenitiesJSON != null){
-                    for (int j = 0; j < amenitiesJSON.size(); j++) {
-                        String amenity = (String) amenitiesJSON.get(j);
-                        shelter.addAmenity(amenity);
-                    }
-                }
-                JSONArray resourcesJSON = (JSONArray) shelterJSON.get(SHELTER_RESOURCES);
-                if (resourcesJSON != null){
-                    for (int j = 0; j < resourcesJSON.size(); j++){
-                        JSONObject resourceType = (JSONObject) resourcesJSON.get(j);
-                        String type = (String) resourceType.get(RESOURCE_TYPE);
-                        String unit = (String) resourceType.get(RESOURCE_UNIT);
-                        int quantity = (int) (long) resourceType.get(RESOURCE_QUANTITY);
-                        String availableUntilStr = (String) resourceType.get(RESOURCE_AVAILABLE_UNTIL);
-                        LocalDateTime availableUntil = LocalDateTime.parse(availableUntilStr);
-                        int lowStockThreshold = (int) (long) resourceType.get(RESOURCE_LOW_STOCK_THRESHOLD);
-                        shelter.addResource(new ShelterResource(type, quantity, availableUntil, lowStockThreshold, unit));
-                    }
-                }
+                Location address = parseLocation(locationJSON);
+
+                Shelter shelter = new Shelter(
+                        id, name, address, capacity, occupancy,
+                        petFriendly, accessible, medicalStaff, vetStaff,
+                        operationalStatus);
+
                 shelters.add(shelter);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return shelters;
-    }
-    private static Location parseLocation(JSONObject locationJSON){
-        if (locationJSON == null) {
-            return null;
-        }
-
-        String street1 = (String) locationJSON.get(LOCATION_STREET_1);
-        String street2 = (String) locationJSON.get(LOCATION_STREET_2);
-        String city = (String) locationJSON.get(LOCATION_CITY);
-        String state = (String) locationJSON.get(LOCATION_STATE);
-        String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
-        double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
-        double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
-
-        return new Location(street1, street2, city, state, zipCode, latitude, longitude);
     }
 
     public static ArrayList<User> getUsers() {
@@ -94,11 +67,12 @@ public class DataLoader extends DataConstants {
             Object parsedData = parser.parse(reader);
 
             JSONArray usersJSON;
+
             if (parsedData instanceof JSONArray) {
                 usersJSON = (JSONArray) parsedData;
             } else if (parsedData instanceof JSONObject) {
                 usersJSON = new JSONArray();
-                usersJSON.add(parsedData); 
+                usersJSON.add(parsedData);
             } else {
                 return users;
             }
@@ -106,43 +80,41 @@ public class DataLoader extends DataConstants {
             for (int i = 0; i < usersJSON.size(); i++) {
                 JSONObject userJSON = (JSONObject) usersJSON.get(i);
 
-                UUID id = UUID.fromString((String) userJSON.get(USER_ID));
-                String userName = (String) userJSON.get(USER_USERNAME);
-                String firstName = (String) userJSON.get(USER_FIRST_NAME);
-                String lastName = (String) userJSON.get(USER_LAST_NAME);
-                String password = (String) userJSON.get(USER_PASSWORD);
+                UUID id = getUuid(userJSON, USER_ID);
+                String userName = getString(userJSON, USER_USERNAME);
+                String firstName = getString(userJSON, USER_FIRST_NAME);
+                String lastName = getString(userJSON, USER_LAST_NAME);
+                String password = getString(userJSON, USER_PASSWORD);
 
-        
-                Location address = parseLocation((JSONObject) userJSON.get(USER_LOCATION));
+                JSONObject locationJSON = (JSONObject) userJSON.get(
+                        USER_LOCATION);
 
-                String safetyString = (String) userJSON.get(USER_SAFETY);
-                SafetyCategory safety = null;
-                if (safetyString != null) {
-                    try {
-                        safety = SafetyCategory.valueOf(safetyString.toUpperCase());
-                    } catch (Exception e) {
+                Location location = parseLocation(locationJSON);
 
-                    }
-                }
+                SafetyCategory safety = parseEnum(
+                        userJSON.get(USER_SAFETY),
+                        SafetyCategory.class);
 
-                // Roles
-                JSONArray rolesJSONArray = (JSONArray) userJSON.get(USER_ROLES);
+                JSONArray rolesJSON = (JSONArray) userJSON.get(USER_ROLES);
                 ArrayList<UserRole> roles = new ArrayList<>();
-                if (rolesJSONArray != null) {
-                    for (int j = 0; j < rolesJSONArray.size(); j++) {
-                        String roleStr = (String) rolesJSONArray.get(j);
-                        try {
-                            roles.add(UserRole.valueOf(roleStr.toUpperCase()));
-                        } catch (Exception e) {
-                        
+
+                if (rolesJSON != null) {
+                    for (int j = 0; j < rolesJSON.size(); j++) {
+                        UserRole role = parseEnum(
+                                rolesJSON.get(j), UserRole.class);
+
+                        if (role != null) {
+                            roles.add(role);
                         }
                     }
                 }
 
-                User user = new User(id, userName, firstName, lastName, password, location, safety, roles);
+                User user = new User(
+                        id, userName, firstName, lastName, password,
+                        location, safety, roles);
+
                 users.add(user);
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -153,50 +125,59 @@ public class DataLoader extends DataConstants {
     public static ArrayList<ReliefRequest> getReliefRequests() {
         ArrayList<ReliefRequest> requests = new ArrayList<>();
 
+        /*
+         * Get the existing users once. This lets a relief request point to
+         * the actual User who submitted it instead of creating a new User.
+         */
+        ArrayList<User> users = getUsers();
+
         try {
             FileReader reader = new FileReader(RELIEF_REQUEST_FILE_NAME);
             JSONParser parser = new JSONParser();
             JSONArray requestsJSON = (JSONArray) parser.parse(reader);
 
             for (int i = 0; i < requestsJSON.size(); i++) {
-                JSONObject requestJSON = (JSONObject) requestsJSON.get(i);
+                JSONObject requestJSON =
+                        (JSONObject) requestsJSON.get(i);
 
-                UUID id = UUID.fromString((String) requestJSON.get(RELIEF_REQUEST_ID));
-                String createdAt = (String) requestJSON.get(RELIEF_REQUEST_DATE);
-                String assistance = (String) requestJSON.get(RELIEF_REQUEST_ASSISTANCE);
-                int people = (int) (long) requestJSON.get(RELIEF_REQUEST_PEOPLE_COUNT);
-                int priorityScore = (int) (long) requestJSON.get(RELIEF_REQUEST_PRIORITY_SCORE);
+                UUID id = getUuid(requestJSON, RELIEF_REQUEST_ID);
+                String createdAt = getString(
+                        requestJSON, RELIEF_REQUEST_DATE);
+                String assistance = getString(
+                        requestJSON, RELIEF_REQUEST_ASSISTANCE);
+                String description = getString(
+                        requestJSON, RELIEF_REQUEST_DESCRIPTION);
 
-                JSONObject locationJSON = (JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION);
-                Location address = parseLocation((JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION));
-                // Enums
-                String urgencyStr = (String) requestJSON.get(RELIEF_REQUEST_URGENCY);
-                UrgencyTier urgency = UrgencyTier.valueOf(urgencyStr);
-                if (urgencyStr != null) {
-                    try {
-                        urgency = UrgencyTier.valueOf(urgencyStr.toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        System.err.println("Warning: Invalid UrgencyTier constant '" + urgencyStr + "'. Setting to default/null.");
-                    }
-                }
+                int people = getInt(
+                        requestJSON, RELIEF_REQUEST_PEOPLE_COUNT);
+                int priorityScore = getInt(
+                        requestJSON, RELIEF_REQUEST_PRIORITY_SCORE);
 
-                String statusStr = (String) requestJSON.get(RELIEF_REQUEST_STATUS);
-                ReliefRequestStatus status = null;
-                if (statusStr != null) {
-                    try {
-                        status = ReliefRequestStatus.valueOf(statusStr.toUpperCase());
-                    } catch (IllegalArgumentException e) {
-                        System.err.println("Warning: Invalid ReliefRequestStatus constant '" + statusStr + "'. Setting to default/null.");
-                    }
-                }
+                boolean specialNeeds = getBoolean(
+                        requestJSON, RELIEF_REQUEST_SPECIAL_NEEDS);
 
-                statusStr = (String) requestJSON.get(RELIEF_REQUEST_STATUS);
-                status = ReliefRequestStatus.valueOf(statusStr);
+                JSONObject locationJSON = (JSONObject) requestJSON.get(
+                        RELIEF_REQUEST_LOCATION);
+
+                Location location = parseLocation(locationJSON);
+
+                UrgencyTier urgency = parseEnum(
+                        requestJSON.get(RELIEF_REQUEST_URGENCY),
+                        UrgencyTier.class);
+
+                ReliefRequestStatus status = parseEnum(
+                        requestJSON.get(RELIEF_REQUEST_STATUS),
+                        ReliefRequestStatus.class);
+
+                UUID userId = getUuid(
+                        requestJSON, RELIEF_REQUEST_USER_ID);
+
+                User submittedBy = getUserById(users, userId);
 
                 ReliefRequest request = new ReliefRequest(
-                    id, createdAt, location, assistance, "", 
-                    people, false, priorityScore, urgency, status
-                );
+                        id, createdAt, location, assistance, description,
+                        people, specialNeeds, priorityScore, urgency,
+                        status, submittedBy);
 
                 requests.add(request);
             }
@@ -210,33 +191,152 @@ public class DataLoader extends DataConstants {
     public static ArrayList<HurricaneEvent> getHurricaneEvents() {
         ArrayList<HurricaneEvent> events = new ArrayList<>();
 
-        try (FileReader reader = new FileReader(EVENT_FILE_NAME)) {
+        try {
+            FileReader reader = new FileReader(EVENT_FILE_NAME);
             JSONParser parser = new JSONParser();
             JSONArray eventsJSON = (JSONArray) parser.parse(reader);
 
-            for (Object obj : eventsJSON) {
-                JSONObject eventJSON = (JSONObject) obj;
+            for (int i = 0; i < eventsJSON.size(); i++) {
+                JSONObject eventJSON =
+                        (JSONObject) eventsJSON.get(i);
 
-                String idStr = (String) eventJSON.get(HURRICANE_EVENT_ID);
-                UUID id = (idStr != null) ? UUID.fromString(idStr) : UUID.randomUUID();
-                
-                String name = (String) eventJSON.get(HURRICANE_EVENT_NAME);
-                
-                int category = 0;
-                if (eventJSON.get(HURRICANE_EVENT_CATEGORY) != null) {
-                    category = ((Number) eventJSON.get(HURRICANE_EVENT_CATEGORY)).intValue();
+                UUID id = getUuid(eventJSON, HURRICANE_EVENT_ID);
+
+                if (id == null) {
+                    id = UUID.randomUUID();
                 }
 
-                String status = (String) eventJSON.get(HURRICANE_EVENT_STATUS);
+                String name = getString(
+                        eventJSON, HURRICANE_EVENT_NAME);
 
-                events.add(new HurricaneEvent(id, name, category, status));
+                int category = getInt(
+                        eventJSON, HURRICANE_EVENT_CATEGORY);
+
+                String status = getString(
+                        eventJSON, HURRICANE_EVENT_STATUS);
+
+                HurricaneEvent event = new HurricaneEvent(
+                        id, name, category, status);
+
+                events.add(event);
             }
-        } catch (FileNotFoundException e) {
-            System.err.println("Hurricane events file not found: " + EVENT_FILE_NAME);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         return events;
+    }
+
+    /*
+     * Helper methods
+     */
+
+    private static Location parseLocation(JSONObject locationJSON) {
+        if (locationJSON == null) {
+            return null;
+        }
+
+        UUID id = getUuid(locationJSON, LOCATION_ID);
+        String street1 = getString(locationJSON, LOCATION_STREET_1);
+        String street2 = getString(locationJSON, LOCATION_STREET_2);
+        String city = getString(locationJSON, LOCATION_CITY);
+        String state = getString(locationJSON, LOCATION_STATE);
+        String zipCode = getString(locationJSON, LOCATION_ZIP_CODE);
+
+        double latitude = getDouble(locationJSON, LOCATION_LATITUDE);
+        double longitude = getDouble(locationJSON, LOCATION_LONGITUDE);
+
+        return new Location(
+                street1, street2, city, state, zipCode,
+                latitude, longitude);
+    }
+
+    private static UUID getUuid(JSONObject jsonObject, String key) {
+        String idString = getString(jsonObject, key);
+
+        if (idString == null) {
+            return null;
+        }
+
+        try {
+            return UUID.fromString(idString);
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid UUID for " + key + ": " + idString);
+            return null;
+        }
+    }
+
+    private static String getString(JSONObject jsonObject, String key) {
+        Object value = jsonObject.get(key);
+
+        if (value == null) {
+            return null;
+        }
+
+        return value.toString();
+    }
+
+    private static int getInt(JSONObject jsonObject, String key) {
+        Object value = jsonObject.get(key);
+
+        if (value instanceof Number) {
+            return ((Number) value).intValue();
+        }
+
+        return 0;
+    }
+
+    private static double getDouble(JSONObject jsonObject, String key) {
+        Object value = jsonObject.get(key);
+
+        if (value instanceof Number) {
+            return ((Number) value).doubleValue();
+        }
+
+        return 0.0;
+    }
+
+    private static boolean getBoolean(JSONObject jsonObject, String key) {
+        Object value = jsonObject.get(key);
+
+        if (value instanceof Boolean) {
+            return (Boolean) value;
+        }
+
+        return value != null && Boolean.parseBoolean(value.toString());
+    }
+
+    private static <T extends Enum<T>> T parseEnum(
+            Object value, Class<T> enumType) {
+
+        if (value == null) {
+            return null;
+        }
+
+        try {
+            return Enum.valueOf(
+                    enumType, value.toString().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            System.err.println("Invalid " + enumType.getSimpleName()
+                    + " value: " + value);
+            return null;
+        }
+    }
+
+    private static User getUserById(
+            ArrayList<User> users, UUID userId) {
+
+        if (userId == null) {
+            return null;
+        }
+
+        for (User user : users) {
+            if (userId.equals(user.getId())) {
+                return user;
+            }
+        }
+
+        System.err.println("No user found for userId: " + userId);
+        return null;
     }
 }

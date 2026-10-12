@@ -39,6 +39,9 @@ protected static final String RELIEF_REQUEST_LOCATION = "location";
 protected static final String RELIEF_REQUEST_PRIORITY_SCORE = "priorityScore";
 protected static final String RELIEF_REQUEST_URGENCY = "urgency";
 protected static final String RELIEF_REQUEST_STATUS = "status";
+protected static final String RELIEF_REQUEST_USER_ID = "userId";
+protected static final String RELIEF_REQUEST_DESCRIPTION = "description";
+protected static final String RELIEF_REQUEST_SPECIAL_NEEDS = "specialNeeds";
 
 protected static final String HURRICANE_EVENT_ID = "id";
 protected static final String HURRICANE_EVENT_NAME = "name";

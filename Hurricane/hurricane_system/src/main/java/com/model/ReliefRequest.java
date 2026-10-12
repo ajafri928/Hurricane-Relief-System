@@ -16,7 +16,7 @@ public class ReliefRequest {
     private UrgencyTier urgency;
     private ReliefRequestStatus status;
     private ArrayList<RequestComment> comments;
-    private ArrayList<User> victims;
+    private User submittedBy;
 
     public ReliefRequest(Location location, String assistance, int people) {
         this.id = UUID.randomUUID();
@@ -41,6 +41,17 @@ public class ReliefRequest {
         this.status = status;
         this.comments = new ArrayList<>();
         this.victims = new ArrayList<>();
+    }
+
+    public ReliefRequest(UUID id, String createdAt, Location location,
+        String assistance, String description, int people,
+        boolean specialNeeds, int priorityScore, UrgencyTier urgency,
+        ReliefRequestStatus status, User submittedBy) {
+
+        this(id, createdAt, location, assistance, description, people,
+            specialNeeds, priorityScore, urgency, status);
+
+        this.submittedBy = submittedBy;
     }
 
     public void submit(){
@@ -71,12 +82,28 @@ public class ReliefRequest {
         // Stub
     }
 
+    public User getSubmittedBy() {
+        // Stub
+    }
+
     public void addComment(RequestComment comment) {
         // Stub
     }
 
     public ArrayList<RequestComment> getComments() {
-        return new ArrayList<RequestComment>();
+        return new ArrayList<>(comments);
+    }
+
+        public String getDescription() {
+        return description;
+    }
+
+    public boolean hasSpecialNeeds() {
+        return specialNeeds;
+    }
+
+    public User getSubmittedBy() {
+        return submittedBy;
     }
 
     public UUID getId() { return id; }
@@ -97,6 +124,8 @@ public class ReliefRequest {
                 "\n  Priority Score: " + priorityScore +
                 "\n  Urgency: " + urgency +
                 "\n  Status: " + status +
+                "\n  Submitted By: " +
+                    (submittedBy != null ? submittedBy.getId() : "N/A") +
                 "\n  Location: " + (location != null ? location.toString() : "N/A") +
                 "\n}";
     }
