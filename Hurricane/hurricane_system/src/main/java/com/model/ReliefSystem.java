@@ -3,20 +3,17 @@ package com.model;
 import java.util.ArrayList;
 import java.util.UUID;
 
+
 public class ReliefSystem {
 
     private static ReliefSystem facade;
 
-    //Q: These should be top priority to fix
     private UserManagement userManagement;
     private ReliefManagement reliefManagement;
     private ShelterManagement shelterManagement;
+    private RegionManagement regionManagement;
+    private HazardManagement hazardManagement;
     private HurricaneEventManagement eventManagement;
-
-
-    // Q: Need to make these managers
-    private ArrayList<GeographicRegion> regions;
-    private ArrayList<HazardReport> hazards;
 
     private User currentUser;
     private ReliefRequest currentRequest;
@@ -26,9 +23,9 @@ public class ReliefSystem {
         userManagement = UserManagement.getInstance();
         reliefManagement = ReliefManagement.getInstance();
         shelterManagement = ShelterManagement.getInstance();
+        regionManagement = RegionManagement.getInstance();
+        hazardManagement = HazardManagement.getInstance();
         eventManagement = HurricaneEventManagement.getInstance();
-        regions = new ArrayList<>();
-        hazards = new ArrayList<>();
     }
 
     public static ReliefSystem getInstance() {
@@ -38,7 +35,6 @@ public class ReliefSystem {
         return facade;
     }
 
-    // ---------- helpers ----------
 
     private void requireLogin() {
         if (currentUser == null) {
@@ -52,6 +48,13 @@ public class ReliefSystem {
             throw new IllegalStateException("This action requires an admin");
         }
         return (Admin) currentUser;
+    }
+
+    private void requireResponder() {
+        requireLogin();
+        if (!currentUser.isResponder()) {
+            throw new IllegalStateException("Only volunteers and professionals can do this");
+        }
     }
 
     private ReliefRequest requireRequest() {
@@ -68,7 +71,6 @@ public class ReliefSystem {
         return currentShelter;
     }
 
-    // ---------- users ----------
 
     public User registerUser(String userName, String firstName, String lastName,
                              String password, Location location) {
@@ -99,14 +101,9 @@ public class ReliefSystem {
         return currentUser;
     }
 
-    //Q: Need to polish this and make EmergencyContact class
     public void addEmergencyContact(String name, String phone, String relationship) {
         requireLogin();
-        String[] parts = name.trim().split("\\s+", 2);
-        String first = parts[0];
-        String last = parts.length > 1 ? parts[1] : "";
-        currentUser.getEmergencyContacts()
-                .add(new EmergencyContact(first, last, phone, relationship));
+        currentUser.addEmergencyContact(name, phone, relationship);
     }
 
     public void markUserSafe(SafetyCategory category) {
@@ -119,9 +116,7 @@ public class ReliefSystem {
         currentUser.shareLocation();
     }
 
-    // ---------- relief requests ----------
 
-    //Q: Need to implement Relief Manager
     public ReliefRequest submitReliefRequest(Location location, String assistance, int people) {
         requireLogin();
         ReliefRequest request = new ReliefRequest(location, assistance, people);
@@ -149,12 +144,12 @@ public class ReliefSystem {
     }
 
     public void claimRequest() {
-        requireLogin();
+        requireResponder();
         requireRequest().accept(currentUser);
     }
 
     public void respondToRequest() {
-        requireLogin();
+        requireResponder();
         requireRequest().updateStatus(ReliefRequestStatus.HELP_EN_ROUTE);
     }
 
@@ -187,22 +182,9 @@ public class ReliefSystem {
         return reliefManagement.getRequestsByRegion(regionId);
     }
 
-    // ---------- shelters ----------
 
     public Shelter findSafeShelter(Location location, int people) {
-        Shelter best = null;
-        double bestDistance = Double.MAX_VALUE;
-        for (Shelter s : shelterManagement.getAvailableShelters(people)) {
-            Location a = s.getAddress();
-            double dLat = a.getLatitude() - location.getLatitude();
-            double dLon = a.getLongitude() - location.getLongitude();
-            double distance = dLat * dLat + dLon * dLon;
-            if (distance < bestDistance) {
-                bestDistance = distance;
-                best = s;
-            }
-        }
-        return best;
+        return shelterManagement.findNearestAvailable(location, people);
     }
 
     public Shelter selectShelter(UUID shelterId) {
@@ -214,7 +196,6 @@ public class ReliefSystem {
         return shelter;
     }
 
-    //Q: Set this
     public void assignShelterToRequest(UUID shelterId) {
         ReliefRequest request = requireRequest();
         request.setDestinationShelter(selectShelter(shelterId));
@@ -233,62 +214,54 @@ public class ReliefSystem {
     }
 
     public ArrayList<ShelterResource> getLowStockResources() {
-        ArrayList<ShelterResource> low = new ArrayList<>();
-        for (ShelterResource r : requireShelter().getResources()) {
-            if (r.checkStockLevel()) {      // true means stock is low
-                low.add(r);
-            }
-        }
-        return low;
+        return requireShelter().getLowStockResources();
     }
 
     public void changeShelterStatus(String status) {
-        requireShelter().setOperationalStatus(status);
+        requireAdmin().changeShelterStatus(requireShelter(), status);
     }
 
-    // ---------- hazards ----------
 
     public HazardReport reportHazard(HazardCategory type, Location location) {
         requireLogin();
         HazardReport report = new HazardReport(type, location, currentUser.getUserName());
         report.report();
-        hazards.add(report);
+        hazardManagement.addHazard(report);
         return report;
     }
 
     public void verifyHazard(UUID hazardId) {
-        for (HazardReport h : hazards) {
-            if (h.getId().equals(hazardId)) {
-                h.verify();
-                return;
-            }
+        requireAdmin();
+        HazardReport hazard = hazardManagement.getHazard(hazardId);
+        if (hazard == null) {
+            throw new IllegalArgumentException("No hazard with id " + hazardId);
         }
-        throw new IllegalArgumentException("No hazard with id " + hazardId);
+        hazard.verify();
     }
 
     public ArrayList<HazardReport> listVerifiedHazards() {
-        ArrayList<HazardReport> verified = new ArrayList<>();
-        for (HazardReport h : hazards) {
-            if (h.isVerified()) {
-                verified.add(h);
-            }
-        }
-        return verified;
+        return hazardManagement.getVerifiedHazards();
     }
 
-    // ---------- regions and hurricane events ----------
+
+    public GeographicRegion createRegion(String name, String boundary) {
+        requireAdmin();
+        GeographicRegion region = new GeographicRegion(name, boundary);
+        regionManagement.addRegion(region);
+        return region;
+    }
 
     public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
-        for (GeographicRegion r : regions) {
-            if (r.getId().equals(regionId)) {
-                r.setZoneType(zoneType);
-                return;
-            }
+        requireAdmin();
+        GeographicRegion region = regionManagement.getRegion(regionId);
+        if (region == null) {
+            throw new IllegalArgumentException("No region with id " + regionId);
         }
-        throw new IllegalArgumentException("No region with id " + regionId);
+        region.setZoneType(zoneType);
     }
 
     public void updateHurricaneTrack(String eventName) {
+        requireAdmin();
         HurricaneEvent event = eventManagement.getEvent(eventName);
         if (event == null) {
             throw new IllegalArgumentException("No event named " + eventName);
@@ -300,7 +273,6 @@ public class ReliefSystem {
         return eventManagement.getActiveEvent();
     }
 
-    // ---------- admin actions (all require an Admin to be signed in) ----------
 
     public void approveRequest() {
         requireAdmin().approve(requireRequest());
@@ -315,24 +287,25 @@ public class ReliefSystem {
     }
 
     public void overrideUserRole(UUID userId, UserRole role) {
+        Admin admin = requireAdmin();
         User target = userManagement.getUser(userId);
         if (target == null) {
             throw new IllegalArgumentException("No user with id " + userId);
         }
-        requireAdmin().overrideRole(target, role);
+        admin.overrideRole(target, role);
     }
 
     public void banUser(UUID userId) {
+        Admin admin = requireAdmin();
         User target = userManagement.getUser(userId);
         if (target == null) {
             throw new IllegalArgumentException("No user with id " + userId);
         }
-        requireAdmin().banUser(target);
+        admin.banUser(target);
     }
 
     public void notifyResponders() {
-        // Q: Placeholder -message every Helper near currentRequest
-        requireRequest();
+        userManagement.notifyResponders(requireRequest());
     }
 
     public void publishEmergencyAlert(String message) {

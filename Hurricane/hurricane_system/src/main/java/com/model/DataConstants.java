@@ -45,4 +45,22 @@ protected static final String HURRICANE_EVENT_NAME = "name";
 protected static final String HURRICANE_EVENT_CATEGORY = "category";
 protected static final String HURRICANE_EVENT_STATUS = "status";
 
+protected static final String SHELTER_AMENITIES = "amenities";
+protected static final String SHELTER_RESOURCES = "shelterResources";
+
+protected static final String LOCATION_ID = "id";
+protected static final String LOCATION_STREET_1 = "street1";
+protected static final String LOCATION_STREET_2 = "street2";
+protected static final String LOCATION_CITY = "city";
+protected static final String LOCATION_STATE = "state";
+protected static final String LOCATION_ZIP_CODE = "zipCode";
+protected static final String LOCATION_LATITUDE = "latitude";
+protected static final String LOCATION_LONGITUDE = "longitude";
+
+protected static final String RESOURCE_TYPE = "type";
+protected static final String RESOURCE_QUANTITY = "quantity";
+protected static final String RESOURCE_UNIT = "unit";
+protected static final String RESOURCE_AVAILABLE_UNTIL = "availableUntil";
+protected static final String RESOURCE_LOW_STOCK_THRESHOLD = "lowStockThreshold";
+
 }
