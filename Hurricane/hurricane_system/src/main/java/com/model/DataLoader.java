@@ -34,19 +34,7 @@ public class DataLoader extends DataConstants {
 
                 String operationalStatus = (String) shelterJSON.get(SHELTER_OPERATIONAL_STATUS);
 
-                JSONObject locationJSON = (JSONObject) shelterJSON.get(SHELTER_LOCATION);
-                Location address = null;
-                if (locationJSON != null) {
-                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
-                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
-                    String city = (String) locationJSON.get(LOCATION_CITY);
-                    String state = (String) locationJSON.get(LOCATION_STATE);
-                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
-                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
-                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
-
-                    address = new Location(street1, street2, city, state, zipCode, latitude, longitude);
-                }
+                Location address = parseLocation((JSONObject) shelterJSON.get(SHELTER_LOCATION));
 
                     Shelter shelter = new Shelter(
                      id, name, address, capacity, occupancy, 
@@ -81,6 +69,21 @@ public class DataLoader extends DataConstants {
 
         return shelters;
     }
+    private static Location parseLocation(JSONObject locationJSON){
+        if (locationJSON == null) {
+            return null;
+        }
+
+        String street1 = (String) locationJSON.get(LOCATION_STREET_1);
+        String street2 = (String) locationJSON.get(LOCATION_STREET_2);
+        String city = (String) locationJSON.get(LOCATION_CITY);
+        String state = (String) locationJSON.get(LOCATION_STATE);
+        String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
+        double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
+        double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
+
+        return new Location(street1, street2, city, state, zipCode, latitude, longitude);
+    }
 
     public static ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
@@ -104,24 +107,13 @@ public class DataLoader extends DataConstants {
                 JSONObject userJSON = (JSONObject) usersJSON.get(i);
 
                 UUID id = UUID.fromString((String) userJSON.get(USER_ID));
-                String userName = (String) userJSON.get(USER_ID);
+                String userName = (String) userJSON.get(USER_USERNAME);
                 String firstName = (String) userJSON.get(USER_FIRST_NAME);
                 String lastName = (String) userJSON.get(USER_LAST_NAME);
                 String password = (String) userJSON.get(USER_PASSWORD);
 
-                JSONObject locationJSON = (JSONObject) userJSON.get(USER_LOCATION);
-                Location location = null;
-                if (locationJSON != null) {
-                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
-                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
-                    String city = (String) locationJSON.get(LOCATION_CITY);
-                    String state = (String) locationJSON.get(LOCATION_STATE);
-                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
-                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
-                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
-
-                    location = new Location(street1, street2, city, state, zipCode, latitude, longitude);
-                }
+        
+                Location address = parseLocation((JSONObject) userJSON.get(USER_LOCATION));
 
                 String safetyString = (String) userJSON.get(USER_SAFETY);
                 SafetyCategory safety = null;
@@ -176,19 +168,7 @@ public class DataLoader extends DataConstants {
                 int priorityScore = (int) (long) requestJSON.get(RELIEF_REQUEST_PRIORITY_SCORE);
 
                 JSONObject locationJSON = (JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION);
-                Location location = null;
-                if (locationJSON != null) {
-                    String street1 = (String) locationJSON.get(LOCATION_STREET_1);
-                    String street2 = (String) locationJSON.get(LOCATION_STREET_2);
-                    String city = (String) locationJSON.get(LOCATION_CITY);
-                    String state = (String) locationJSON.get(LOCATION_STATE);
-                    String zipCode = (String) locationJSON.get(LOCATION_ZIP_CODE);
-                    double latitude = (Double) locationJSON.get(LOCATION_LATITUDE);
-                    double longitude = (Double) locationJSON.get(LOCATION_LONGITUDE);
-
-                    location = new Location(street1, street2, city, state, zipCode, latitude, longitude);
-                }
-
+                Location address = parseLocation((JSONObject) requestJSON.get(RELIEF_REQUEST_LOCATION));
                 // Enums
                 String urgencyStr = (String) requestJSON.get(RELIEF_REQUEST_URGENCY);
                 UrgencyTier urgency = UrgencyTier.valueOf(urgencyStr);
