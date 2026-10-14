@@ -88,4 +88,8 @@ public class UserManagement {
             user.editProfile(firstName, lastName, location);
         }
     }
+    // Writes the current user list back to the JSON file
+    public void saveUsers() {
+        DataWriter.saveUsers(users);
+    }
 }
