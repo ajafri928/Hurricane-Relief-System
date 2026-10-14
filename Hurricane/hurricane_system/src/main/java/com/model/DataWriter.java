@@ -69,3 +69,40 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
     resourceJSON.put(RESOURCE_LOW_STOCK_THRESHOLD, resource.getLowStockThreshold())
     return resourceJSON;
 }
+    public static void saveUsers(ArrayList<User> users) {
+        JSONArray usersJSON = new JSONArray();
+
+        for (User user : users) {
+            usersJSON.add(getUserJSON(user));
+        }
+
+        try {
+            FileWriter file = new FileWriter(USER_FILE_NAME);
+            file.write(usersJSON.toJSONString());
+            file.flush();
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static JSONObject getUserJSON(User user) {
+        JSONObject userJSON = new JSONObject();
+
+        userJSON.put(USER_ID, user.getId().toString());
+        userJSON.put(USER_USERNAME, user.getUserName());
+        userJSON.put(USER_FIRST_NAME, user.getFirstName());
+        userJSON.put(USER_LAST_NAME, user.getLastName());
+        userJSON.put(USER_PASSWORD, user.getPassword());
+        userJSON.put(USER_LOCATION, getLocationJSON(user.getLocation()));
+        userJSON.put(USER_SAFETY, user.getSafety() == null ? null : user.getSafety().toString());
+
+        JSONArray rolesJSON = new JSONArray();
+        for (UserRole role : user.getRoles()) {
+            rolesJSON.add(role.toString());
+        }
+        userJSON.put(USER_ROLES, rolesJSON);
+
+        return userJSON;
+    }
+}
