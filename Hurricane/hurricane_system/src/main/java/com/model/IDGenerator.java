@@ -1,4 +1,4 @@
-package jsonfiles;
+package com.model;
 
 import java.util.UUID;
 
