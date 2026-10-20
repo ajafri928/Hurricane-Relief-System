@@ -105,4 +105,41 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
 
         return userJSON;
     }
+    public static void saveReliefRequests(ArrayList<ReliefRequest> requests) {
+        JSONArray requestsJSON = new JSONArray();
+
+        for (ReliefRequest request: requests) {
+            requestsJSON.add(getReliefRequestJSON(request));
+        }
+
+        try {
+            FileWriter file = new FileWriter(USER_FILE_NAME);
+            file.write(requestsJSON.toJSONString());
+            file.flush();
+            file.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    public static JSONObject getReliefRequestJSON(ReliefRequest request) {
+        JSONObject requestJSON = new JSONObject();
+
+        requestJSON.put(RELIEF_REQUEST_ID, request.getId().toString());
+        requestJSON.put(RELIEF_REQUEST_DATE, request.getCreatedAt());
+        requestJSON.put(RELIEF_REQUEST_USER_ID,
+                request.getSubmittedBy() == null ? null : request.getSubmittedBy().getId().toString());
+        requestJSON.put(RELIEF_REQUEST_ASSISTANCE, request.getAssistance());
+        requestJSON.put(RELIEF_REQUEST_DESCRIPTION, request.getDescription());
+        requestJSON.put(RELIEF_REQUEST_LOCATION, getLocationJSON(request.getLocation()));
+        requestJSON.put(RELIEF_REQUEST_PEOPLE_COUNT, request.getPeople());
+        requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
+        requestJSON.put(RELIEF_REQUEST_PRIORITY_SCORE, request.getPriorityScore());
+        requestJSON.put(RELIEF_REQUEST_URGENCY,
+                request.getUrgency() == null ? null : request.getUrgency().toString());
+        requestJSON.put(RELIEF_REQUEST_STATUS,
+                request.getStatus() == null ? null : request.getStatus().toString());
+
+        return requestJSON;
+    }
+
 }
