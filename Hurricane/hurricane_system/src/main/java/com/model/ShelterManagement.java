@@ -50,4 +50,7 @@ public class ShelterManagement {
     public void removeShelter(String id){
         shelters.removeIf(shelter -> shelter.getId().equals(id));
     }
+    public void save(){
+        DataWriter.saveShelters(shelters);
+    }
 }

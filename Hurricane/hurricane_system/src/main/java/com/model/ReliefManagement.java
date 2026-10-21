@@ -73,5 +73,7 @@ public class ReliefManagement {
         }
     } */
 
-
+    public void save(){
+        DataWriter.saveReliefRequests(requests);
+    }
 }

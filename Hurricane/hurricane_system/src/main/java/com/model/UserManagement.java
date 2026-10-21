@@ -88,4 +88,14 @@ public class UserManagement {
             user.editProfile(firstName, lastName, location);
         }
     }
+    public void notifyResponders(ReliefRquest request){
+        for (User user : users){
+            if(user.isResponder()){
+                System.out.println("Notifying " + user.getUserName() + ": new request " + request.getID());
+            }
+        }
+    }
+    public void save(){
+        DataWriter.saveUsers(users);
+    }
 }

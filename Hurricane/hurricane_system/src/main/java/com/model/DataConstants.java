@@ -66,4 +66,10 @@ protected static final String RESOURCE_UNIT = "unit";
 protected static final String RESOURCE_AVAILABLE_UNTIL = "availableUntil";
 protected static final String RESOURCE_LOW_STOCK_THRESHOLD = "lowStockThreshold";
 
+
+protected static final String RELIEF_REQUEST_COMMENTS = "comments";
+protected static final String COMMENT_AUTHOR_ID = "authorId";
+protected static final String COMMENT_TEXT = "text";
+protected static final String COMMENT_TIMESTAMP = "timeStamp";
+
 }
