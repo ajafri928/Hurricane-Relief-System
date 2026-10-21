@@ -9,7 +9,7 @@ public class ReliefManagement {
     private ArrayList<ReliefRequest> requests;
 
     private ReliefManagement() {
-        requests = new ArrayList<>();
+        requests = DataLoader.getReliefRequests();
     }
 
     public static ReliefManagement getInstance(){
