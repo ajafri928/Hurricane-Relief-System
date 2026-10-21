@@ -88,4 +88,7 @@ public class UserManagement {
             user.editProfile(firstName, lastName, location);
         }
     }
+    public void save(){
+        DataWriter.saveUsers(users);
+    }
 }

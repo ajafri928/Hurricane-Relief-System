@@ -58,6 +58,15 @@ public class Shelter {
         shelterResources.add(resource);
     }
 
+    public ArrayList<ShelterResource> getLowStockResources(){
+        ArrayList<ShelterResource> low = new ArrayList<>();
+        for (ShelterResource r : shelterResources){
+            if (r.checkStockLevel()){
+                low.add(r);
+            }
+        }
+        return low;
+    }
     /*public void updateInventory(ShelterResource resource){ //Q: Confused on how this will work/if it should be moved to another class?
         resource = resource;
     }
@@ -110,6 +119,7 @@ public class Shelter {
                 "\n  Resources: " + shelterResources +
                 "\n}";
     }
+    
 
 }
 
