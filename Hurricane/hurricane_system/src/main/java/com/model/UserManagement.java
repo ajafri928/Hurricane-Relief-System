@@ -29,11 +29,7 @@ public class UserManagement {
         return users;
     }
 
-    /**
-     * Finds a user by id.
-     * @param id the user's id
-     * @return the user, or null if not found
-     */
+    // Finds a user by id, or null if not found.
     public User getUser(UUID id) {
         if (id == null) {
             return null;
@@ -46,11 +42,7 @@ public class UserManagement {
         return null;
     }
 
-    /**
-     * Finds a user by username, ignoring case. Used for login.
-     * @param userName the username to look for
-     * @return the user, or null if not found
-     */
+    // Finds a user by username, ignoring case.
     public User getUserByUserName(String userName) {
         if (userName == null) {
             return null;
@@ -63,16 +55,26 @@ public class UserManagement {
         return null;
     }
 
-    /**
-     * Adds a new user. Used for create account.
-     * @param user the user to add
-     * @return false if the user is null or the username is taken
-     */
-    public boolean addUser(User user) {
-        if (user == null || getUserByUserName(user.getUserName()) != null) {
+    // Finds a user whose username AND password match. Used for login.
+    public User getUser(String userName, String password) {
+        User user = getUserByUserName(userName);
+        if (user == null || password == null || !user.getPassword().equals(password)) {
+            return null;
+        }
+        return user;
+    }
+
+    // Makes a new user and adds them. Same parameters as the User constructor.
+    // Returns false if username/password is blank or the username is taken.
+    public boolean addUser(String userName, String firstName, String lastName,
+                           String password, Location location) {
+        if (userName == null || userName.isBlank() || password == null || password.isBlank()) {
             return false;
         }
-        users.add(user);
+        if (getUserByUserName(userName) != null) {
+            return false;
+        }
+        users.add(new User(userName.trim(), firstName, lastName, password, location));
         return true;
     }
 
@@ -88,14 +90,18 @@ public class UserManagement {
             user.editProfile(firstName, lastName, location);
         }
     }
-    public void notifyResponders(ReliefRequest request){
-        for (User user : users){
-            if(user.isResponder()){
+
+    // Tells every volunteer and professional about a new request.
+    public void notifyResponders(ReliefRequest request) {
+        for (User user : users) {
+            if (user.isResponder()) {
                 System.out.println("Notifying " + user.getUserName() + ": new request " + request.getID());
             }
         }
     }
-    public void save(){
+
+    // Writes the current user list back to the JSON file.
+    public void saveUsers() {
         DataWriter.saveUsers(users);
     }
 }
