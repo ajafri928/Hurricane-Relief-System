@@ -1,6 +1,7 @@
 package com.model;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.UUID;
 
 public class ReliefRequest {
     private UUID id;
@@ -110,6 +111,9 @@ public class ReliefRequest {
         return specialNeeds;
     }
 
+    public void setDestinationShelter(Shelter shelter) {
+    this.destinationShelter = shelter;
+}
     
 
     public UUID getId() { return id; }
