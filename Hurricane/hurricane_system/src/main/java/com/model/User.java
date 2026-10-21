@@ -77,11 +77,18 @@ public class User {
     public void Languages() {
         // Stub
     }
-    public boolean isResponder(){
+    
+    // Returns what kind of user this is. Admin will override this.
+    public String getType() {
+        return "USER";
+    }
+
+    public boolean isResponder() {
         return roles.contains(UserRole.VOLUNTEER) || roles.contains(UserRole.PROFESSIONAL);
     }
-    public void addEmergencyContact(String name, String phone, String relationship){
-        emergencyContacts.add(new EmergencyContact(name,phone,relationship));
+
+    public void addEmergencyContact(String name, String phone, String relationship) {
+        emergencyContacts.add(new EmergencyContact(name, phone, relationship));
     }
 
     // Getters
