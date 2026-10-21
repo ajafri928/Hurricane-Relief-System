@@ -1,6 +1,8 @@
 package com.model;
 
 import java.util.ArrayList;
+import java.util.UUID;
+
 
 public class ShelterManagement {
     private static ShelterManagement shelterManagement;
@@ -18,9 +20,9 @@ public class ShelterManagement {
         return shelters;
     }
 
-    public Shelter getShelter(String id){
+    public Shelter getShelter(UUID id){
         for (Shelter s: shelters){
-            if (s.getID().equals(id)){
+            if (s.getId().equals(id)){
                 return s;
             }
         }

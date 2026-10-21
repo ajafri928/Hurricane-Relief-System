@@ -1,29 +1,31 @@
-{
-  "id": "123e4567-e89b-12d3-a456-426614174000",
-  "userName": "johndoe",
-  "firstName": "John",
-  "lastName": "Doe",
-  "password": "hashed_password_string",
-  "location": {
-    "id": "876e4567-e89b-12d3-a456-426614174111",
-    "street1": "123 Main St",
-    "street2": "Apt 4B",
-    "city": "Columbia",
-    "state": "SC",
-    "zipCode": "29201",
-    "latitude": 33.9988,
-    "longitude": -81.0453
-  },
-  "safety": "SAFE",
-  "roles": [
-    "VICTIM",
-    "VOLUNTEER"
-  ],
-  "emergencyContacts": [
-    {
-      "name": "Jane Doe",
-      "relationship": "Spouse",
-      "phoneNumber": "555-0199"
-    }
-  ]
-}
+[
+  {
+    "id": "123e4567-e89b-12d3-a456-426614174000",
+    "userName": "johndoe",
+    "firstName": "John",
+    "lastName": "Doe",
+    "password": "hashed_password_string",
+    "location": {
+      "id": "876e4567-e89b-12d3-a456-426614174111",
+      "addressLine1": "123 Main St",
+      "addressLine2": "Apt 4B",
+      "city": "Columbia",
+      "state": "SC",
+      "zipCode": "29201",
+      "latitude": 33.9988,
+      "longitude": -81.0453
+    },
+    "safety": "SAFE",
+    "roles": [
+      "VICTIM",
+      "VOLUNTEER"
+    ],
+    "emergencyContacts": [
+      {
+        "name": "Jane Doe",
+        "relationship": "Spouse",
+        "phoneNumber": "555-0199"
+      }
+    ]
+  }
+]

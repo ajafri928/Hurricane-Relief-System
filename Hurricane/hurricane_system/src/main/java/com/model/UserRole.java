@@ -1,4 +1,4 @@
-package Hurricane.hurricane_system.src.main.java.com.model;
+package com.model;
 
 public enum UserRole {
     VOLUNTEER,

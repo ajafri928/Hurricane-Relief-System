@@ -1,28 +1,30 @@
-{
-  "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-  "requestDate": "2026-09-27T14:30:00Z",
-  "peopleId": "123e4567-e89b-12d3-a456-426614174000",
-  "requestCategory": "DISASTER_RELIEF",
-  "priorityScore": 8,
-  "urgency": "HIGH",
-  "status": "SUBMITTED",
-  "assistance": "Need clean drinking water and non-perishable food rations.",
-  "location": {
-    "id": "876e4567-e89b-12d3-a456-426614174111",
-    "street1": "123 Main St",
-    "city": "Columbia",
-    "state": "SC",
-    "zipCode": "29201",
-    "latitude": 33.9988,
-    "longitude": -81.0453
-  },
-  "peopleCount": 3,
-  "comments": [
-    {
-      "id": "c1c1c1c1-2222-3333-4444-555555555555",
-      "commenterId": "999e4567-e89b-12d3-a456-426614174999",
-      "text": "Dispatched a local volunteer group to deliver supplies.",
-      "timestamp": "2026-09-27T15:00:00Z"
-    }
-  ]
-}
+[
+  {
+    "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
+    "requestDate": "2026-09-27T14:30:00Z",
+    "userId": "123e4567-e89b-12d3-a456-426614174000",
+    "requestCategory": "DISASTER_RELIEF",
+    "priorityScore": 8,
+    "urgency": "URGENT",
+    "status": "SUBMITTED",
+    "assistance": "Need clean drinking water and non-perishable food rations.",
+    "location": {
+      "id": "876e4567-e89b-12d3-a456-426614174111",
+      "street1": "123 Main St",
+      "city": "Columbia",
+      "state": "SC",
+      "zipCode": "29201",
+      "latitude": 33.9988,
+      "longitude": -81.0453
+    },
+    "peopleCount": 3,
+    "comments": [
+      {
+        "id": "c1c1c1c1-2222-3333-4444-555555555555",
+        "commenterId": "999e4567-e89b-12d3-a456-426614174999",
+        "text": "Dispatched a local volunteer group to deliver supplies.",
+        "timestamp": "2026-09-27T15:00:00Z"
+      }
+    ]
+  }
+]

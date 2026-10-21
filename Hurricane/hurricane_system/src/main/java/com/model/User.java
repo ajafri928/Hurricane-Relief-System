@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 // One person with an account in the system.
 public class User {
     private UUID id;
@@ -87,4 +88,16 @@ public class User {
     public SafetyCategory getSafety() { return safety; }
     public List<UserRole> getRoles() { return roles; }
     public List<EmergencyContact> getEmergencyContacts() { return emergencyContacts; }
+
+    @Override
+public String toString() {
+    return "User {" +
+            "\n  ID: " + id +
+            "\n  Username: '" + userName + '\'' +
+            "\n  Name: '" + firstName + " " + lastName + '\'' +
+            "\n  Safety: " + safety +
+            "\n  Roles: " + roles +
+            "\n  Location: " + (location != null ? location.toString() : "N/A") +
+            "\n}";
+}
 }

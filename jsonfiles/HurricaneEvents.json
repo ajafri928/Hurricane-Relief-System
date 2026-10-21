@@ -1,14 +1,10 @@
-{
-  "id": "777e4567-e89b-12d3-a456-426614174777",
-  "name": "Hurricane Helena",
-  "category": 4,
-  "startDate": "2026-09-25T06:00:00Z",
-  "endDate": "2026-09-29T18:00:00Z",
-  "affectedAreas": [
-    {
-      "regionName": "Midlands SC",
-      "zoneType": "EVACUATION_ZONE_B",
-      "riskLevel": "HIGH"
-    }
-  ]
-}
+[
+  {
+    "id": "777e4567-e89b-12d3-a456-426614174777",
+    "name": "Hurricane Helena",
+    "category": 4,
+    "startDate": "2026-09-25T06:00:00Z",
+    "endDate": "2026-09-29T18:00:00Z",
+    "status": "ACTIVE"
+  }
+]
