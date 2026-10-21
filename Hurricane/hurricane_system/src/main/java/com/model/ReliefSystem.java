@@ -81,7 +81,13 @@ public class ReliefSystem {
     }
 
     public void signOut() {
+<<<<<<< HEAD
+        userManagement.save();
+        reliefManagement.save();
+        shelterManagement.save();
+=======
         userManagement.saveUsers();
+>>>>>>> origin/main
         currentUser = null;
         currentRequest = null;
         currentShelter = null;

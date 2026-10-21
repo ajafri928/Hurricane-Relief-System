@@ -27,5 +27,33 @@
         "phoneNumber": "555-0199"
       }
     ]
+  },{
+    "id": "223e4567-e89b-12d3-a456-426614174001",
+    "userName": "mrivera",
+    "firstName": "Maria",
+    "lastName": "Rivera",
+    "password": "volunteer456",
+    "location": {
+      "id": "976e4567-e89b-12d3-a456-426614174222",
+      "addressLine1": "840 Harden St",
+      "addressLine2": "",
+      "city": "Columbia",
+      "state": "SC",
+      "zipCode": "29205",
+      "latitude": 34.0012,
+      "longitude": -81.0147
+    },
+    "safety": "SAFE",
+    "roles": [
+      "VOLUNTEER"
+    ],
+    "emergencyContacts": [
+      {
+        "name": "Carlos Rivera",
+        "relationship": "Brother",
+        "phoneNumber": "555-0142"
+      }
+    ]
   }
 ]
+  
