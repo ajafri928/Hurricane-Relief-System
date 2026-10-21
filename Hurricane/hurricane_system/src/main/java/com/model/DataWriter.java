@@ -77,7 +77,7 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         }
 
         try {
-            FileWriter file = new FileWriter(RELIEF_REQUEST_FILE_NAME);
+            FileWriter file = new FileWriter(USER_FILE_NAME);
             file.write(usersJSON.toJSONString());
             file.flush();
             file.close();
@@ -112,7 +112,7 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         }
 
         try {
-            FileWriter file = new FileWriter(USER_FILE_NAME);
+            FileWriter file = new FileWriter(RELIEF_REQUEST_FILE_NAME);
             file.write(requestsJSON.toJSONString());
             file.flush();
             file.close();
