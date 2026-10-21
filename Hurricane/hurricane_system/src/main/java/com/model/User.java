@@ -77,7 +77,11 @@ public class User {
     public void Languages() {
         // Stub
     }
-
+        // Returns what kind of user this is. Admin will override this.
+    public String getType() {
+        return "USER";
+    }
+    
     // Getters
     public UUID getId() { return id; }
     public String getUserName() { return userName; }
