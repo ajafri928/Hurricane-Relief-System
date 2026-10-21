@@ -5,5 +5,7 @@ public enum ReliefRequestStatus {
     CLAIMED,
     HELP_EN_ROUTE,
     RESOLVED,
-    ESCALATED_TO_911
+    ESCALATED_TO_911,
+    APPROVED,
+    DENIED
 }
