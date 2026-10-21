@@ -92,6 +92,9 @@ public class ReliefSystem {
     }
 
     public void signOut() {
+        userManagement.save();
+        reliefManagement.save();
+        shelterManagement.save();
         currentUser = null;
         currentRequest = null;
         currentShelter = null;
