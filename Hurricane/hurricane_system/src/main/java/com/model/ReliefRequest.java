@@ -87,6 +87,14 @@ public class ReliefRequest {
         return submittedBy;
     }
 
+    public Shelter getDestinationShelter(){
+        return destinationShelter;
+    }
+
+    public void setDestinationShelter(Shelter destinationShelter){
+        this.destinationShelter = destinationShelter;
+    }
+
     public void addComment(RequestComment comment) {
         // Stub
     }

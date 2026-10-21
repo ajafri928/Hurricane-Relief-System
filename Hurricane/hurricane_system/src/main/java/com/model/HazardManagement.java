@@ -8,7 +8,7 @@ public class HazardManagement {
     private ArrayList<HazardReport> hazards;
 
     private HazardManagement() {
-        hazards = new ArrayList<>();
+        hazards = DataLoader.getHazardReports();
     }
 
     public static HazardManagement getInstance() {

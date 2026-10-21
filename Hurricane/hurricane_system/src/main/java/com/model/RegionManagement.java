@@ -8,7 +8,7 @@ public class RegionManagement {
     private ArrayList<GeographicRegion> regions;
 
     private RegionManagement() {
-        regions = new ArrayList<>();
+        regions = DataLoader.getGeographicRegions();
     }
 
     public static RegionManagement getInstance() {
@@ -38,4 +38,5 @@ public class RegionManagement {
     public void removeRegion(UUID id) {
         regions.removeIf(region -> region.getId().equals(id));
     }
+    public UUID getId() { return id; }
 }

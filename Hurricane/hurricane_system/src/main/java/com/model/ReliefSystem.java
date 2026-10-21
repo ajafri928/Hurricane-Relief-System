@@ -44,7 +44,7 @@ public class ReliefSystem {
 
     private Admin requireAdmin() {
         requireLogin();
-        if (!(currentUser instanceof Admin)) {
+            if (!currentUser.getType().equals("ADMIN")) {
             throw new IllegalStateException("This action requires an admin");
         }
         return (Admin) currentUser;
@@ -70,28 +70,24 @@ public class ReliefSystem {
         }
         return currentShelter;
     }
-
-
-    public User registerUser(String userName, String firstName, String lastName,
-                             String password, Location location) {
-        if (userManagement.getUserByUserName(userName) != null) {
-            throw new IllegalArgumentException("Username already taken: " + userName);
-        }
-        User user = new User(userName, firstName, lastName, password, location);
-        userManagement.addUser(user);
-        return user;
+        public boolean registerUser(String userName, String firstName, String lastName,
+                                String password, Location location) {
+        return userManagement.addUser(userName, firstName, lastName, password, location);
     }
 
     public boolean signIn(String userName, String password) {
-        User user = userManagement.getUserByUserName(userName);
-        if (user != null && user.signIn(userName, password)) {
-            currentUser = user;
-            return true;
-        }
-        return false;
+        currentUser = userManagement.getUser(userName, password);
+        return currentUser != null;
     }
 
     public void signOut() {
+<<<<<<< HEAD
+        userManagement.save();
+        reliefManagement.save();
+        shelterManagement.save();
+=======
+        userManagement.saveUsers();
+>>>>>>> origin/main
         currentUser = null;
         currentRequest = null;
         currentShelter = null;
