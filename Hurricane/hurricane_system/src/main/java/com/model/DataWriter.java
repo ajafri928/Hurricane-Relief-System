@@ -77,7 +77,7 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         }
 
         try {
-            FileWriter file = new FileWriter(USER_FILE_NAME);
+            FileWriter file = new FileWriter(RELIEF_REQUEST_FILE_NAME);
             file.write(usersJSON.toJSONString());
             file.flush();
             file.close();
@@ -85,7 +85,6 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
             e.printStackTrace();
         }
     }
-
     public static JSONObject getUserJSON(User user) {
         JSONObject userJSON = new JSONObject();
 
@@ -139,7 +138,22 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         requestJSON.put(RELIEF_REQUEST_STATUS,
                 request.getStatus() == null ? null : request.getStatus().toString());
 
+    JSONArray commentsJSON = new JSONArray();         
+    for (RequestComment comment : request.getComments()) {
+        commentsJSON.add(getCommentJSON(comment));
+    }
+    requestJSON.put(RELIEF_REQUEST_COMMENTS, commentsJSON);
+
         return requestJSON;
     }
+    private static JSONObject getCommentJSON(RequestComment comment) {
+    JSONObject commentJSON = new JSONObject();
+
+    commentJSON.put(COMMENT_AUTHOR_ID, comment.getAuthor().getId().toString());
+    commentJSON.put(COMMENT_TEXT, comment.getText());
+    commentJSON.put(COMMENT_TIMESTAMP, comment.getTimeStamp().toString());
+
+    return commentJSON;
+}
 
 }
