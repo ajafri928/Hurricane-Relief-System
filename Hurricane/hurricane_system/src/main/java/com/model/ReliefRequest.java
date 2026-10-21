@@ -40,7 +40,7 @@ public class ReliefRequest {
         this.urgency = urgency;
         this.status = status;
         this.comments = new ArrayList<>();
-        this.victims = new ArrayList<>();
+        
     }
 
     public ReliefRequest(UUID id, String createdAt, Location location,
@@ -83,7 +83,7 @@ public class ReliefRequest {
     }
 
     public User getSubmittedBy() {
-        // Stub
+        return submittedBy;
     }
 
     public void addComment(RequestComment comment) {
@@ -102,9 +102,7 @@ public class ReliefRequest {
         return specialNeeds;
     }
 
-    public User getSubmittedBy() {
-        return submittedBy;
-    }
+    
 
     public UUID getId() { return id; }
     public String getCreatedAt() { return createdAt; }
