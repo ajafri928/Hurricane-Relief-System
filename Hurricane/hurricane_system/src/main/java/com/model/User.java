@@ -80,7 +80,9 @@ public class User {
     public boolean isResponder(){
         return roles.contains(UserRole.VOLUNTEER) || roles.contains(UserRole.PROFESSIONAL);
     }
-
+    public void addEmergencyContact(String name, String phone, String relationship){
+        emergencyContacts.add(new EmergencyContact(name,phone,relationship));
+    }
 
     // Getters
     public UUID getId() { return id; }
