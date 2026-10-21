@@ -9,7 +9,7 @@ public class ShelterManagement {
     private ArrayList<Shelter> shelters;
 
     private ShelterManagement(){
-        shelters = new ArrayList<>();
+        shelters = DataLoader.getShelters();
     }
 
     public static ShelterManagement getInstance(){
@@ -45,6 +45,7 @@ public class ShelterManagement {
         }
         return available;
     }
+    
 
     public void addShelter(Shelter shelter){
         shelters.add(shelter);
