@@ -77,6 +77,10 @@ public class User {
     public void Languages() {
         // Stub
     }
+    public boolean isResponder(){
+        return roles.contains(UserRole.VOLUNTEER) || roles.contains(UserRole.PROFESSIONAL);
+    }
+
 
     // Getters
     public UUID getId() { return id; }
