@@ -63,16 +63,26 @@ public class UserManagement {
         return null;
     }
 
-    /**
-     * Adds a new user. Used for create account.
-     * @param user the user to add
-     * @return false if the user is null or the username is taken
-     */
-    public boolean addUser(User user) {
-        if (user == null || getUserByUserName(user.getUserName()) != null) {
+        // Finds a user whose username AND password match. Used for login.
+    public User getUser(String userName, String password) {
+        User user = getUserByUserName(userName);
+        if (user == null || password == null || !user.getPassword().equals(password)) {
+            return null;
+        }
+        return user;
+    }
+
+    // Makes a new user and adds them. Same parameters as the User constructor.
+    // Returns false if username/password is blank or the username is taken.
+    public boolean addUser(String userName, String firstName, String lastName,
+                           String password, Location location) {
+        if (userName == null || userName.isBlank() || password == null || password.isBlank()) {
             return false;
         }
-        users.add(user);
+        if (getUserByUserName(userName) != null) {
+            return false;
+        }
+        users.add(new User(userName.trim(), firstName, lastName, password, location));
         return true;
     }
 
@@ -92,4 +102,5 @@ public class UserManagement {
     public void saveUsers() {
         DataWriter.saveUsers(users);
     }
+
 }
