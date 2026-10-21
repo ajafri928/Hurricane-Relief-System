@@ -95,6 +95,46 @@ public class User {
     public List<UserRole> getRoles() { return roles; }
     public List<EmergencyContact> getEmergencyContacts() { return emergencyContacts; }
 
+    public void setUserName(String userName) {
+        if (userName == null || userName.trim().isEmpty()) {
+            throw new IllegalArgumentException("Username cannot be empty");
+        }
+        this.userName = userName.trim();
+    }
+    
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+    
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+    
+    public void setPassword(String password) {
+        if (password == null || password.isEmpty()) {
+            throw new IllegalArgumentException("Password cannot be empty");
+        }
+        this.password = password;
+    }
+    
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+    
+    public void setSafety(SafetyCategory safety) {
+        this.safety = safety;
+    }
+    
+    public void setRoles(List<UserRole> roles) {
+        this.roles = (roles == null) ? new ArrayList<>() : new ArrayList<>(roles);
+    }
+    
+    public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
+        this.emergencyContacts = (emergencyContacts == null)
+                ? new ArrayList<>()
+                : new ArrayList<>(emergencyContacts);
+    }
+
     @Override
 public String toString() {
     return "User {" +
