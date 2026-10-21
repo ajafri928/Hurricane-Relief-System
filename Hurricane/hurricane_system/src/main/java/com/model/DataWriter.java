@@ -66,7 +66,7 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
     resourceJSON.put(RESOURCE_UNIT, resource.getUnit());
     resourceJSON.put(RESOURCE_QUANTITY, resource.getQuantity());
     resourceJSON.put(RESOURCE_AVAILABLE_UNTIL, resource.getAvailableUntil().toString());
-    resourceJSON.put(RESOURCE_LOW_STOCK_THRESHOLD, resource.getLowStockThreshold())
+    resourceJSON.put(RESOURCE_LOW_STOCK_THRESHOLD, resource.getLowStockThreshold());
     return resourceJSON;
 }
     public static void saveUsers(ArrayList<User> users) {
