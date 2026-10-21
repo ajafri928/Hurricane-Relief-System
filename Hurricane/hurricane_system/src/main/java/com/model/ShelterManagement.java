@@ -14,8 +14,8 @@ public class ShelterManagement {
 
     public static ShelterManagement getInstance(){
         if (shelterManagement == null) {
-        shelterManagement = new ShelterManagement();
-    }
+            shelterManagement = new ShelterManagement();
+        }
         return shelterManagement;
     }
 
