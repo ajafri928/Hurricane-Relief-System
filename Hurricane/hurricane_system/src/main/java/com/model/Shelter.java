@@ -72,6 +72,10 @@ public class Shelter {
     }
     */
 
+    public int getAvailableSpace(){
+        return capacity-occupancy;
+    }
+
     // Getters
     public UUID getId() { return id; }
     public String getName() { return name; }
@@ -122,4 +126,3 @@ public class Shelter {
     
 
 }
-
