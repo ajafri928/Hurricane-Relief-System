@@ -33,7 +33,7 @@ public class ShelterManagement {
                            loc.getState(), loc.getZipCode());
     }
 
-    public Shelter findNearestAvailable(Location location, int numPeople)
+    public Shelter findNearestAvailableShelter(Location location, int numPeople)
             throws IOException, InterruptedException {
 
         ArrayList<Shelter> available = new ArrayList<>();
@@ -75,7 +75,6 @@ public class ShelterManagement {
         return available;
     }
     
-
     public void addShelter(Shelter shelter){
         shelters.add(shelter);
     }
