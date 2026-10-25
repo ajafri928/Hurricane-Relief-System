@@ -26,7 +26,7 @@ public class ReliefManagement {
     public UUID getReliefRequest(UUID id){
         for (ReliefRequest r : requests){
             if (r.getId().equals(id)) {
-                return id;
+                return r;
             }
         }
         return null;
