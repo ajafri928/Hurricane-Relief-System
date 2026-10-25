@@ -28,39 +28,50 @@ public class ShelterManagement {
         return shelters;
     }
 
-    private Address toAddress(Location loc) {
-        return new Address(loc.getAddressLine1(), loc.getCity(),
-                           loc.getState(), loc.getZipCode());
-    }
 
-    public Shelter findNearestAvailableShelter(Location location, int numPeople)
-            throws IOException, InterruptedException {
+    public Shelter findNearestAvailable(Location location, int people, boolean needsPetFriendly, boolean needsMedical){
 
-        ArrayList<Shelter> available = new ArrayList<>();
-        for (Shelter s : shelters) {
-            if (s.getAvailableSpace() >= numPeople) {
-                available.add(s);
+    
+             ArrayList<Shelter> qualifying = new ArrayList<Shelter>();
+        
+            for (Shelter shelter : getAvailableShelters(people)) {
+                if (needsPetFriendly && !shelter.isPetFriendly()) continue;
+                if (needsMedical && !shelter.hasMedicalStaff()) continue;
+                qualifying.add(shelter);
             }
-        }
-        if (available.isEmpty()) {
-            return null;
+            if (qualifying.isEmpty()) {
+                return null;
+            }
+            if (qualifying.size() == 1) {
+                return qualifying.get(0);
+            }
+        Address[] addresses = new Address[qualifying.size()];
+        for (int i =0; i <qualifying.size(); i++){
+            addresses[i] = qualifying.get(i).getLocation().toAddress();
         }
 
-        Address[] addresses = new Address[available.size()];
-        for (int i = 0; i < available.size(); i++) {
-            addresses[i] = toAddress(available.get(i).getLocation());
-        }
-
-        Address closest = mapTools.findClosestAddress(toAddress(location), addresses);
+        try {
+             Address closest = MapTools.getInstance()
+                .findClosestAddress(location.toAddress(), addresses);
 
         for (int i = 0; i < addresses.length; i++) {
             if (addresses[i] == closest) {
-                return available.get(i);
+                return qualifying.get(i);
             }
         }
-        return null;
+
+        for (int i = 0; i < addresses.length; i++) {
+            if (addresses[i].toString().equals(closest.toString())) {
+                return qualifying.get(i);
+            }
+        }
+    } catch (Exception e) {
+        System.err.println("Could not reach the map service: " + e.getMessage());
     }
 
+    return qualifying.get(0);
+}
+        
     public ArrayList<Shelter> getAvailableShelters(int people){
         ArrayList<Shelter> available = new ArrayList<>();
 
@@ -79,7 +90,7 @@ public class ShelterManagement {
         shelters.add(shelter);
     }
 
-    public void removeShelter(String id){
+    public void removeShelter(UUID id){
         shelters.removeIf(shelter -> shelter.getId().equals(id));
     }
     public void save(){
