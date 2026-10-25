@@ -139,18 +139,6 @@ public class ReliefRequest {
         // Stub
     }
 
-    public User getSubmittedBy() {
-        return submittedBy;
-    }
-
-    public Shelter getDestinationShelter(){
-        return destinationShelter;
-    }
-
-    public void setDestinationShelter(Shelter destinationShelter){
-        //this.destinationShelter = destinationShelter;
-    }
-
     /**
      * Adds a comment to the request.
      *
