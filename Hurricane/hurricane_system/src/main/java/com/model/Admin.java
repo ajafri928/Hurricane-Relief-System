@@ -1,6 +1,6 @@
 package com.model;
 
-public class Admin {
+public class Admin{
     public String accessLevel;
     public String firstName;
     public String lastName;
