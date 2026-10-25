@@ -1,7 +1,7 @@
 package com.model;
 
 public enum VolunteerRole {
-    Transportation,
+    TRANSPORTATION,
     GENERAL,
     CPR_CERTIFIED,
     EMS   

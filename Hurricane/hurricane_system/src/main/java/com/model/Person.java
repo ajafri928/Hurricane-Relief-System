@@ -1,6 +1,6 @@
 package com.model;
-import java.util.UUID;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Person {
     private final UUID id;
