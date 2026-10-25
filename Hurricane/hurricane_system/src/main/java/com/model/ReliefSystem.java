@@ -18,7 +18,7 @@ public class ReliefSystem {
     private UserManagement userManagement;
     private ReliefManagement reliefManagement;
     private ShelterManagement shelterManagement;
-    private RegionManagement regionManagement;
+    //private RegionManagement regionManagement;
     private HazardManagement hazardManagement;
     private HurricaneEventManagement eventManagement;
 
@@ -31,7 +31,7 @@ public class ReliefSystem {
         userManagement = UserManagement.getInstance();
         reliefManagement = ReliefManagement.getInstance();
         shelterManagement = ShelterManagement.getInstance();
-        regionManagement = RegionManagement.getInstance();
+        //regionManagement = RegionManagement.getInstance();
         hazardManagement = HazardManagement.getInstance();
         eventManagement = HurricaneEventManagement.getInstance();
     }
@@ -277,6 +277,11 @@ public class ReliefSystem {
         return reliefManagement.getRequestsByStatus(ReliefRequestStatus.SUBMITTED);
     }
 
+    /*public ArrayList<ReliefRequest> listRequestsByRegion(UUID regionId) {
+        return reliefManagement.getRequestsByRegion(regionId);
+    } */
+
+
     /**
      * Finds the closest shelter with room for the given number of people.
      *
@@ -421,20 +426,21 @@ public class ReliefSystem {
      * @param boundary the region's boundary
      * @return the new region
      */
-    public GeographicRegion createRegion(String name, String boundary) {
+    /*public GeographicRegion createRegion(String name, String boundary) {
         requireAdmin();
         GeographicRegion region = new GeographicRegion(name, boundary);
         regionManagement.addRegion(region);
         return region;
-    }
+    } */
 
+    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
     /**
      * Lets an admin set a region's evacuation zone type.
      *
      * @param regionId the region's id
      * @param zoneType the new zone type
      */
-    public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
+    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
         requireAdmin();
         GeographicRegion region = regionManagement.getRegion(regionId);
         if (region == null) {
@@ -442,6 +448,7 @@ public class ReliefSystem {
         }
         region.setZoneType(zoneType);
     }
+        */
 
     /**
      * Lets an admin update where a hurricane is and where it is heading.

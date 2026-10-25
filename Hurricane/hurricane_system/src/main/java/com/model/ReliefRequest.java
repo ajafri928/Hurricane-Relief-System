@@ -136,7 +136,19 @@ public class ReliefRequest {
 
     // Marks the request as resolved.
     public void complete() {
-        status = ReliefRequestStatus.RESOLVED;
+        // Stub
+    }
+
+    public User getSubmittedBy() {
+        return submittedBy;
+    }
+
+    public Shelter getDestinationShelter(){
+        return destinationShelter;
+    }
+
+    public void setDestinationShelter(Shelter destinationShelter){
+        //this.destinationShelter = destinationShelter;
     }
 
     /**
