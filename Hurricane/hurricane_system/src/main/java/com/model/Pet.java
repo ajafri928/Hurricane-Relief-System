@@ -37,7 +37,7 @@ public class Pet {
     }
 
     //Getters
-    public UUID getID() { return Id; }
+    public UUID getId() { return Id; }
     public String getName() { return name; }
     public String getSpecies() { return species; }
 
