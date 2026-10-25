@@ -92,7 +92,7 @@ public class ReliefRequest {
     }
 
     public void setDestinationShelter(Shelter destinationShelter){
-        this.destinationShelter = destinationShelter;
+        //this.destinationShelter = destinationShelter;
     }
 
     public void addComment(RequestComment comment) {
@@ -110,10 +110,6 @@ public class ReliefRequest {
     public boolean hasSpecialNeeds() {
         return specialNeeds;
     }
-
-    public void setDestinationShelter(Shelter shelter) {
-    this.destinationShelter = shelter;
-}
     
 
     public UUID getId() { return id; }
