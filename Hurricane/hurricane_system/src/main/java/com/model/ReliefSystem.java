@@ -57,7 +57,7 @@ public class ReliefSystem {
     // Throws unless the signed-in user is an admin
     private Admin requireAdmin() {
         requireLogin();
-        if (!currentUser.getType().equals("ADMIN")) {
+        if (!currentUser.getRoles().contains(UserRole.ADMIN)) {
             throw new IllegalStateException("This action requires an admin");
         }
         // Admin is its own class (not a User subclass), so build one for the signed-in admin
