@@ -1,5 +1,6 @@
 package com.model;
 import java.util.UUID;
+import java.util.Objects;
 
 public class Person {
     private final UUID id;
@@ -18,6 +19,19 @@ public class Person {
 
     public Person(String firstName, String lastName, int age) {
         this(UUID.randomUUID(), firstName, lastName, age, false);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person other = (Person) o;
+        return Objects.equals(id, other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 
     public UUID getId() { return id; }
