@@ -85,6 +85,9 @@ public class DataLoader extends DataConstants {
                 String firstName = getString(userJSON, USER_FIRST_NAME);
                 String lastName = getString(userJSON, USER_LAST_NAME);
                 String password = getString(userJSON, USER_PASSWORD);
+                VolunteerRole specialty = parseEnum(userJSON.get(USER_SPECIALTY), VolunteerRole.class);
+                String contactPhone = getString(userJSON, USER_CONTACT_PHONE);
+
 
                 JSONObject locationJSON = (JSONObject) userJSON.get(
                         USER_LOCATION);
@@ -112,7 +115,8 @@ public class DataLoader extends DataConstants {
                 User user = new User(
                         id, userName, firstName, lastName, password,
                         location, safety, roles);
-
+                user.setSpecialty(specialty);
+                user.setContactPhone(contactPhone);
                 users.add(user);
             }
         } catch (Exception e) {

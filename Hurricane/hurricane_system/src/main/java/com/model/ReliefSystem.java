@@ -1,6 +1,5 @@
 package com.model;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -58,7 +57,7 @@ public class ReliefSystem {
     // Throws unless the signed-in user is an admin
     private Admin requireAdmin() {
         requireLogin();
-        if (!currentUser.getType().equals("ADMIN")) {
+        if (!currentUser.getRoles().contains(UserRole.ADMIN)) {
             throw new IllegalStateException("This action requires an admin");
         }
         // Admin is its own class (not a User subclass), so build one for the signed-in admin
@@ -244,11 +243,6 @@ public class ReliefSystem {
         requireRequest().cancel();
     }
 
-    /** Marks the selected request as complete. */
-    public void completeRequest() {
-        requireRequest().complete();
-    }
-
     /**
      * Adds a comment from the signed-in user to the selected request.
      *
@@ -289,13 +283,10 @@ public class ReliefSystem {
      * @param people   how many people need space
      * @return the nearest shelter with room, or null if none found
      */
-    public Shelter findSafeShelter(Location location, int people) {
-        try {
-            return shelterManagement.findNearestAvailableShelter(location, people);
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Could not reach the map service: " + e.getMessage());
-            return null;
-        }
+    public Shelter findSafeShelter(Location location, int people,
+                               boolean needsPetFriendly, boolean needsMedical) {
+    return shelterManagement.findNearestAvailable(location, people,
+                                                  needsPetFriendly, needsMedical);
     }
 
     /**
