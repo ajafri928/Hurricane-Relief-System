@@ -16,6 +16,9 @@ public class User {
     protected SafetyCategory safety;
     protected List<UserRole> roles;
     private List<EmergencyContact> emergencyContacts;
+    private VolunteerRole specialty;
+    private String contactPhone;
+
 
     // Makes a new user with a fresh id. Used for create account.
     public User(String userName, String firstName, String lastName, String password, Location location) {
@@ -142,6 +145,8 @@ public class User {
                 : new ArrayList<>(emergencyContacts);
     }
 
+    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
+
     @Override
 public String toString() {
     return "User {" +
@@ -153,4 +158,7 @@ public String toString() {
             "\n  Location: " + (location != null ? location.toString() : "N/A") +
             "\n}";
 }
+public VolunteerRole getSpecialty() { return specialty; }
+public String getContactPhone() { return contactPhone; }
+public void setSpecialty(VolunteerRole specialty) { this.specialty = specialty; }
 }
