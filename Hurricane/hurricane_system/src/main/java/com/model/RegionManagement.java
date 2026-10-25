@@ -38,5 +38,4 @@ public class RegionManagement {
     public void removeRegion(UUID id) {
         regions.removeIf(region -> region.getId().equals(id));
     }
-    public UUID getId() { return id; }
 }
