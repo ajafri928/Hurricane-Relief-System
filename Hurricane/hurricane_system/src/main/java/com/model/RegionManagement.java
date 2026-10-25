@@ -8,7 +8,7 @@ public class RegionManagement {
     private ArrayList<GeographicRegion> regions;
 
     private RegionManagement() {
-        regions = DataLoader.getGeographicRegions();
+        regions = new ArrayList<>();
     }
 
     public static RegionManagement getInstance() {

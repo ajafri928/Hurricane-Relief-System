@@ -95,7 +95,7 @@ public class UserManagement {
     public void notifyResponders(ReliefRequest request) {
         for (User user : users) {
             if (user.isResponder()) {
-                System.out.println("Notifying " + user.getUserName() + ": new request " + request.getID());
+                System.out.println("Notifying " + user.getUserName() + ": new request " + request.getId());
             }
         }
     }
