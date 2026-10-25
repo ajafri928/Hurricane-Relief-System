@@ -157,4 +157,42 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
     return commentJSON;
 }
 
+private static JSONObject getPersonJSON(Person person) {
+    JSONObject personJSON = new JSONObject();
+
+    personJSON.put(PERSON_ID, person.getId().toString());
+    personJSON.put(PERSON_FIRST_NAME, person.getFirstName());
+    personJSON.put(PERSON_LAST_NAME, person.getLastName());
+    personJSON.put(PERSON_AGE, person.getAge());
+    personJSON.put(PERSON_NEEDS_MEDICAL, person.needsMedicalAssistance());
+
+    return personJSON;
+}
+
+private static JSONObject getPetJSON(Pet pet) {
+    JSONObject petJSON = new JSONObject();
+
+    petJSON.put(PET_ID, pet.getId().toString());
+    petJSON.put(PET_NAME, pet.getName());
+    petJSON.put(PET_SPECIES, pet.getSpecies());
+
+    return petJSON;
+}
+
+private static JSONArray getPersonsJSON(ArrayList<Person> persons) {
+    JSONArray personsJSON = new JSONArray();
+    for (Person person : persons) {
+        personsJSON.add(getPersonJSON(person));
+    }
+    return personsJSON;
+}
+
+private static JSONArray getPetsJSON(ArrayList<Pet> pets) {
+    JSONArray petsJSON = new JSONArray();
+    for (Pet pet : pets) {
+        petsJSON.add(getPetJSON(pet));
+    }
+    return petsJSON;
+}
+
 }
