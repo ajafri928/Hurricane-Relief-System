@@ -8,12 +8,16 @@ public class Person {
     private int age;
     private boolean needsMedicalAssistance;
 
-    public Person(UUID id,String firstName, String lastName, int age, boolean needsMedicalAssistance) {
-        this.id = null;
+    public Person(UUID id, String firstName, String lastName, int age, boolean needsMedicalAssistance) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.age = age;
+        this.needsMedicalAssistance = needsMedicalAssistance;
     }
 
     public Person(String firstName, String lastName, int age) {
-        this.id = null;
+        this(UUID.randomUUID(), firstName, lastName, age, false);
     }
 
     public UUID getId() { return id; }
