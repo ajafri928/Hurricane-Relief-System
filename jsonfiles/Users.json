@@ -4,7 +4,7 @@
     "userName": "johndoe",
     "firstName": "John",
     "lastName": "Doe",
-    "password": "hashed_password_string",
+    "password": "password123",
     "location": {
       "id": "876e4567-e89b-12d3-a456-426614174111",
       "addressLine1": "123 Main St",
@@ -56,4 +56,3 @@
     ]
   }
 ]
-  
