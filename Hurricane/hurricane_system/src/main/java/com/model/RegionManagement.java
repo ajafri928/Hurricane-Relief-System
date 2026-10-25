@@ -1,4 +1,4 @@
-package com.model;
+/*package com.model;
 
 import java.util.ArrayList;
 import java.util.UUID;
@@ -8,7 +8,7 @@ public class RegionManagement {
     private ArrayList<GeographicRegion> regions;
 
     private RegionManagement() {
-        regions = DataLoader.getGeographicRegions();
+        regions = new ArrayList<>();
     }
 
     public static RegionManagement getInstance() {
@@ -22,9 +22,9 @@ public class RegionManagement {
         return regions;
     }
 
-    public GeographicRegion getRegion(UUID id) {
+    public GeographicRegion getRegion(UUID Id) {
         for (GeographicRegion region : regions) {
-            if (region.getId().equals(id)) {
+            if (region.getId().equals(Id)) {
                 return region;
             }
         }
@@ -38,5 +38,6 @@ public class RegionManagement {
     public void removeRegion(UUID id) {
         regions.removeIf(region -> region.getId().equals(id));
     }
-    public UUID getId() { return id; }
+    //public UUID getId() { return Id; }
 }
+*/
