@@ -13,7 +13,9 @@ public class ReliefRequest {
     private Location location;
     private String assistance;
     private String description;
-    private int people;
+    private ArrayList<Person> requestedPersons;
+    private ArrayList<Pet> pets;
+    private String contactPhone;    
     private boolean specialNeeds;
     private Shelter destinationShelter;
     private String estimatedArrival;
