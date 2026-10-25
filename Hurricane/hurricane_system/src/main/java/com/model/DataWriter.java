@@ -131,8 +131,12 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         requestJSON.put(RELIEF_REQUEST_ASSISTANCE, request.getAssistance());
         requestJSON.put(RELIEF_REQUEST_DESCRIPTION, request.getDescription());
         requestJSON.put(RELIEF_REQUEST_LOCATION, getLocationJSON(request.getLocation()));
-        requestJSON.put(RELIEF_REQUEST_PEOPLE_COUNT, request.getPeople());
-        requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
+        requestJSON.put(RELIEF_REQUEST_PERSONS, getPersonsJSON(request.getRequestedPersons()));
+        requestJSON.put(RELIEF_REQUEST_PETS, getPetsJSON(request.getPets()));
+        requestJSON.put(RELIEF_REQUEST_CONTACT_PHONE, request.getContactPhone());
+        requestJSON.put(RELIEF_REQUEST_ASSIGNED_TO,
+                request.getResponder() == null ? null : request.getResponder().getId().toString());        
+                requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
         requestJSON.put(RELIEF_REQUEST_PRIORITY_SCORE, request.getPriorityScore());
         requestJSON.put(RELIEF_REQUEST_URGENCY,
                 request.getUrgency() == null ? null : request.getUrgency().toString());

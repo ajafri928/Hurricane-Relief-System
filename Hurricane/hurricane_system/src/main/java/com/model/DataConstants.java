@@ -33,7 +33,6 @@ protected static final String SHELTER_OPERATIONAL_STATUS = "operationalStatus";
 
 protected static final String RELIEF_REQUEST_ID = "id";
 protected static final String RELIEF_REQUEST_DATE = "requestDate";
-protected static final String RELIEF_REQUEST_PEOPLE_COUNT = "peopleCount";
 protected static final String RELIEF_REQUEST_ASSISTANCE = "assistance";
 protected static final String RELIEF_REQUEST_LOCATION = "location";
 protected static final String RELIEF_REQUEST_PRIORITY_SCORE = "priorityScore";

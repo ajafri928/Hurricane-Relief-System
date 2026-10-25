@@ -148,8 +148,6 @@ public class DataLoader extends DataConstants {
                 String description = getString(
                         requestJSON, RELIEF_REQUEST_DESCRIPTION);
 
-                int people = getInt(
-                        requestJSON, RELIEF_REQUEST_PEOPLE_COUNT);
                 int priorityScore = getInt(
                         requestJSON, RELIEF_REQUEST_PRIORITY_SCORE);
 
@@ -176,8 +174,18 @@ public class DataLoader extends DataConstants {
 
                 ReliefRequest request = new ReliefRequest(
                         id, createdAt, location, assistance, description,
-                        people, specialNeeds, priorityScore, urgency,
+                        specialNeeds, priorityScore, urgency,
                         status, submittedBy);
+
+                        for (Person p : parsePersons((JSONArray) requestJSON.get(RELIEF_REQUEST_PERSONS))) {
+                            request.addPerson(p);
+                        }
+                        for (Pet p : parsePets((JSONArray) requestJSON.get(RELIEF_REQUEST_PETS))) {
+                            request.addPet(p);
+                        }
+                        request.setContactPhone(getString(requestJSON, RELIEF_REQUEST_CONTACT_PHONE));
+                        request.setResponder(getUserById(
+                                users, getUuid(requestJSON, RELIEF_REQUEST_ASSIGNED_TO)));
 
                 requests.add(request);
             }
@@ -236,81 +244,6 @@ public class DataLoader extends DataConstants {
             return null;
         }
 
-    private static Person parsePerson(JSONObject json) {
-        UUID id = getUuid(json, PERSON_ID);
-        String firstName = getString(json, PERSON_FIRST_NAME);
-        String lastName = getString(json, PERSON_LAST_NAME);
-        int age = getInt(json, PERSON_AGE);
-        boolean needsMedical = getBoolean(json, PERSON_NEEDS_MEDICAL);
-        return new Person(id, firstName, lastName, age, needsMedical);
-    }
-        
-    private static Pet parsePet(JSONObject json) {
-        UUID id = getUuid(json, PET_ID);
-        String name = getString(json, PET_NAME);
-        String species = getString(json, PET_SPECIES);
-        return new Pet(id, name, species);
-    }
-        
-    private static ArrayList<Person> parsePersons(JSONArray array) {
-        ArrayList<Person> persons = new ArrayList<>();
-        if (array == null) {
-            return persons;
-        }
-        for (int i = 0; i < array.size(); i++) {
-            persons.add(parsePerson((JSONObject) array.get(i)));
-        }
-        return persons;
-    }
-        
-    private static ArrayList<Pet> parsePets(JSONArray array) {
-        ArrayList<Pet> pets = new ArrayList<>();
-        if (array == null) {
-            return pets;
-        }
-        for (int i = 0; i < array.size(); i++) {
-            pets.add(parsePet((JSONObject) array.get(i)));
-        }
-        return pets;
-    }
-
-    private static Person parsePerson(JSONObject json) {
-    UUID id = getUuid(json, PERSON_ID);
-    String firstName = getString(json, PERSON_FIRST_NAME);
-    String lastName = getString(json, PERSON_LAST_NAME);
-    int age = getInt(json, PERSON_AGE);
-    boolean needsMedical = getBoolean(json, PERSON_NEEDS_MEDICAL);
-    return new Person(id, firstName, lastName, age, needsMedical);
-}
-
-private static Pet parsePet(JSONObject json) {
-    UUID id = getUuid(json, PET_ID);
-    String name = getString(json, PET_NAME);
-    String species = getString(json, PET_SPECIES);
-    return new Pet(id, name, species);
-}
-
-private static ArrayList<Person> parsePersons(JSONArray array) {
-    ArrayList<Person> persons = new ArrayList<>();
-    if (array == null) {
-        return persons;
-    }
-    for (int i = 0; i < array.size(); i++) {
-        persons.add(parsePerson((JSONObject) array.get(i)));
-    }
-    return persons;
-}
-
-private static ArrayList<Pet> parsePets(JSONArray array) {
-    ArrayList<Pet> pets = new ArrayList<>();
-    if (array == null) {
-        return pets;
-    }
-    for (int i = 0; i < array.size(); i++) {
-        pets.add(parsePet((JSONObject) array.get(i)));
-    }
-    return pets;
-}
 
         UUID id = getUuid(locationJSON, LOCATION_ID);
         String street1 = getString(locationJSON, LOCATION_STREET_1);
@@ -325,6 +258,44 @@ private static ArrayList<Pet> parsePets(JSONArray array) {
         return new Location(
                 street1, street2, city, state, zipCode,
                 latitude, longitude);
+    }
+
+    private static Person parsePerson(JSONObject json) {
+        UUID id = getUuid(json, PERSON_ID);
+        String firstName = getString(json, PERSON_FIRST_NAME);
+        String lastName = getString(json, PERSON_LAST_NAME);
+        int age = getInt(json, PERSON_AGE);
+        boolean needsMedical = getBoolean(json, PERSON_NEEDS_MEDICAL);
+        return new Person(id, firstName, lastName, age, needsMedical);
+    }
+    
+    private static Pet parsePet(JSONObject json) {
+        UUID id = getUuid(json, PET_ID);
+        String name = getString(json, PET_NAME);
+        String species = getString(json, PET_SPECIES);
+        return new Pet(id, name, species);
+    }
+    
+    private static ArrayList<Person> parsePersons(JSONArray array) {
+        ArrayList<Person> persons = new ArrayList<>();
+        if (array == null) {
+            return persons;
+        }
+        for (int i = 0; i < array.size(); i++) {
+            persons.add(parsePerson((JSONObject) array.get(i)));
+        }
+        return persons;
+    }
+    
+    private static ArrayList<Pet> parsePets(JSONArray array) {
+        ArrayList<Pet> pets = new ArrayList<>();
+        if (array == null) {
+            return pets;
+        }
+        for (int i = 0; i < array.size(); i++) {
+            pets.add(parsePet((JSONObject) array.get(i)));
+        }
+        return pets;
     }
 
     private static UUID getUuid(JSONObject jsonObject, String key) {
