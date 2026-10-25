@@ -303,4 +303,13 @@ public class ReliefSystem {
     public void publishEmergencyAlert(String message) {
         requireAdmin().broadcastAlert(message);
     }
+    public void completeRequest(){
+        requireLogin();
+        if (!currentUser.getRoles().contains(UserRole.SHELTER_MANAGER)){
+            throw new IllegalStateException("Your volunteer role does not have permission to complete relief requests.");
+
+        }
+        requireRequest().complete();
+    }
+
 }
