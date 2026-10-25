@@ -72,4 +72,7 @@ protected static final String COMMENT_AUTHOR_ID = "authorId";
 protected static final String COMMENT_TEXT = "text";
 protected static final String COMMENT_TIMESTAMP = "timeStamp";
 
+protected static final String USER_SPECIALTY = "specialty"
+protected static final String USER_CONTACT_PHONE = "contactPhone"
+
 }

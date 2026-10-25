@@ -95,7 +95,8 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
         userJSON.put(USER_PASSWORD, user.getPassword());
         userJSON.put(USER_LOCATION, getLocationJSON(user.getLocation()));
         userJSON.put(USER_SAFETY, user.getSafety() == null ? null : user.getSafety().toString());
-
+        userJSON.put(USER_SPECIALTY, user.getSpecialty() == null ? null : user.getSpecialty().toString());
+        userJSON.put(USER_CONTACT_PHONE, user.getContactPhone());
         JSONArray rolesJSON = new JSONArray();
         for (UserRole role : user.getRoles()) {
             rolesJSON.add(role.toString());
