@@ -26,75 +26,74 @@ public class ReliefRequest {
     private User submittedBy;
     private User responder;
 
-    /**
-     * Makes a brand-new request.
-     *
-     * @param location   where help is needed
-     * @param assistance the kind of help needed
-     * @param people     how many people need help
-     */
-    public ReliefRequest(Location location, String assistance, int people) {
-        this.id = UUID.randomUUID();
-        this.createdAt = LocalDateTime.now().toString();
-        this.location = location;
-        this.assistance = assistance;
-        this.people = people;
-        this.comments = new ArrayList<>();
-    }
+    /*
+    * Makes a brand-new request. Add people and pets with addPerson and addPet.
+    *
+    * @param location   where help is needed
+    * @param assistance the kind of help needed
+    */
+   public ReliefRequest(Location location, String assistance) {
+       this.id = UUID.randomUUID();
+       this.createdAt = LocalDateTime.now().toString();
+       this.location = location;
+       this.assistance = assistance;
+       this.requestedPersons = new ArrayList<>();
+       this.pets = new ArrayList<>();
+       this.comments = new ArrayList<>();
+   }
 
-    /**
-     * Rebuilds a saved request (used by DataLoader).
-     *
-     * @param id            the request's id
-     * @param createdAt     when it was created
-     * @param location      where help is needed
-     * @param assistance    the kind of help needed
-     * @param description   extra details
-     * @param people        how many people need help
-     * @param specialNeeds  whether anyone has special needs
-     * @param priorityScore the priority score
-     * @param urgency       the urgency tier
-     * @param status        the current status
-     */
-    public ReliefRequest(UUID id, String createdAt, Location location, String assistance,
-                         String description, int people, boolean specialNeeds,
-                         int priorityScore, UrgencyTier urgency, ReliefRequestStatus status) {
-        this.id = id;
-        this.createdAt = createdAt;
-        this.location = location;
-        this.assistance = assistance;
-        this.description = description;
-        this.people = people;
-        this.specialNeeds = specialNeeds;
-        this.priorityScore = priorityScore;
-        this.urgency = urgency;
-        this.status = status;
-        this.comments = new ArrayList<>();
-    }
+   /**
+    * Rebuilds a saved request (used by DataLoader).
+    *
+    * @param id            the request's id
+    * @param createdAt     when it was created
+    * @param location      where help is needed
+    * @param assistance    the kind of help needed
+    * @param description   extra details
+    * @param specialNeeds  whether anyone has special needs
+    * @param priorityScore the priority score
+    * @param urgency       the urgency tier
+    * @param status        the current status
+    */
+   public ReliefRequest(UUID id, String createdAt, Location location, String assistance,
+                        String description, boolean specialNeeds,
+                        int priorityScore, UrgencyTier urgency, ReliefRequestStatus status) {
+       this.id = id;
+       this.createdAt = createdAt;
+       this.location = location;
+       this.assistance = assistance;
+       this.description = description;
+       this.specialNeeds = specialNeeds;
+       this.priorityScore = priorityScore;
+       this.urgency = urgency;
+       this.status = status;
+       this.requestedPersons = new ArrayList<>();
+       this.pets = new ArrayList<>();
+       this.comments = new ArrayList<>();
+   }
 
-    /**
-     * Rebuilds a saved request along with who submitted it (used by DataLoader).
-     *
-     * @param id            the request's id
-     * @param createdAt     when it was created
-     * @param location      where help is needed
-     * @param assistance    the kind of help needed
-     * @param description   extra details
-     * @param people        how many people need help
-     * @param specialNeeds  whether anyone has special needs
-     * @param priorityScore the priority score
-     * @param urgency       the urgency tier
-     * @param status        the current status
-     * @param submittedBy   the user who submitted it
-     */
-    public ReliefRequest(UUID id, String createdAt, Location location,
-                         String assistance, String description, int people,
-                         boolean specialNeeds, int priorityScore, UrgencyTier urgency,
-                         ReliefRequestStatus status, User submittedBy) {
-        this(id, createdAt, location, assistance, description, people,
-             specialNeeds, priorityScore, urgency, status);
-        this.submittedBy = submittedBy;
-    }
+   /**
+    * Rebuilds a saved request along with who submitted it (used by DataLoader).
+    *
+    * @param id            the request's id
+    * @param createdAt     when it was created
+    * @param location      where help is needed
+    * @param assistance    the kind of help needed
+    * @param description   extra details
+    * @param specialNeeds  whether anyone has special needs
+    * @param priorityScore the priority score
+    * @param urgency       the urgency tier
+    * @param status        the current status
+    * @param submittedBy   the user who submitted it
+    */
+   public ReliefRequest(UUID id, String createdAt, Location location,
+                        String assistance, String description,
+                        boolean specialNeeds, int priorityScore, UrgencyTier urgency,
+                        ReliefRequestStatus status, User submittedBy) {
+       this(id, createdAt, location, assistance, description,
+            specialNeeds, priorityScore, urgency, status);
+       this.submittedBy = submittedBy;
+   }
 
     // Marks the request as submitted.
     public void submit() {
@@ -197,8 +196,29 @@ public class ReliefRequest {
     // Returns the kind of help needed
     public String getAssistance() { return assistance; }
 
+    // Returns the people who need help
+    public ArrayList<Person> getRequestedPersons() { return requestedPersons; }
+
+    // Adds a person who needs help
+    public void addPerson(Person person) { requestedPersons.add(person); }
+
+    // Returns the pets that need help
+    public ArrayList<Pet> getPets() { return pets; }
+
+    // Adds a pet that needs help
+    public void addPet(Pet pet) { pets.add(pet); }
+
     // Returns how many people need help
-    public int getPeople() { return people; }
+    public int getPeopleCount() { return requestedPersons.size(); }
+
+    // Returns the phone number to reach the requester
+    public String getContactPhone() { return contactPhone; }
+
+    // Sets the phone number to reach the requester
+    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
+
+    // Sets the responder directly (used by DataLoader; use accept() to claim a request)
+    public void setResponder(User responder) { this.responder = responder; }
 
     // Returns the priority score
     public int getPriorityScore() { return priorityScore; }
@@ -214,7 +234,7 @@ public class ReliefRequest {
         return "ReliefRequest {" +
                 "\n  ID: " + id +
                 "\n  Assistance: '" + assistance + '\'' +
-                "\n  People Count: " + people +
+                "\n  People Count: " + getPeopleCount() +                
                 "\n  Priority Score: " + priorityScore +
                 "\n  Urgency: " + urgency +
                 "\n  Status: " + status +
