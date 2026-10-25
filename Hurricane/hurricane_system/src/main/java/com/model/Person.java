@@ -15,4 +15,18 @@ public class Person {
     public Person(String firstName, String lastName, int age) {
         this.id = null;
     }
+
+    public UUID getId() { return id; }
+    public String getFirstName() { return firstName; }
+    public String getLastName() { return lastName; }
+    public String getFullName() { return firstName + " " + lastName; }
+    public int getAge() { return age; }
+    public boolean needsMedicalAssistance() { return needsMedicalAssistance; }
+
+    public void setFirstName(String firstName) { this.firstName = firstName; }
+    public void setLastName(String lastName) { this.lastName = lastName; }
+    public void setAge(int age) { this.age = age; }
+    public void setNeedsMedicalAssistance(boolean needsMedicalAssistance) {
+        this.needsMedicalAssistance = needsMedicalAssistance;
+    }
 }
