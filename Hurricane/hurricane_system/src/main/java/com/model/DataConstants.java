@@ -72,7 +72,25 @@ protected static final String COMMENT_AUTHOR_ID = "authorId";
 protected static final String COMMENT_TEXT = "text";
 protected static final String COMMENT_TIMESTAMP = "timeStamp";
 
-protected static final String USER_SPECIALTY = "specialty"
-protected static final String USER_CONTACT_PHONE = "contactPhone"
+protected static final String USER_SPECIALTY = "specialty";
+protected static final String USER_CONTACT_PHONE = "contactPhone";
+
+protected static final String RELIEF_REQUEST_PERSONS = "requestedPersons";
+protected static final String RELIEF_REQUEST_PETS = "pets";
+protected static final String RELIEF_REQUEST_CONTACT_PHONE = "contactPhone";
+protected static final String RELIEF_REQUEST_ASSIGNED_TO = "assignedTo";
+
+protected static final String PERSON_ID = "id";
+protected static final String PERSON_FIRST_NAME = "firstName";
+protected static final String PERSON_LAST_NAME = "lastName";
+protected static final String PERSON_AGE = "age";
+protected static final String PERSON_NEEDS_MEDICAL = "needsMedicalAssistance";
+
+protected static final String PET_ID = "id";
+protected static final String PET_NAME = "name";
+protected static final String PET_SPECIES = "species";
+
+protected static final String SHELTER_OCCUPANTS = "occupants";
+protected static final String SHELTER_PETS_ON_SITE = "petsOnSite";
 
 }
