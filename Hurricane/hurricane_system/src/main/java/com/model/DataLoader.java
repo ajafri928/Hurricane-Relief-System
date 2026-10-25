@@ -3,7 +3,7 @@ package com.model;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
-
+import java.time.LocalDateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,9 +48,45 @@ public class DataLoader extends DataConstants {
                         id, name, address, capacity, occupancy,
                         petFriendly, accessible, medicalStaff, vetStaff,
                         operationalStatus);
+                
+                // Load the shelter's amenities from the JSON array.
+                JSONArray amenitiesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_AMENITIES);
 
+                if (amenitiesJSON != null) {
+                    for (Object amenityObject : amenitiesJSON) {
+                        shelter.addAmenity(amenityObject.toString());
+                    }
+                }
+
+                // Load the shelter's resources from the JSON array.
+                JSONArray resourcesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_RESOURCES);
+
+                if (resourcesJSON != null) {
+                    for (Object resourceObject : resourcesJSON) {
+                        JSONObject resourceJSON = (JSONObject) resourceObject;
+
+                        String type = getString(resourceJSON, RESOURCE_TYPE);
+                        int quantity = getInt(resourceJSON, RESOURCE_QUANTITY);
+                        String unit = getString(resourceJSON, RESOURCE_UNIT);
+
+                        String availableUntilText = getString(
+                                resourceJSON, RESOURCE_AVAILABLE_UNTIL);
+
+                        LocalDateTime availableUntil = LocalDateTime.parse(
+                                availableUntilText);
+
+                        int lowStockThreshold = getInt(
+                                resourceJSON, RESOURCE_LOW_STOCK_THRESHOLD);
+
+                        ShelterResource resource = new ShelterResource(
+                                type, quantity, availableUntil,
+                                lowStockThreshold, unit);
                 shelters.add(shelter);
             }
+
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
