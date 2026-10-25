@@ -18,5 +18,10 @@ public class Pet {
         this(UUID.randomUUID(), name, species);
     }
 
+    public UUID getID() { return id; }
+    public String getName() { return name; }
+    public String getSpecies() { return species; }
     
+    public void setName(String name) { this.name = name; }
+    public void setSpecies(String species) { this.species = species; }
 }
