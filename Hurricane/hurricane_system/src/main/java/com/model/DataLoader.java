@@ -3,7 +3,7 @@ package com.model;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
-
+import java.time.LocalDateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,9 +48,49 @@ public class DataLoader extends DataConstants {
                         id, name, address, capacity, occupancy,
                         petFriendly, accessible, medicalStaff, vetStaff,
                         operationalStatus);
+                
+                // Load the shelter's amenities from the JSON array.
+                JSONArray amenitiesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_AMENITIES);
+
+                if (amenitiesJSON != null) {
+                    for (Object amenityObject : amenitiesJSON) {
+                        shelter.addAmenity(amenityObject.toString());
+                    }
+                }
+
+                // Load the shelter's resources from the JSON array.
+                JSONArray resourcesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_RESOURCES);
+
+                if (resourcesJSON != null) {
+                    for (Object resourceObject : resourcesJSON) {
+                        shelter.addResource(parseResource((JSONObject) resourceObject));
+                    }
+                }
+
+                // Load the people checked into the shelter.
+                JSONArray occupantsJSON = (JSONArray) shelterJSON.get(SHELTER_OCCUPANTS);
+
+                if (occupantsJSON != null) {
+                    for (Object personObject : occupantsJSON) {
+                        shelter.getOccupants().add(parsePerson((JSONObject) personObject));
+                    }
+                }
+
+                // Load the pets staying at the shelter.
+                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS);
+
+                if (petsJSON != null) {
+                    for (Object petObject : petsJSON) {
+                        shelter.getPetsOnSite().add(parsePet((JSONObject) petObject));
+                    }
+                }
 
                 shelters.add(shelter);
             }
+
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -117,6 +157,17 @@ public class DataLoader extends DataConstants {
                         location, safety, roles);
                 user.setSpecialty(specialty);
                 user.setContactPhone(contactPhone);
+
+                JSONArray contactsJSON = (JSONArray) userJSON.get(USER_EMERGENCY_CONTACTS);
+                if (contactsJSON != null) {
+                    for (Object c : contactsJSON) {
+                        JSONObject contactJSON = (JSONObject) c;
+                        user.getEmergencyContacts().add(new EmergencyContact(
+                                getString(contactJSON, CONTACT_NAME),
+                                getString(contactJSON, CONTACT_PHONE),
+                                getString(contactJSON, CONTACT_RELATIONSHIP)));
+                    }
+                }
                 users.add(user);
             }
         } catch (Exception e) {
@@ -182,6 +233,18 @@ public class DataLoader extends DataConstants {
                         id, createdAt, location, assistance, description,
                         people, specialNeeds, priorityScore, urgency,
                         status, submittedBy);
+
+                JSONArray commentsJSON = (JSONArray) requestJSON.get(RELIEF_REQUEST_COMMENTS);
+                if (commentsJSON != null) {
+                    for (Object c : commentsJSON) {
+                        JSONObject commentJSON = (JSONObject) c;
+                        User author = getUserById(users, getUuid(commentJSON, COMMENT_AUTHOR_ID));
+                        LocalDateTime time = parseDateTime(getString(commentJSON, COMMENT_TIMESTAMP));
+                        request.addComment(new RequestComment(
+                                author, getString(commentJSON, COMMENT_TEXT),
+                                time == null ? LocalDateTime.now() : time));
+                    }
+                }
 
                 requests.add(request);
             }
@@ -253,6 +316,52 @@ public class DataLoader extends DataConstants {
         return new Location(
                 street1, street2, city, state, zipCode,
                 latitude, longitude);
+    }
+
+    // Reads a shelter resource (water, blankets, etc.)
+    private static ShelterResource parseResource(JSONObject resourceJSON) {
+        return new ShelterResource(
+                getString(resourceJSON, RESOURCE_TYPE),
+                getInt(resourceJSON, RESOURCE_QUANTITY),
+                parseDateTime(getString(resourceJSON, RESOURCE_AVAILABLE_UNTIL)),
+                getInt(resourceJSON, RESOURCE_LOW_STOCK_THRESHOLD),
+                getString(resourceJSON, RESOURCE_UNIT));
+    }
+
+    // Reads a person checked into a shelter
+    private static Person parsePerson(JSONObject personJSON) {
+        UUID id = getUuid(personJSON, PERSON_ID);
+        return new Person(
+                id == null ? UUID.randomUUID() : id,
+                getString(personJSON, PERSON_FIRST_NAME),
+                getString(personJSON, PERSON_LAST_NAME),
+                getInt(personJSON, PERSON_AGE),
+                getBoolean(personJSON, PERSON_NEEDS_MEDICAL));
+    }
+
+    // Reads a pet staying at a shelter
+    private static Pet parsePet(JSONObject petJSON) {
+        UUID id = getUuid(petJSON, PET_ID);
+        return new Pet(
+                id == null ? UUID.randomUUID() : id,
+                getString(petJSON, PET_NAME),
+                getString(petJSON, PET_SPECIES));
+    }
+
+    // Turns "2026-10-15T12:00:00" (with or without a trailing Z) into a LocalDateTime, or null
+    private static LocalDateTime parseDateTime(String text) {
+        if (text == null) {
+            return null;
+        }
+        try {
+            if (text.endsWith("Z")) {
+                text = text.substring(0, text.length() - 1);
+            }
+            return LocalDateTime.parse(text);
+        } catch (Exception e) {
+            System.err.println("Invalid date: " + text);
+            return null;
+        }
     }
 
     private static UUID getUuid(JSONObject jsonObject, String key) {
