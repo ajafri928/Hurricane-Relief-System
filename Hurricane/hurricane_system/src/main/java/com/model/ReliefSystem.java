@@ -184,6 +184,14 @@ public class ReliefSystem {
             request.addPet(pet);
         }
         request.setContactPhone(contactPhone);
+        boolean medicalNeed = false;
+        for (Person person : persons) {
+            if (person.needsMedicalAssistance()) {
+                medicalNeed = true;
+            }
+        }
+        request.setSpecialNeeds(medicalNeed);
+        request.setUrgency(medicalNeed ? UrgencyTier.URGENT : UrgencyTier.STANDARD);
         request.submit();
         reliefManagement.addReliefRequest(request);
         currentRequest = request;
