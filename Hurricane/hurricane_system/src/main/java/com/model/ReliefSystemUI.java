@@ -106,7 +106,7 @@ public class ReliefSystemUI {
     public void matchRosaToTheRequest() {
         System.out.println("\n===== PART 2: Rosa is matched to the request =====\n");
 
-        if (!system.signIn("rdelgado", "volunteer456")) {
+        if (!system.signIn("rosadelgado", "rosa2026")) {
             System.out.println("Rosa could not sign in.");
             return;
         }
@@ -220,7 +220,7 @@ public class ReliefSystemUI {
     public void checkTheFamilyIn() {
         System.out.println("\n===== PART 6: Felix checks the family in =====\n");
 
-        if (!system.signIn("fmartinez", "shelter789")) {
+        if (!system.signIn("felixmanager", "felix2026")) {
             System.out.println("Felix could not sign in.");
             return;
         }
