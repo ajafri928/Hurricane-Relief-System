@@ -33,6 +33,7 @@ public class PersistenceCheck {
                 : submitter.getFirstName() + " " + submitter.getLastName()));
         
         printFamily(carter);
+        printOccupiedShelters();
     }
 
     private static ReliefRequest findCarterRequest() {
@@ -55,5 +56,20 @@ public class PersistenceCheck {
             System.out.println("    - " + pet.getName() + " (" + pet.getSpecies() + ")");
         }
     }
-
+    private static void printOccupiedShelters() {
+        for (Shelter s : ShelterManagement.getInstance().getShelters()) {
+            if (!s.getOccupants().isEmpty() || !s.getPetsOnSite().isEmpty()) {
+                System.out.println("\n" + s.getName() + ":");
+                System.out.println("  Occupancy: " + s.getOccupancy()
+                        + " of " + s.getCapacity());
+                for (Person p : s.getOccupants()) {
+                    System.out.println("    - " + p.getFullName());
+                }
+                for (Pet pet : s.getPetsOnSite()) {
+                    System.out.println("    - " + pet.getName()
+                            + " (" + pet.getSpecies() + ")");
+                }
+            }
+        }
+    }
 }
