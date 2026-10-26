@@ -38,8 +38,8 @@ public class ReliefSystemUI {
     public void createTheRequest() {
         System.out.println("\n===== PART 1: The Carter family requests help =====\n");
 
-        Location home = new Location("18 Bogard Street", "", "Charleston",
-                "SC", "29403", 32.7876, -79.9403);
+        Location home = new Location("155 Jackson Street", "", "Charleston",
+        "SC", "29403", 32.8018, -79.9444);
 
         User david = system.registerUser("dcarter", "David", "Carter",
                 "carter2026", home);
