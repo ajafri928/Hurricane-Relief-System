@@ -56,7 +56,7 @@ public class DataWriter extends DataConstants{
     for (Pet pet : shelter.getPetsOnSite()) {
         petsJSON.add(getPetJSON(pet));
     }
-    shelterJSON.put(SHELTER_PETS, petsJSON);
+    shelterJSON.put(SHELTER_PETS_ON_SITE, petsJSON);
 
     return shelterJSON;
 }
@@ -107,7 +107,7 @@ public static JSONObject getPersonJSON(Person person) {
  */
 public static JSONObject getPetJSON(Pet pet) {
     JSONObject petJSON = new JSONObject();
-    petJSON.put(PET_ID, pet.getID().toString());
+    petJSON.put(PET_ID, pet.getId().toString());
     petJSON.put(PET_NAME, pet.getName());
     petJSON.put(PET_SPECIES, pet.getSpecies());
     return petJSON;
@@ -189,8 +189,12 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
         requestJSON.put(RELIEF_REQUEST_ASSISTANCE, request.getAssistance());
         requestJSON.put(RELIEF_REQUEST_DESCRIPTION, request.getDescription());
         requestJSON.put(RELIEF_REQUEST_LOCATION, getLocationJSON(request.getLocation()));
-        requestJSON.put(RELIEF_REQUEST_PEOPLE_COUNT, request.getPeople());
-        requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
+        requestJSON.put(RELIEF_REQUEST_PERSONS, getPersonsJSON(request.getRequestedPersons()));
+        requestJSON.put(RELIEF_REQUEST_PETS, getPetsJSON(request.getPets()));
+        requestJSON.put(RELIEF_REQUEST_CONTACT_PHONE, request.getContactPhone());
+        requestJSON.put(RELIEF_REQUEST_ASSIGNED_TO,
+                request.getResponder() == null ? null : request.getResponder().getId().toString());        
+                requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
         requestJSON.put(RELIEF_REQUEST_PRIORITY_SCORE, request.getPriorityScore());
         requestJSON.put(RELIEF_REQUEST_URGENCY,
                 request.getUrgency() == null ? null : request.getUrgency().toString());
@@ -214,6 +218,22 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
     commentJSON.put(COMMENT_TIMESTAMP, comment.getTimeStamp().toString());
 
     return commentJSON;
+}
+
+private static JSONArray getPersonsJSON(ArrayList<Person> persons) {
+    JSONArray personsJSON = new JSONArray();
+    for (Person person : persons) {
+        personsJSON.add(getPersonJSON(person));
+    }
+    return personsJSON;
+}
+
+private static JSONArray getPetsJSON(ArrayList<Pet> pets) {
+    JSONArray petsJSON = new JSONArray();
+    for (Pet pet : pets) {
+        petsJSON.add(getPetJSON(pet));
+    }
+    return petsJSON;
 }
 
 }

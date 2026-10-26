@@ -54,6 +54,15 @@ public class ReliefManagement {
         }
     }
 
+    //Q: How would this change anything?
+    /*public ReliefRequest editReliefRequest(UUID id){
+        for (ReliefRequest r: requests){
+            if (r.getId().equals(id)){
+                r = 
+            }
+        }
+    } */
+
     public void save(){
         DataWriter.saveReliefRequests(requests);
     }

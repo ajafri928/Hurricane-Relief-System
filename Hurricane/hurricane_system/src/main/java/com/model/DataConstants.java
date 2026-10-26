@@ -33,7 +33,6 @@ protected static final String SHELTER_OPERATIONAL_STATUS = "operationalStatus";
 
 protected static final String RELIEF_REQUEST_ID = "id";
 protected static final String RELIEF_REQUEST_DATE = "requestDate";
-protected static final String RELIEF_REQUEST_PEOPLE_COUNT = "peopleCount";
 protected static final String RELIEF_REQUEST_ASSISTANCE = "assistance";
 protected static final String RELIEF_REQUEST_LOCATION = "location";
 protected static final String RELIEF_REQUEST_PRIORITY_SCORE = "priorityScore";
@@ -79,8 +78,10 @@ protected static final String CONTACT_NAME = "name";
 protected static final String CONTACT_PHONE = "phoneNumber";
 protected static final String CONTACT_RELATIONSHIP = "relationship";
 
-protected static final String SHELTER_OCCUPANTS = "occupants";
-protected static final String SHELTER_PETS = "petsOnSite";
+protected static final String RELIEF_REQUEST_PERSONS = "requestedPersons";
+protected static final String RELIEF_REQUEST_PETS = "pets";
+protected static final String RELIEF_REQUEST_CONTACT_PHONE = "contactPhone";
+protected static final String RELIEF_REQUEST_ASSIGNED_TO = "assignedTo";
 
 protected static final String PERSON_ID = "id";
 protected static final String PERSON_FIRST_NAME = "firstName";
@@ -91,5 +92,8 @@ protected static final String PERSON_NEEDS_MEDICAL = "needsMedicalAssistance";
 protected static final String PET_ID = "id";
 protected static final String PET_NAME = "name";
 protected static final String PET_SPECIES = "species";
+
+protected static final String SHELTER_OCCUPANTS = "occupants";
+protected static final String SHELTER_PETS_ON_SITE = "petsOnSite";
 
 }

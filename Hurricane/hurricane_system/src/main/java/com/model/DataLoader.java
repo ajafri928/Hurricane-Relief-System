@@ -79,7 +79,7 @@ public class DataLoader extends DataConstants {
                 }
 
                 // Load the pets staying at the shelter.
-                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS);
+                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS_ON_SITE);
 
                 if (petsJSON != null) {
                     for (Object petObject : petsJSON) {
@@ -203,8 +203,6 @@ public class DataLoader extends DataConstants {
                 String description = getString(
                         requestJSON, RELIEF_REQUEST_DESCRIPTION);
 
-                int people = getInt(
-                        requestJSON, RELIEF_REQUEST_PEOPLE_COUNT);
                 int priorityScore = getInt(
                         requestJSON, RELIEF_REQUEST_PRIORITY_SCORE);
 
@@ -231,8 +229,18 @@ public class DataLoader extends DataConstants {
 
                 ReliefRequest request = new ReliefRequest(
                         id, createdAt, location, assistance, description,
-                        people, specialNeeds, priorityScore, urgency,
+                        specialNeeds, priorityScore, urgency,
                         status, submittedBy);
+
+                        for (Person p : parsePersons((JSONArray) requestJSON.get(RELIEF_REQUEST_PERSONS))) {
+                            request.addPerson(p);
+                        }
+                        for (Pet p : parsePets((JSONArray) requestJSON.get(RELIEF_REQUEST_PETS))) {
+                            request.addPet(p);
+                        }
+                        request.setContactPhone(getString(requestJSON, RELIEF_REQUEST_CONTACT_PHONE));
+                        request.setResponder(getUserById(
+                                users, getUuid(requestJSON, RELIEF_REQUEST_ASSIGNED_TO)));
 
                 JSONArray commentsJSON = (JSONArray) requestJSON.get(RELIEF_REQUEST_COMMENTS);
                 if (commentsJSON != null) {
@@ -303,6 +311,7 @@ public class DataLoader extends DataConstants {
             return null;
         }
 
+
         UUID id = getUuid(locationJSON, LOCATION_ID);
         String street1 = getString(locationJSON, LOCATION_STREET_1);
         String street2 = getString(locationJSON, LOCATION_STREET_2);
@@ -328,26 +337,6 @@ public class DataLoader extends DataConstants {
                 getString(resourceJSON, RESOURCE_UNIT));
     }
 
-    // Reads a person checked into a shelter
-    private static Person parsePerson(JSONObject personJSON) {
-        UUID id = getUuid(personJSON, PERSON_ID);
-        return new Person(
-                id == null ? UUID.randomUUID() : id,
-                getString(personJSON, PERSON_FIRST_NAME),
-                getString(personJSON, PERSON_LAST_NAME),
-                getInt(personJSON, PERSON_AGE),
-                getBoolean(personJSON, PERSON_NEEDS_MEDICAL));
-    }
-
-    // Reads a pet staying at a shelter
-    private static Pet parsePet(JSONObject petJSON) {
-        UUID id = getUuid(petJSON, PET_ID);
-        return new Pet(
-                id == null ? UUID.randomUUID() : id,
-                getString(petJSON, PET_NAME),
-                getString(petJSON, PET_SPECIES));
-    }
-
     // Turns "2026-10-15T12:00:00" (with or without a trailing Z) into a LocalDateTime, or null
     private static LocalDateTime parseDateTime(String text) {
         if (text == null) {
@@ -362,6 +351,46 @@ public class DataLoader extends DataConstants {
             System.err.println("Invalid date: " + text);
             return null;
         }
+    }
+
+    private static Person parsePerson(JSONObject json) {
+        UUID id = getUuid(json, PERSON_ID);
+        if (id == null) id = UUID.randomUUID();
+        String firstName = getString(json, PERSON_FIRST_NAME);
+        String lastName = getString(json, PERSON_LAST_NAME);
+        int age = getInt(json, PERSON_AGE);
+        boolean needsMedical = getBoolean(json, PERSON_NEEDS_MEDICAL);
+        return new Person(id, firstName, lastName, age, needsMedical);
+    }
+    
+    private static Pet parsePet(JSONObject json) {
+        UUID id = getUuid(json, PET_ID);
+        if (id == null) id = UUID.randomUUID();
+        String name = getString(json, PET_NAME);
+        String species = getString(json, PET_SPECIES);
+        return new Pet(id, name, species);
+    }
+    
+    private static ArrayList<Person> parsePersons(JSONArray array) {
+        ArrayList<Person> persons = new ArrayList<>();
+        if (array == null) {
+            return persons;
+        }
+        for (int i = 0; i < array.size(); i++) {
+            persons.add(parsePerson((JSONObject) array.get(i)));
+        }
+        return persons;
+    }
+    
+    private static ArrayList<Pet> parsePets(JSONArray array) {
+        ArrayList<Pet> pets = new ArrayList<>();
+        if (array == null) {
+            return pets;
+        }
+        for (int i = 0; i < array.size(); i++) {
+            pets.add(parsePet((JSONObject) array.get(i)));
+        }
+        return pets;
     }
 
     private static UUID getUuid(JSONObject jsonObject, String key) {
@@ -452,4 +481,6 @@ public class DataLoader extends DataConstants {
         System.err.println("No user found for userId: " + userId);
         return null;
     }
+
+    
 }
