@@ -4,12 +4,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Pet {
-    private UUID id;
+    private UUID Id;
     private String name;
     private String species;
 
-    public Pet(UUID id, String name, String species){
-        this.id = id;
+    public Pet(UUID Id, String name, String species){
+        this.Id = Id;
         this.name = name;
         this.species = species;
     }
@@ -23,12 +23,12 @@ public class Pet {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Pet other = (Pet) o;
-        return Objects.equals(id, other.id);
+        return Objects.equals(Id, other.Id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(Id);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Pet {
     }
 
     //Getters
-    public UUID getID() { return id; }
+    public UUID getId() { return Id; }
     public String getName() { return name; }
     public String getSpecies() { return species; }
 
