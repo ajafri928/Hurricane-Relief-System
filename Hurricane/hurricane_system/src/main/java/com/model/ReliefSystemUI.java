@@ -113,19 +113,20 @@ public class ReliefSystemUI {
         System.out.println("Rosa Delgado is signed in.");
         System.out.println("Specialty: " + system.getCurrentUser().getSpecialty());
 
-        ArrayList<ReliefRequest> open = system.listOpenRequests();
-        System.out.println("\nOpen relief requests: " + open.size() + "\n");
-
+        ArrayList<ReliefRequest> open = system.listRecommendedRequests();
+        System.out.println("\nOpen relief requests (best match first): " + open.size() + "\n");
+        
         for (ReliefRequest r : open) {
             String marker = r.getId().equals(carterRequest.getId())
                     ? "  <-- RECOMMENDED" : "";
             System.out.println("  " + r.getAssistance()
                     + " for " + r.getPeopleCount() + " people" + marker);
         }
-
-        System.out.println("\nWhy the top request is recommended:");
-        System.out.println("  It is close to Rosa and it needs transportation,");
-        System.out.println("  which matches her listed specialty.");
+        
+        if (!open.isEmpty()) {
+            System.out.println("\nWhy the top request is recommended:");
+            System.out.println("  " + system.explainRecommendation(open.get(0)));
+        }
 
         system.selectRequest(carterRequest.getId());
         System.out.println("\nRosa opened the request:");
