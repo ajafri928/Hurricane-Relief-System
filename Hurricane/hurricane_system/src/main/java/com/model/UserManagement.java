@@ -5,6 +5,7 @@ import java.util.UUID;
 
 /**
  * Holds every user in the system. Singleton, so the whole app shares one list.
+ * 
  * @author Abaan Jafri
  */
 public class UserManagement {
@@ -16,7 +17,7 @@ public class UserManagement {
         users = DataLoader.getUsers();
     }
 
-    // Returns the one shared instance, creating it the first time.
+    /** @return the single instance */
     public static UserManagement getInstance() {
         if (userManagement == null) {
             userManagement = new UserManagement();
@@ -24,12 +25,12 @@ public class UserManagement {
         return userManagement;
     }
 
-    // Returns all users.
+    /** @return all users */
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    // Finds a user by id, or null if not found.
+    /** @param id user id @return the matching user, or null */
     public User getUser(UUID id) {
         if (id == null) {
             return null;
@@ -42,7 +43,7 @@ public class UserManagement {
         return null;
     }
 
-    // Finds a user by username, ignoring case.
+    /** @param userName username, case doesn't matter @return the matching user, or null */
     public User getUserByUserName(String userName) {
         if (userName == null) {
             return null;
@@ -55,7 +56,7 @@ public class UserManagement {
         return null;
     }
 
-    // Finds a user whose username AND password match. Used for login.
+    /** @param userName username @param password password @return the user if both match, or null */
     public User getUser(String userName, String password) {
         User user = getUserByUserName(userName);
         if (user == null || password == null || !user.getPassword().equals(password)) {
@@ -64,10 +65,9 @@ public class UserManagement {
         return user;
     }
 
-    // Makes a new user and adds them. Same parameters as the User constructor.
-    // Returns false if username/password is blank or the username is taken.
+    /** @param userName username @param firstName first name @param lastName last name @param password password @param location home location @return false if blank or the username is taken */
     public boolean addUser(String userName, String firstName, String lastName,
-                           String password, Location location) {
+            String password, Location location) {
         if (userName == null || userName.isBlank() || password == null || password.isBlank()) {
             return false;
         }
@@ -78,12 +78,12 @@ public class UserManagement {
         return true;
     }
 
-    // Removes the user with the given id.
+    /** @param id id of user to remove */
     public void removeUser(UUID id) {
         users.removeIf(user -> user.getId().equals(id));
     }
 
-    // Updates the name and location of the user with the given id.
+    /** @param id user id @param firstName new first name @param lastName new last name @param location new location */
     public void editUser(UUID id, String firstName, String lastName, Location location) {
         User user = getUser(id);
         if (user != null) {
@@ -91,7 +91,7 @@ public class UserManagement {
         }
     }
 
-    // Tells every volunteer and professional about a new request.
+    /** @param request the new request to tell responders about */
     public void notifyResponders(ReliefRequest request) {
         for (User user : users) {
             if (user.isResponder()) {
@@ -100,7 +100,7 @@ public class UserManagement {
         }
     }
 
-    // Writes the current user list back to the JSON file.
+    /** Saves all users to the JSON file. */
     public void saveUsers() {
         DataWriter.saveUsers(users);
     }

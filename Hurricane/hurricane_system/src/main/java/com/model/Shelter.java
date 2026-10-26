@@ -31,7 +31,7 @@ public class Shelter {
      * @param location where the shelter is
      * @param capacity how many people it can hold
      */
-    public Shelter(UUID id, String name, Location location, int capacity) { //Q: should operationalStatus be required?
+    public Shelter(UUID id, String name, Location location, int capacity) { // Q: should operationalStatus be required?
         this.id = id;
         this.name = name;
         this.location = location;
@@ -56,32 +56,32 @@ public class Shelter {
      * @param vetStaff          whether a vet is on site
      * @param operationalStatus the status, like "OPEN"
      */
-    public Shelter(UUID id, String name, Location location, int capacity, int occupancy, 
-               boolean petFriendly, boolean accessible, boolean medicalStaff, 
-               boolean vetStaff, String operationalStatus) {
+    public Shelter(UUID id, String name, Location location, int capacity, int occupancy,
+            boolean petFriendly, boolean accessible, boolean medicalStaff,
+            boolean vetStaff, String operationalStatus) {
 
-    this.id = id;
-    this.name = name;
-    this.location = location; 
-    this.capacity = capacity;
-    this.occupancy = occupancy;
-    this.petFriendly = petFriendly;
-    this.accessible = accessible;
-    this.medicalStaff = medicalStaff;
-    this.vetStaff = vetStaff;
-    this.operationalStatus = operationalStatus;
-    this.amenities = new ArrayList<String>();
-    this.shelterResources = new ArrayList<ShelterResource>();
-    this.occupants = new ArrayList<Person>();
-    this.petsOnSite = new ArrayList<Pet>();
-}
+        this.id = id;
+        this.name = name;
+        this.location = location;
+        this.capacity = capacity;
+        this.occupancy = occupancy;
+        this.petFriendly = petFriendly;
+        this.accessible = accessible;
+        this.medicalStaff = medicalStaff;
+        this.vetStaff = vetStaff;
+        this.operationalStatus = operationalStatus;
+        this.amenities = new ArrayList<String>();
+        this.shelterResources = new ArrayList<ShelterResource>();
+        this.occupants = new ArrayList<Person>();
+        this.petsOnSite = new ArrayList<Pet>();
+    }
 
     /**
      * Checks one person in by QR code and raises occupancy by one.
      *
      * @param qrCode the person's QR code
      */
-    public void checkIn(String qrCode){
+    public void checkIn(String qrCode) {
         occupancy++;
     }
 
@@ -90,7 +90,7 @@ public class Shelter {
      *
      * @param citienId the person's id
      */
-    public void checkOut(String citienId){
+    public void checkOut(String citienId) {
         occupancy--;
     }
 
@@ -131,6 +131,7 @@ public class Shelter {
         }
         petsOnSite.removeAll(pets);
     }
+
     /**
      * Adds an amenity, like "Showers".
      *
@@ -139,6 +140,7 @@ public class Shelter {
     public void addAmenity(String amenity) {
         amenities.add(amenity);
     }
+
     /**
      * Adds a supply to the shelter's inventory.
      *
@@ -153,83 +155,151 @@ public class Shelter {
      *
      * @return the resources that are running low
      */
-    public ArrayList<ShelterResource> getLowStockResources(){
+    public ArrayList<ShelterResource> getLowStockResources() {
         ArrayList<ShelterResource> low = new ArrayList<>();
-        for (ShelterResource r : shelterResources){
-            if (r.checkStockLevel()){
+        for (ShelterResource r : shelterResources) {
+            if (r.checkStockLevel()) {
                 low.add(r);
             }
         }
         return low;
     }
-    /*public void updateInventory(ShelterResource resource){ //Q: Confused on how this will work/if it should be moved to another class?
-        resource = resource;
-    }
-    */
+    /*
+     * public void updateInventory(ShelterResource resource){ //Q: Confused on how
+     * this will work/if it should be moved to another class?
+     * resource = resource;
+     * }
+     */
 
     /** @return how many more people the shelter can hold */
-    public int getAvailableSpace(){
-        return capacity-occupancy;
+    public int getAvailableSpace() {
+        return capacity - occupancy;
     }
 
-    /** @return how many more people the shelter can hold (same as getAvailableSpace) */
+    /**
+     * @return how many more people the shelter can hold (same as getAvailableSpace)
+     */
     public int getAvailableSpaces() {
-    return capacity - occupancy;
-}
+        return capacity - occupancy;
+    }
 
     // Getters
     /** @return the shelter's id */
-    public UUID getId() { return id; }
+    public UUID getId() {
+        return id;
+    }
+
     /** @return the shelter's name */
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
+
     /** @return where the shelter is */
-    public Location getLocation() { return location; }
+    public Location getLocation() {
+        return location;
+    }
+
     /** @return how many people the shelter can hold */
-    public int getCapacity() { return capacity; }
+    public int getCapacity() {
+        return capacity;
+    }
+
     /** @return how many people are there now */
-    public int getOccupancy() { return occupancy; }
+    public int getOccupancy() {
+        return occupancy;
+    }
+
     /** @return true if pets are allowed */
-    public boolean isPetFriendly() { return petFriendly; }
+    public boolean isPetFriendly() {
+        return petFriendly;
+    }
+
     /** @return true if the shelter is wheelchair accessible */
-    public boolean isAccessible() { return accessible; }
+    public boolean isAccessible() {
+        return accessible;
+    }
+
     /** @return true if medical staff are on site */
-    public boolean hasMedicalStaff() { return medicalStaff; }
+    public boolean hasMedicalStaff() {
+        return medicalStaff;
+    }
+
     /** @return true if a vet is on site */
-    public boolean hasVetStaff() { return vetStaff; }
+    public boolean hasVetStaff() {
+        return vetStaff;
+    }
+
     /** @return the status, like "OPEN" */
-    public String getOperationalStatus() { return operationalStatus; }
+    public String getOperationalStatus() {
+        return operationalStatus;
+    }
+
     /** @return the shelter's amenities */
-    public ArrayList<String> getAmenities() { return amenities; }
+    public ArrayList<String> getAmenities() {
+        return amenities;
+    }
+
     /** @return the shelter's supplies */
-    public ArrayList<ShelterResource> getShelterResources() { return shelterResources; }
+    public ArrayList<ShelterResource> getShelterResources() {
+        return shelterResources;
+    }
+
     /** @return the people checked in */
-    public ArrayList<Person> getOccupants() { return occupants; }
+    public ArrayList<Person> getOccupants() {
+        return occupants;
+    }
+
     /** @return the pets checked in */
-    public ArrayList<Pet> getPetsOnSite() { return petsOnSite; }
+    public ArrayList<Pet> getPetsOnSite() {
+        return petsOnSite;
+    }
+
     // Setters
     /** @param name the new name */
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
+
     /** @param location the new location */
-    public void setLocation(Location location) { this.location = location; }
-    
+    public void setLocation(Location location) {
+        this.location = location;
+    }
+
     /** @param capacity the new capacity */
     public void setCapacity(int capacity) {
-        /*if (capacity < occupancy) { //Q: not sure if this part is needed
-            throw new IllegalArgumentException("Capacity can't be below current occupancy");
-        } */ 
+        /*
+         * if (capacity < occupancy) { //Q: not sure if this part is needed
+         * throw new
+         * IllegalArgumentException("Capacity can't be below current occupancy");
+         * }
+         */
         this.capacity = capacity;
     }
-    
+
     /** @param petFriendly whether pets are allowed */
-    public void setPetFriendly(boolean petFriendly) { this.petFriendly = petFriendly; }
+    public void setPetFriendly(boolean petFriendly) {
+        this.petFriendly = petFriendly;
+    }
+
     /** @param accessible whether it is wheelchair accessible */
-    public void setAccessible(boolean accessible) { this.accessible = accessible; }
+    public void setAccessible(boolean accessible) {
+        this.accessible = accessible;
+    }
+
     /** @param medicalStaff whether medical staff are on site */
-    public void setMedicalStaff(boolean medicalStaff) { this.medicalStaff = medicalStaff; }
+    public void setMedicalStaff(boolean medicalStaff) {
+        this.medicalStaff = medicalStaff;
+    }
+
     /** @param vetStaff whether a vet is on site */
-    public void setVetStaff(boolean vetStaff) { this.vetStaff = vetStaff; }
+    public void setVetStaff(boolean vetStaff) {
+        this.vetStaff = vetStaff;
+    }
+
     /** @param operationalStatus the new status */
-    public void setOperationalStatus(String operationalStatus) { this.operationalStatus = operationalStatus; }
+    public void setOperationalStatus(String operationalStatus) {
+        this.operationalStatus = operationalStatus;
+    }
 
     @Override
     /** @return a readable summary of the shelter */
@@ -249,6 +319,5 @@ public class Shelter {
                 "\n  Resources: " + shelterResources +
                 "\n}";
     }
-    
 
 }

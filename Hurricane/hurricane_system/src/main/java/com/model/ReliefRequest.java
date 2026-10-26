@@ -126,7 +126,7 @@ public class ReliefRequest {
      */
     public void accept(User responder) {
         this.responder = responder;
-        status = ReliefRequestStatus.CLAIMED;
+        status = ReliefRequestStatus.ASSIGNED;
     }
 
     // The responder drops the request so someone else can take it.
@@ -148,6 +148,15 @@ public class ReliefRequest {
     public void addComment(RequestComment comment) {
         comments.add(comment);
     }
+
+    // Sets the user who submitted the request
+    public void setSubmittedBy(User submittedBy) { this.submittedBy = submittedBy; }
+
+    // Sets how urgent the request is
+    public void setUrgency(UrgencyTier urgency) { this.urgency = urgency; }
+
+    // Sets whether anyone in the request has special needs
+    public void setSpecialNeeds(boolean specialNeeds) { this.specialNeeds = specialNeeds; }
 
     // Returns a copy of the request's comments
     public ArrayList<RequestComment> getComments() {

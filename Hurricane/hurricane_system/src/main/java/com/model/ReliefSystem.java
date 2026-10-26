@@ -57,7 +57,8 @@ public class ReliefSystem {
         if (!currentUser.getRoles().contains(UserRole.ADMIN)) {
             throw new IllegalStateException("This action requires an admin");
         }
-        // Admin is its own class (not a User subclass), so build one for the signed-in admin
+        // Admin is its own class (not a User subclass), so build one for the signed-in
+        // admin
         return new Admin(currentUser.getFirstName(), currentUser.getLastName());
     }
 
@@ -96,7 +97,7 @@ public class ReliefSystem {
      * @return the new User, or null if the username is taken or a field is blank
      */
     public User registerUser(String userName, String firstName, String lastName,
-                             String password, Location location) {
+            String password, Location location) {
         if (!userManagement.addUser(userName, firstName, lastName, password, location)) {
             return null;
         }
@@ -176,6 +177,7 @@ public class ReliefSystem {
             ArrayList<Person> persons, ArrayList<Pet> pets, String contactPhone) {
         requireLogin();
         ReliefRequest request = new ReliefRequest(location, assistance);
+        request.setSubmittedBy(currentUser);
         for (Person person : persons) {
             request.addPerson(person);
         }
@@ -183,6 +185,14 @@ public class ReliefSystem {
             request.addPet(pet);
         }
         request.setContactPhone(contactPhone);
+        boolean medicalNeed = false;
+        for (Person person : persons) {
+            if (person.needsMedicalAssistance()) {
+                medicalNeed = true;
+            }
+        }
+        request.setSpecialNeeds(medicalNeed);
+        request.setUrgency(medicalNeed ? UrgencyTier.URGENT : UrgencyTier.STANDARD);
         request.submit();
         reliefManagement.addReliefRequest(request);
         currentRequest = request;
@@ -278,7 +288,6 @@ public class ReliefSystem {
         return reliefManagement.getRequestsByStatus(ReliefRequestStatus.SUBMITTED);
     }
 
-
     /**
      * Finds the closest shelter with room for the given number of people.
      *
@@ -287,9 +296,9 @@ public class ReliefSystem {
      * @return the nearest shelter with room, or null if none found
      */
     public Shelter findSafeShelter(Location location, int people,
-                               boolean needsPetFriendly, boolean needsMedical) {
-    return shelterManagement.findNearestAvailable(location, people,
-                                                  needsPetFriendly, needsMedical);
+            boolean needsPetFriendly, boolean needsMedical) {
+        return shelterManagement.findNearestAvailable(location, people,
+                needsPetFriendly, needsMedical);
     }
 
     /**
@@ -499,10 +508,12 @@ public class ReliefSystem {
     public void publishEmergencyAlert(String message) {
         requireAdmin().broadcastAlert(message);
     }
-    public void completeRequest(){
+
+    public void completeRequest() {
         requireLogin();
-        if (!currentUser.getRoles().contains(UserRole.SHELTER_MANAGER)){
-            throw new IllegalStateException("Your volunteer role does not have permission to complete relief requests.");
+        if (!currentUser.getRoles().contains(UserRole.SHELTER_MANAGER)) {
+            throw new IllegalStateException(
+                    "Your volunteer role does not have permission to complete relief requests.");
 
         }
         requireRequest().complete();
@@ -517,4 +528,24 @@ public class ReliefSystem {
         requireShelter().checkIn(persons, pets);
     }
 
+    /**
+     * Returns open requests ranked for the signed-in responder.
+     *
+     * @return open requests, best match first
+     */
+    public ArrayList<ReliefRequest> listRecommendedRequests() {
+        requireResponder();
+        return reliefManagement.getRecommendedRequests(currentUser);
+    }
+
+    /**
+     * Explains why a request was recommended to the signed-in responder.
+     *
+     * @param request the request to explain
+     * @return a short reason, or an empty string if nothing matched
+     */
+    public String explainRecommendation(ReliefRequest request) {
+        requireLogin();
+        return reliefManagement.getRecommendationReason(request, currentUser);
+    }
 }

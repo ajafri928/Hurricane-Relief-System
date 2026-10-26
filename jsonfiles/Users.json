@@ -7,8 +7,8 @@
     "password": "password123",
     "location": {
       "id": "876e4567-e89b-12d3-a456-426614174111",
-      "addressLine1": "123 Main St",
-      "addressLine2": "Apt 4B",
+      "street1": "123 Main St",
+      "street2": "Apt 4B",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29201",
@@ -27,7 +27,8 @@
         "phoneNumber": "555-0199"
       }
     ]
-  },{
+  },
+  {
     "id": "223e4567-e89b-12d3-a456-426614174001",
     "userName": "mrivera",
     "firstName": "Maria",
@@ -35,8 +36,8 @@
     "password": "volunteer456",
     "location": {
       "id": "976e4567-e89b-12d3-a456-426614174222",
-      "addressLine1": "840 Harden St",
-      "addressLine2": "",
+      "street1": "840 Harden St",
+      "street2": "",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29205",
@@ -54,5 +55,74 @@
         "phoneNumber": "555-0142"
       }
     ]
+  },
+  {
+    "id": "333e4567-e89b-12d3-a456-426614174003",
+    "userName": "rosadelgado",
+    "firstName": "Rosa",
+    "lastName": "Delgado",
+    "password": "rosa2026",
+    "location": {
+      "street1": "823 Meeting Street",
+      "street2": "",
+      "city": "Charleston",
+      "state": "SC",
+      "zipCode": "29403",
+      "latitude": 32.8027,
+      "longitude": -79.9479
+    },
+    "safety": "SAFE",
+    "roles": [
+      "VOLUNTEER"
+    ],
+    "specialty": "TRANSPORTATION",
+    "contactPhone": "843-555-0148",
+    "emergencyContacts": []
+  },
+  {
+    "id": "444e4567-e89b-12d3-a456-426614174004",
+    "userName": "felixmanager",
+    "firstName": "Felix",
+    "lastName": "Carter",
+    "password": "felix2026",
+    "location": {
+      "street1": "4800 Park Circle",
+      "street2": "",
+      "city": "North Charleston",
+      "state": "SC",
+      "zipCode": "29405",
+      "latitude": 32.8796,
+      "longitude": -79.9811
+    },
+    "safety": "SAFE",
+    "roles": [
+      "SHELTER_MANAGER"
+    ],
+    "specialty": null,
+    "contactPhone": "843-555-0176",
+    "emergencyContacts": []
+  },
+  {
+    "id": "555e4567-e89b-12d3-a456-426614174005",
+    "userName": "systemadmin",
+    "firstName": "Avery",
+    "lastName": "Brooks",
+    "password": "admin2026",
+    "location": {
+      "street1": "80 Broad Street",
+      "street2": "",
+      "city": "Charleston",
+      "state": "SC",
+      "zipCode": "29401",
+      "latitude": 32.7767,
+      "longitude": -79.9311
+    },
+    "safety": "SAFE",
+    "roles": [
+      "ADMIN"
+    ],
+    "specialty": null,
+    "contactPhone": "843-555-0181",
+    "emergencyContacts": []
   }
 ]

@@ -6,8 +6,6 @@ import com.location.Address;
 import com.location.MapTools;
 import java.io.IOException;
 
-
-
 /**
  * Keeps track of every shelter and finds shelters for people who need one.
  * Uses the Singleton pattern, so there is only ever one ShelterManagement.
@@ -17,8 +15,11 @@ public class ShelterManagement {
     private ArrayList<Shelter> shelters;
     private MapTools mapTools = MapTools.getInstance();
 
-    /** Private so the only instance comes from getInstance(). Loads shelters from the JSON file. */
-    private ShelterManagement(){
+    /**
+     * Private so the only instance comes from getInstance(). Loads shelters from
+     * the JSON file.
+     */
+    private ShelterManagement() {
         shelters = DataLoader.getShelters();
     }
 
@@ -27,7 +28,7 @@ public class ShelterManagement {
      *
      * @return the ShelterManagement instance
      */
-    public static ShelterManagement getInstance(){
+    public static ShelterManagement getInstance() {
         if (shelterManagement == null) {
             shelterManagement = new ShelterManagement();
         }
@@ -35,14 +36,14 @@ public class ShelterManagement {
     }
 
     /** @return every shelter in the system */
-    public ArrayList<Shelter> getShelters(){
+    public ArrayList<Shelter> getShelters() {
         return shelters;
     }
 
-
     /**
      * Finds the closest shelter that has room and meets the group's needs.
-     * If the map service can't be reached, returns the first shelter that qualifies.
+     * If the map service can't be reached, returns the first shelter that
+     * qualifies.
      *
      * @param location         where the group is
      * @param people           how many people need space
@@ -50,59 +51,60 @@ public class ShelterManagement {
      * @param needsMedical     true if the group needs medical staff
      * @return the best shelter, or null if none qualify
      */
-    public Shelter findNearestAvailable(Location location, int people, boolean needsPetFriendly, boolean needsMedical){
+    public Shelter findNearestAvailable(Location location, int people, boolean needsPetFriendly, boolean needsMedical) {
 
-    
-             ArrayList<Shelter> qualifying = new ArrayList<Shelter>();
-        
-            for (Shelter shelter : getAvailableShelters(people)) {
-                if (needsPetFriendly && !shelter.isPetFriendly()) continue;
-                if (needsMedical && !shelter.hasMedicalStaff()) continue;
-                qualifying.add(shelter);
-            }
-            if (qualifying.isEmpty()) {
-                return null;
-            }
-            if (qualifying.size() == 1) {
-                return qualifying.get(0);
-            }
+        ArrayList<Shelter> qualifying = new ArrayList<Shelter>();
+
+        for (Shelter shelter : getAvailableShelters(people)) {
+            if (needsPetFriendly && !shelter.isPetFriendly())
+                continue;
+            if (needsMedical && !shelter.hasMedicalStaff())
+                continue;
+            qualifying.add(shelter);
+        }
+        if (qualifying.isEmpty()) {
+            return null;
+        }
+        if (qualifying.size() == 1) {
+            return qualifying.get(0);
+        }
         Address[] addresses = new Address[qualifying.size()];
-        for (int i =0; i <qualifying.size(); i++){
+        for (int i = 0; i < qualifying.size(); i++) {
             addresses[i] = qualifying.get(i).getLocation().toAddress();
         }
 
         try {
-             Address closest = MapTools.getInstance()
-                .findClosestAddress(location.toAddress(), addresses);
+            Address closest = MapTools.getInstance()
+                    .findClosestAddress(location.toAddress(), addresses);
 
-        for (int i = 0; i < addresses.length; i++) {
-            if (addresses[i] == closest) {
-                return qualifying.get(i);
+            for (int i = 0; i < addresses.length; i++) {
+                if (addresses[i] == closest) {
+                    return qualifying.get(i);
+                }
             }
+
+            for (int i = 0; i < addresses.length; i++) {
+                if (addresses[i].toString().equals(closest.toString())) {
+                    return qualifying.get(i);
+                }
+            }
+        } catch (Exception e) {
+            System.err.println("Could not reach the map service: " + e.getMessage());
         }
 
-        for (int i = 0; i < addresses.length; i++) {
-            if (addresses[i].toString().equals(closest.toString())) {
-                return qualifying.get(i);
-            }
-        }
-    } catch (Exception e) {
-        System.err.println("Could not reach the map service: " + e.getMessage());
+        return qualifying.get(0);
     }
 
-    return qualifying.get(0);
-}
-        
     /**
      * Lists every shelter with enough open spots for a group.
      *
      * @param people how many people need space
      * @return the shelters with room
      */
-    public ArrayList<Shelter> getAvailableShelters(int people){
+    public ArrayList<Shelter> getAvailableShelters(int people) {
         ArrayList<Shelter> available = new ArrayList<>();
 
-        for (Shelter s: shelters){
+        for (Shelter s : shelters) {
             int openSpots = (s.getCapacity() - s.getOccupancy());
 
             if (openSpots >= people) {
@@ -112,13 +114,13 @@ public class ShelterManagement {
         }
         return available;
     }
-    
+
     /**
      * Adds a shelter to the system.
      *
      * @param shelter the shelter to add
      */
-    public void addShelter(Shelter shelter){
+    public void addShelter(Shelter shelter) {
         shelters.add(shelter);
     }
 
@@ -127,11 +129,12 @@ public class ShelterManagement {
      *
      * @param id the shelter's id
      */
-    public void removeShelter(UUID id){
+    public void removeShelter(UUID id) {
         shelters.removeIf(shelter -> shelter.getId().equals(id));
     }
+
     /** Saves every shelter to the JSON file. */
-    public void save(){
+    public void save() {
         DataWriter.saveShelters(shelters);
     }
 }

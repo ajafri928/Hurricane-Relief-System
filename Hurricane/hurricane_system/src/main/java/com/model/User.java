@@ -72,7 +72,7 @@ public class User {
      * @param roles the user's roles, or null for an empty role list
      */
     public User(UUID id, String userName, String firstName, String lastName, String password,
-                Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
+            Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -282,17 +282,26 @@ public class User {
     public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
 
     @Override
-public String toString() {
-    return "User {" +
-            "\n  ID: " + id +
-            "\n  Username: '" + userName + '\'' +
-            "\n  Name: '" + firstName + " " + lastName + '\'' +
-            "\n  Safety: " + safety +
-            "\n  Roles: " + roles +
-            "\n  Location: " + (location != null ? location.toString() : "N/A") +
-            "\n}";
-}
-public VolunteerRole getSpecialty() { return specialty; }
-public String getContactPhone() { return contactPhone; }
-public void setSpecialty(VolunteerRole specialty) { this.specialty = specialty; }
+    public String toString() {
+        return "User {" +
+                "\n  ID: " + id +
+                "\n  Username: '" + userName + '\'' +
+                "\n  Name: '" + firstName + " " + lastName + '\'' +
+                "\n  Safety: " + safety +
+                "\n  Roles: " + roles +
+                "\n  Location: " + (location != null ? location.toString() : "N/A") +
+                "\n}";
+    }
+
+    public VolunteerRole getSpecialty() {
+        return specialty;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setSpecialty(VolunteerRole specialty) {
+        this.specialty = specialty;
+    }
 }
