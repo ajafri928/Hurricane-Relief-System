@@ -50,7 +50,7 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 
 ### Run it
 ```bash
-git clone https://github.com/shmoney2/Hurricane-Relief-System.git
+git clone https://github.com/ajafri928/Hurricane-Relief-System.git
 cd Hurricane-Relief-System/Hurricane/hurricane_system
 mvn clean javafx:run
 ```
