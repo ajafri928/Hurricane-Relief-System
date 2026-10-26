@@ -47,7 +47,7 @@ public class ReliefSystemUI {
         persons.add(new Person("Liam", "Doe", 4));
 
         ReliefRequest request = system.submitReliefRequest(
-            johnsLocation, "Food and Water", persons, new ArrayList<>(), "803-555-0100");
+                johnsLocation, "Food and Water", persons, new ArrayList<>(), "803-555-0100");
 
         if (request == null) {
             System.out.println("The relief request was not submitted.");
