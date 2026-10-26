@@ -1,29 +1,45 @@
 [
   {
     "id": "a1b2c3d4-e5f6-7a8b-9c0d-1e2f3a4b5c6d",
-    "requestDate": "2026-09-27T14:30:00Z",
+    "requestDate": "2026-09-27T14:30:00",
     "userId": "123e4567-e89b-12d3-a456-426614174000",
-    "requestCategory": "DISASTER_RELIEF",
     "priorityScore": 8,
     "urgency": "URGENT",
     "status": "SUBMITTED",
     "assistance": "Need clean drinking water and non-perishable food rations.",
     "location": {
       "id": "876e4567-e89b-12d3-a456-426614174111",
-      "addressLine1": "123 Main St",
+      "street1": "123 Main St",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29201",
       "latitude": 33.9988,
       "longitude": -81.0453
     },
-    "peopleCount": 3,
+    "requestedPersons": [
+      {
+        "id": "1b9d6bcd-bbfd-4b2d-9b5d-ab8dfbbd4bed",
+        "firstName": "Sophie",
+        "lastName": "Carter",
+        "age": 9,
+        "needsMedicalAssistance": true
+      }
+    ],
+    "pets": [
+      {
+        "id": "6f1ed002-ab5d-42e0-868f-9a8f8f1f8c4b",
+        "name": "Buddy",
+        "species": "Dog"
+      }
+    ],
+    "contactPhone": "803-555-0142",
+    "assignedTo": null,
     "comments": [
       {
         "id": "c1c1c1c1-2222-3333-4444-555555555555",
-        "commenterId": "999e4567-e89b-12d3-a456-426614174999",
+        "authorId": "999e4567-e89b-12d3-a456-426614174999",
         "text": "Dispatched a local volunteer group to deliver supplies.",
-        "timestamp": "2026-09-27T15:00:00Z"
+        "timeStamp": "2026-09-27T15:00:00Z"
       }
     ]
   }
