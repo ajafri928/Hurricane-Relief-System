@@ -11,6 +11,6 @@ package com.model;
  * through the Person class.
  */
 
-public class RegisteredVictim {
+//public class RegisteredVictim {
     // Empty stub placeholder
-}
+
