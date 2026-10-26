@@ -189,8 +189,12 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
         requestJSON.put(RELIEF_REQUEST_ASSISTANCE, request.getAssistance());
         requestJSON.put(RELIEF_REQUEST_DESCRIPTION, request.getDescription());
         requestJSON.put(RELIEF_REQUEST_LOCATION, getLocationJSON(request.getLocation()));
-        requestJSON.put(RELIEF_REQUEST_PEOPLE_COUNT, request.getPeople());
-        requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
+        requestJSON.put(RELIEF_REQUEST_PERSONS, getPersonsJSON(request.getRequestedPersons()));
+        requestJSON.put(RELIEF_REQUEST_PETS, getPetsJSON(request.getPets()));
+        requestJSON.put(RELIEF_REQUEST_CONTACT_PHONE, request.getContactPhone());
+        requestJSON.put(RELIEF_REQUEST_ASSIGNED_TO,
+                request.getResponder() == null ? null : request.getResponder().getId().toString());        
+                requestJSON.put(RELIEF_REQUEST_SPECIAL_NEEDS, request.hasSpecialNeeds());
         requestJSON.put(RELIEF_REQUEST_PRIORITY_SCORE, request.getPriorityScore());
         requestJSON.put(RELIEF_REQUEST_URGENCY,
                 request.getUrgency() == null ? null : request.getUrgency().toString());
@@ -214,6 +218,44 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
     commentJSON.put(COMMENT_TIMESTAMP, comment.getTimeStamp().toString());
 
     return commentJSON;
+}
+
+private static JSONObject getPersonJSON(Person person) {
+    JSONObject personJSON = new JSONObject();
+
+    personJSON.put(PERSON_ID, person.getId().toString());
+    personJSON.put(PERSON_FIRST_NAME, person.getFirstName());
+    personJSON.put(PERSON_LAST_NAME, person.getLastName());
+    personJSON.put(PERSON_AGE, person.getAge());
+    personJSON.put(PERSON_NEEDS_MEDICAL, person.needsMedicalAssistance());
+
+    return personJSON;
+}
+
+private static JSONObject getPetJSON(Pet pet) {
+    JSONObject petJSON = new JSONObject();
+
+    petJSON.put(PET_ID, pet.getId().toString());
+    petJSON.put(PET_NAME, pet.getName());
+    petJSON.put(PET_SPECIES, pet.getSpecies());
+
+    return petJSON;
+}
+
+private static JSONArray getPersonsJSON(ArrayList<Person> persons) {
+    JSONArray personsJSON = new JSONArray();
+    for (Person person : persons) {
+        personsJSON.add(getPersonJSON(person));
+    }
+    return personsJSON;
+}
+
+private static JSONArray getPetsJSON(ArrayList<Pet> pets) {
+    JSONArray petsJSON = new JSONArray();
+    for (Pet pet : pets) {
+        petsJSON.add(getPetJSON(pet));
+    }
+    return petsJSON;
 }
 
 }

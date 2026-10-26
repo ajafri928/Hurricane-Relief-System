@@ -168,14 +168,24 @@ public class ReliefSystem {
     /**
      * Submits a new relief request for the signed-in user and selects it.
      *
-     * @param location   where help is needed
-     * @param assistance the kind of help needed
-     * @param people     how many people need help
+     * @param location     where help is needed
+     * @param assistance   the kind of help needed
+     * @param persons      the people who need help
+     * @param pets         the pets that need help
+     * @param contactPhone the phone number to reach the requester
      * @return the new relief request
      */
-    public ReliefRequest submitReliefRequest(Location location, String assistance, int people) {
+    public ReliefRequest submitReliefRequest(Location location, String assistance,
+            ArrayList<Person> persons, ArrayList<Pet> pets, String contactPhone) {
         requireLogin();
-        ReliefRequest request = new ReliefRequest(location, assistance, people);
+        ReliefRequest request = new ReliefRequest(location, assistance);
+        for (Person person : persons) {
+            request.addPerson(person);
+        }
+        for (Pet pet : pets) {
+            request.addPet(pet);
+        }
+        request.setContactPhone(contactPhone);
         request.submit();
         reliefManagement.addReliefRequest(request);
         currentRequest = request;

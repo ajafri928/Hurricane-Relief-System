@@ -3,14 +3,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 public class Person {
-    private final UUID id;
+    private final UUID Id;
     private String firstName;
     private String lastName;
     private int age;
     private boolean needsMedicalAssistance;
 
-    public Person(UUID id, String firstName, String lastName, int age, boolean needsMedicalAssistance) {
-        this.id = id;
+    public Person(UUID Id, String firstName, String lastName, int age, boolean needsMedicalAssistance) {
+        this.Id = Id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.age = age;
@@ -26,15 +26,15 @@ public class Person {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person other = (Person) o;
-        return Objects.equals(id, other.id);
+        return Objects.equals(Id, other.Id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        return Objects.hash(Id);
     }
 
-    public UUID getId() { return id; }
+    public UUID getId() { return Id; }
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getFullName() { return firstName + " " + lastName; }
