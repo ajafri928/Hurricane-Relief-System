@@ -38,8 +38,8 @@ public class ReliefSystemUI {
     public void createTheRequest() {
         System.out.println("\n===== PART 1: The Carter family requests help =====\n");
 
-        Location home = new Location("18 Bogard Street", "", "Charleston",
-                "SC", "29403", 32.7876, -79.9403);
+        Location home = new Location("155 Jackson Street", "", "Charleston",
+        "SC", "29403", 32.8018, -79.9444);
 
         User david = system.registerUser("dcarter", "David", "Carter",
                 "carter2026", home);
@@ -106,26 +106,27 @@ public class ReliefSystemUI {
     public void matchRosaToTheRequest() {
         System.out.println("\n===== PART 2: Rosa is matched to the request =====\n");
 
-        if (!system.signIn("rdelgado", "volunteer456")) {
+        if (!system.signIn("rosadelgado", "rosa2026")) {
             System.out.println("Rosa could not sign in.");
             return;
         }
         System.out.println("Rosa Delgado is signed in.");
         System.out.println("Specialty: " + system.getCurrentUser().getSpecialty());
 
-        ArrayList<ReliefRequest> open = system.listOpenRequests();
-        System.out.println("\nOpen relief requests: " + open.size() + "\n");
-
+        ArrayList<ReliefRequest> open = system.listRecommendedRequests();
+        System.out.println("\nOpen relief requests (best match first): " + open.size() + "\n");
+        
         for (ReliefRequest r : open) {
             String marker = r.getId().equals(carterRequest.getId())
                     ? "  <-- RECOMMENDED" : "";
             System.out.println("  " + r.getAssistance()
                     + " for " + r.getPeopleCount() + " people" + marker);
         }
-
-        System.out.println("\nWhy the top request is recommended:");
-        System.out.println("  It is close to Rosa and it needs transportation,");
-        System.out.println("  which matches her listed specialty.");
+        
+        if (!open.isEmpty()) {
+            System.out.println("\nWhy the top request is recommended:");
+            System.out.println("  " + system.explainRecommendation(open.get(0)));
+        }
 
         system.selectRequest(carterRequest.getId());
         System.out.println("\nRosa opened the request:");
@@ -219,7 +220,7 @@ public class ReliefSystemUI {
     public void checkTheFamilyIn() {
         System.out.println("\n===== PART 6: Felix checks the family in =====\n");
 
-        if (!system.signIn("fmartinez", "shelter789")) {
+        if (!system.signIn("felixmanager", "felix2026")) {
             System.out.println("Felix could not sign in.");
             return;
         }

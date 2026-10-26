@@ -177,6 +177,7 @@ public class ReliefSystem {
             ArrayList<Person> persons, ArrayList<Pet> pets, String contactPhone) {
         requireLogin();
         ReliefRequest request = new ReliefRequest(location, assistance);
+        request.setSubmittedBy(currentUser);
         for (Person person : persons) {
             request.addPerson(person);
         }
@@ -184,6 +185,14 @@ public class ReliefSystem {
             request.addPet(pet);
         }
         request.setContactPhone(contactPhone);
+        boolean medicalNeed = false;
+        for (Person person : persons) {
+            if (person.needsMedicalAssistance()) {
+                medicalNeed = true;
+            }
+        }
+        request.setSpecialNeeds(medicalNeed);
+        request.setUrgency(medicalNeed ? UrgencyTier.URGENT : UrgencyTier.STANDARD);
         request.submit();
         reliefManagement.addReliefRequest(request);
         currentRequest = request;
@@ -519,4 +528,24 @@ public class ReliefSystem {
         requireShelter().checkIn(persons, pets);
     }
 
+    /**
+     * Returns open requests ranked for the signed-in responder.
+     *
+     * @return open requests, best match first
+     */
+    public ArrayList<ReliefRequest> listRecommendedRequests() {
+        requireResponder();
+        return reliefManagement.getRecommendedRequests(currentUser);
+    }
+
+    /**
+     * Explains why a request was recommended to the signed-in responder.
+     *
+     * @param request the request to explain
+     * @return a short reason, or an empty string if nothing matched
+     */
+    public String explainRecommendation(ReliefRequest request) {
+        requireLogin();
+        return reliefManagement.getRecommendationReason(request, currentUser);
+    }
 }
