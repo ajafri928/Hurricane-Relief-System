@@ -17,21 +17,18 @@ public class ReliefSystem {
     private UserManagement userManagement;
     private ReliefManagement reliefManagement;
     private ShelterManagement shelterManagement;
-    //private RegionManagement regionManagement;
-    private HazardManagement hazardManagement;
     private HurricaneEventManagement eventManagement;
 
     private User currentUser;
     private ReliefRequest currentRequest;
     private Shelter currentShelter;
+    private ArrayList<HazardReport> hazardReports = new ArrayList<>();
 
     // Private so the facade can only be made through getInstance()
     private ReliefSystem() {
         userManagement = UserManagement.getInstance();
         reliefManagement = ReliefManagement.getInstance();
         shelterManagement = ShelterManagement.getInstance();
-        //regionManagement = RegionManagement.getInstance();
-        hazardManagement = HazardManagement.getInstance();
         eventManagement = HurricaneEventManagement.getInstance();
     }
 
@@ -281,10 +278,6 @@ public class ReliefSystem {
         return reliefManagement.getRequestsByStatus(ReliefRequestStatus.SUBMITTED);
     }
 
-    /*public ArrayList<ReliefRequest> listRequestsByRegion(UUID regionId) {
-        return reliefManagement.getRequestsByRegion(regionId);
-    } */
-
 
     /**
      * Finds the closest shelter with room for the given number of people.
@@ -393,7 +386,7 @@ public class ReliefSystem {
         requireLogin();
         HazardReport report = new HazardReport(type, location, currentUser.getUserName());
         report.report();
-        hazardManagement.addHazard(report);
+        hazardReports.add(report);
         return report;
     }
 
@@ -404,7 +397,13 @@ public class ReliefSystem {
      */
     public void verifyHazard(UUID hazardId) {
         requireAdmin();
-        HazardReport hazard = hazardManagement.getHazard(hazardId);
+        HazardReport hazard = null;
+        for (HazardReport h : hazardReports) {
+            if (h.getId().equals(hazardId)) {
+                hazard = h;
+                break;
+            }
+        }
         if (hazard == null) {
             throw new IllegalArgumentException("No hazard with id " + hazardId);
         }
@@ -417,39 +416,14 @@ public class ReliefSystem {
      * @return the verified hazard reports
      */
     public ArrayList<HazardReport> listVerifiedHazards() {
-        return hazardManagement.getVerifiedHazards();
-    }
-
-    /**
-     * Lets an admin create a new geographic region.
-     *
-     * @param name     the region's name
-     * @param boundary the region's boundary
-     * @return the new region
-     */
-    /*public GeographicRegion createRegion(String name, String boundary) {
-        requireAdmin();
-        GeographicRegion region = new GeographicRegion(name, boundary);
-        regionManagement.addRegion(region);
-        return region;
-    } */
-
-    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
-    /**
-     * Lets an admin set a region's evacuation zone type.
-     *
-     * @param regionId the region's id
-     * @param zoneType the new zone type
-     */
-    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
-        requireAdmin();
-        GeographicRegion region = regionManagement.getRegion(regionId);
-        if (region == null) {
-            throw new IllegalArgumentException("No region with id " + regionId);
+        ArrayList<HazardReport> verified = new ArrayList<>();
+        for (HazardReport h : hazardReports) {
+            if (h.isVerified()) {
+                verified.add(h);
+            }
         }
-        region.setZoneType(zoneType);
+        return verified;
     }
-        */
 
     /**
      * Lets an admin update where a hurricane is and where it is heading.

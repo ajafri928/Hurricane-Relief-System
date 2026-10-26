@@ -42,16 +42,6 @@ public class ReliefManagement {
         return statusRequests;
     }
 
-    // Q: ReliefRequest class has no region variable
-    /*public ArrayList<ReliefRequest> getRequestsByRegion(String name){
-        ArrayList<ReliefRequest> regionRequests = new ArrayList<>();
-        for (ReliefRequest r: requests) {
-            if (r.getName().equals(name)){
-
-            }
-        }
-    } */ 
-
     public void addReliefRequest(ReliefRequest request){
         requests.add(request);
     }

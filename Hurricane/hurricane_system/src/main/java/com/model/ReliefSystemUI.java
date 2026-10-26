@@ -60,7 +60,7 @@ public class ReliefSystemUI {
         system.addRequestComment("We have two small children and no power.");
         System.out.println("Comment added to the request.");
 
-        Shelter shelter = system.findSafeShelter(johnsLocation, request.getPeopleCount());
+        Shelter shelter = system.findSafeShelter(johnsLocation, request.getPeopleCount(), false, false);
 
         if (shelter == null) {
             System.out.println("No shelter with room was found.");

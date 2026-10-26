@@ -56,7 +56,7 @@ public class DataWriter extends DataConstants{
     for (Pet pet : shelter.getPetsOnSite()) {
         petsJSON.add(getPetJSON(pet));
     }
-    shelterJSON.put(SHELTER_PETS, petsJSON);
+    shelterJSON.put(SHELTER_PETS_ON_SITE, petsJSON);
 
     return shelterJSON;
 }
@@ -107,7 +107,7 @@ public static JSONObject getPersonJSON(Person person) {
  */
 public static JSONObject getPetJSON(Pet pet) {
     JSONObject petJSON = new JSONObject();
-    petJSON.put(PET_ID, pet.getID().toString());
+    petJSON.put(PET_ID, pet.getId().toString());
     petJSON.put(PET_NAME, pet.getName());
     petJSON.put(PET_SPECIES, pet.getSpecies());
     return petJSON;
@@ -218,28 +218,6 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
     commentJSON.put(COMMENT_TIMESTAMP, comment.getTimeStamp().toString());
 
     return commentJSON;
-}
-
-private static JSONObject getPersonJSON(Person person) {
-    JSONObject personJSON = new JSONObject();
-
-    personJSON.put(PERSON_ID, person.getId().toString());
-    personJSON.put(PERSON_FIRST_NAME, person.getFirstName());
-    personJSON.put(PERSON_LAST_NAME, person.getLastName());
-    personJSON.put(PERSON_AGE, person.getAge());
-    personJSON.put(PERSON_NEEDS_MEDICAL, person.needsMedicalAssistance());
-
-    return personJSON;
-}
-
-private static JSONObject getPetJSON(Pet pet) {
-    JSONObject petJSON = new JSONObject();
-
-    petJSON.put(PET_ID, pet.getId().toString());
-    petJSON.put(PET_NAME, pet.getName());
-    petJSON.put(PET_SPECIES, pet.getSpecies());
-
-    return petJSON;
 }
 
 private static JSONArray getPersonsJSON(ArrayList<Person> persons) {

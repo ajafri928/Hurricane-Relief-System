@@ -74,6 +74,10 @@ protected static final String COMMENT_TIMESTAMP = "timestamp";
 protected static final String USER_SPECIALTY = "specialty";
 protected static final String USER_CONTACT_PHONE = "contactPhone";
 
+protected static final String CONTACT_NAME = "name";
+protected static final String CONTACT_PHONE = "phoneNumber";
+protected static final String CONTACT_RELATIONSHIP = "relationship";
+
 protected static final String RELIEF_REQUEST_PERSONS = "requestedPersons";
 protected static final String RELIEF_REQUEST_PETS = "pets";
 protected static final String RELIEF_REQUEST_CONTACT_PHONE = "contactPhone";
