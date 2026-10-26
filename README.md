@@ -36,7 +36,7 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 ---
 
 ## Presentation Section
-- coming soon
+[Watch the demo on YouTube](https://youtu.be/IHKQ3QOQjfw)
 
 ---
 
