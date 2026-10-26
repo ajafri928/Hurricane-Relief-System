@@ -2,7 +2,10 @@ package com.model;
 
 import java.util.ArrayList;
 
+/** Test driver that loads, changes, and saves shelters. */
 public class ShelterDriver {
+
+    /** @param args not used */
     public static void main(String[] args) {
 
         ArrayList<Shelter> shelters = DataLoader.getShelters();

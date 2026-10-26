@@ -1,5 +1,6 @@
 package com.model;
 
+/** The stages a relief request can be in. */
 public enum ReliefRequestStatus {
     SUBMITTED,
     ASSIGNED,

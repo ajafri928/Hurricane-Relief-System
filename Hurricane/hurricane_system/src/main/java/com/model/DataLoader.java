@@ -8,8 +8,18 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
+/**
+ * Loads shelters, users, relief requests, and hurricane events from the JSON files.
+ *
+ * @author Anish
+ */
 public class DataLoader extends DataConstants {
 
+    /**
+     * Loads every shelter, including its amenities, resources, occupants, and pets.
+     *
+     * @return the list of shelters, or an empty list if the file can't be read
+     */
     public static ArrayList<Shelter> getShelters() {
         ArrayList<Shelter> shelters = new ArrayList<>();
 
@@ -98,6 +108,11 @@ public class DataLoader extends DataConstants {
         return shelters;
     }
 
+    /**
+     * Loads every user, including their roles, location, and emergency contacts.
+     *
+     * @return the list of users, or an empty list if the file can't be read
+     */
     public static ArrayList<User> getUsers() {
         ArrayList<User> users = new ArrayList<>();
 
@@ -177,6 +192,11 @@ public class DataLoader extends DataConstants {
         return users;
     }
 
+    /**
+     * Loads every relief request and links it to the users who submitted and claimed it.
+     *
+     * @return the list of relief requests, or an empty list if the file can't be read
+     */
     public static ArrayList<ReliefRequest> getReliefRequests() {
         ArrayList<ReliefRequest> requests = new ArrayList<>();
 
@@ -263,6 +283,11 @@ public class DataLoader extends DataConstants {
         return requests;
     }
 
+    /**
+     * Loads every hurricane event.
+     *
+     * @return the list of hurricane events, or an empty list if the file can't be read
+     */
     public static ArrayList<HurricaneEvent> getHurricaneEvents() {
         ArrayList<HurricaneEvent> events = new ArrayList<>();
 
@@ -302,10 +327,9 @@ public class DataLoader extends DataConstants {
         return events;
     }
 
-    /*
-     * Helper methods
-     */
+    // ----- Helper methods -----
 
+    // Builds a Location from JSON, or returns null if there isn't one
     private static Location parseLocation(JSONObject locationJSON) {
         if (locationJSON == null) {
             return null;
@@ -353,6 +377,7 @@ public class DataLoader extends DataConstants {
         }
     }
 
+    // Builds a Person from JSON, making a new id if one is missing
     private static Person parsePerson(JSONObject json) {
         UUID id = getUuid(json, PERSON_ID);
         if (id == null) id = UUID.randomUUID();
@@ -363,6 +388,7 @@ public class DataLoader extends DataConstants {
         return new Person(id, firstName, lastName, age, needsMedical);
     }
     
+    // Builds a Pet from JSON, making a new id if one is missing
     private static Pet parsePet(JSONObject json) {
         UUID id = getUuid(json, PET_ID);
         if (id == null) id = UUID.randomUUID();
@@ -371,6 +397,7 @@ public class DataLoader extends DataConstants {
         return new Pet(id, name, species);
     }
     
+    // Turns a JSON array into a list of Persons (empty if the array is missing)
     private static ArrayList<Person> parsePersons(JSONArray array) {
         ArrayList<Person> persons = new ArrayList<>();
         if (array == null) {
@@ -382,6 +409,7 @@ public class DataLoader extends DataConstants {
         return persons;
     }
     
+    // Turns a JSON array into a list of Pets (empty if the array is missing)
     private static ArrayList<Pet> parsePets(JSONArray array) {
         ArrayList<Pet> pets = new ArrayList<>();
         if (array == null) {
@@ -393,6 +421,7 @@ public class DataLoader extends DataConstants {
         return pets;
     }
 
+    // Reads a UUID, or null if it's missing or invalid
     private static UUID getUuid(JSONObject jsonObject, String key) {
         String idString = getString(jsonObject, key);
 
@@ -408,6 +437,7 @@ public class DataLoader extends DataConstants {
         }
     }
 
+    // Reads a String, or null if it's missing
     private static String getString(JSONObject jsonObject, String key) {
         Object value = jsonObject.get(key);
 
@@ -418,6 +448,7 @@ public class DataLoader extends DataConstants {
         return value.toString();
     }
 
+    // Reads an int, or 0 if it's missing
     private static int getInt(JSONObject jsonObject, String key) {
         Object value = jsonObject.get(key);
 
@@ -428,6 +459,7 @@ public class DataLoader extends DataConstants {
         return 0;
     }
 
+    // Reads a double, or 0.0 if it's missing
     private static double getDouble(JSONObject jsonObject, String key) {
         Object value = jsonObject.get(key);
 
@@ -438,6 +470,7 @@ public class DataLoader extends DataConstants {
         return 0.0;
     }
 
+    // Reads a boolean, or false if it's missing
     private static boolean getBoolean(JSONObject jsonObject, String key) {
         Object value = jsonObject.get(key);
 
@@ -448,6 +481,7 @@ public class DataLoader extends DataConstants {
         return value != null && Boolean.parseBoolean(value.toString());
     }
 
+    // Turns a String into the matching enum value, or null if it doesn't match
     private static <T extends Enum<T>> T parseEnum(
             Object value, Class<T> enumType) {
 
@@ -465,6 +499,7 @@ public class DataLoader extends DataConstants {
         }
     }
 
+    // Finds the user with the given id, or null if there's no match
     private static User getUserById(
             ArrayList<User> users, UUID userId) {
 

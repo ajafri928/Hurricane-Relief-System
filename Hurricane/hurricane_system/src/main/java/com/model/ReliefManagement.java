@@ -3,6 +3,7 @@ package com.model;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/** Singleton that stores and manages relief requests. */
 public class ReliefManagement {
     
     private static ReliefManagement reliefManagement;
@@ -12,6 +13,7 @@ public class ReliefManagement {
         requests = DataLoader.getReliefRequests();
     }
 
+    /** @return the single instance */
     public static ReliefManagement getInstance(){
         if (reliefManagement == null) {
             reliefManagement = new ReliefManagement();
@@ -19,10 +21,12 @@ public class ReliefManagement {
         return reliefManagement;
     }
 
+    /** @return all relief requests */
     public ArrayList<ReliefRequest> getReliefRequests(){
         return requests;
     }
 
+    /** @param id request id @return the matching request, or null */
     public ReliefRequest getReliefRequest(UUID id){
         for (ReliefRequest r : requests){
             if (r.getId().equals(id)) {
@@ -32,37 +36,28 @@ public class ReliefManagement {
         return null;
     }
 
+    /** @param status status to filter by @return requests with that status */
     public ArrayList<ReliefRequest> getRequestsByStatus(ReliefRequestStatus status){
         ArrayList<ReliefRequest> statusRequests = new ArrayList<>();
-            for (ReliefRequest r : requests){
-                if (r.getStatus().equals(status)){
-                    statusRequests.add(r);
-                }
+        for (ReliefRequest r : requests){
+            if (r.getStatus() == status){
+                statusRequests.add(r);
             }
+        }
         return statusRequests;
     }
 
+    /** @param request request to add */
     public void addReliefRequest(ReliefRequest request){
         requests.add(request);
     }
 
+    /** @param id id of request to remove */
     public void removeReliefRequest(UUID id){
-        for (ReliefRequest r: requests){
-            if (r.getId().equals(id)){
-                requests.remove(r);
-            }
-        }
+        requests.removeIf(r -> r.getId().equals(id));
     }
 
-    //Q: How would this change anything?
-    /*public ReliefRequest editReliefRequest(UUID id){
-        for (ReliefRequest r: requests){
-            if (r.getId().equals(id)){
-                r = 
-            }
-        }
-    } */
-
+    /** Saves all requests to the JSON file. */
     public void save(){
         DataWriter.saveReliefRequests(requests);
     }

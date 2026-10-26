@@ -5,7 +5,18 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+/**
+ * Saves shelters, users, and relief requests to the JSON files.
+ *
+ * @author Sahil
+ */
+@SuppressWarnings("unchecked")
 public class DataWriter extends DataConstants{
+    /**
+     * Saves all shelters to the shelters JSON file.
+     *
+     * @param shelters the shelters to save
+     */
     public static void saveShelters(ArrayList<Shelter> shelters) {
         JSONArray sheltersJSON = new JSONArray();
 
@@ -21,6 +32,12 @@ public class DataWriter extends DataConstants{
             e.printStackTrace();
         }
     }
+    /**
+     * Turns a shelter into JSON, including its amenities, resources, occupants, and pets.
+     *
+     * @param shelter the shelter to save
+     * @return the shelter as a JSON object
+     */
     public static JSONObject getShelterJSON(Shelter shelter) {
         JSONObject shelterJSON = new JSONObject();
         shelterJSON.put(SHELTER_ID, shelter.getId().toString());
@@ -61,6 +78,7 @@ public class DataWriter extends DataConstants{
     return shelterJSON;
 }
 
+// Turns a location into JSON
 private static JSONObject getLocationJSON(Location location) {
     JSONObject locationJSON = new JSONObject();
     locationJSON.put(LOCATION_STREET_1, location.getAddressLine1());
@@ -72,6 +90,7 @@ private static JSONObject getLocationJSON(Location location) {
     locationJSON.put(LOCATION_LONGITUDE, location.getLongitude());
     return locationJSON;
 }
+// Turns a shelter resource into JSON
 private static JSONObject getResourceJSON(ShelterResource resource) {
     JSONObject resourceJSON = new JSONObject();
     resourceJSON.put(RESOURCE_TYPE, resource.getType());
@@ -121,6 +140,11 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
     contactJSON.put(CONTACT_RELATIONSHIP, contact.getRelationship());
     return contactJSON;
 }
+    /**
+     * Saves all users to the users JSON file.
+     *
+     * @param users the users to save
+     */
     public static void saveUsers(ArrayList<User> users) {
         JSONArray usersJSON = new JSONArray();
 
@@ -137,6 +161,12 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
             e.printStackTrace();
         }
     }
+    /**
+     * Turns a user into JSON, including their roles and emergency contacts.
+     *
+     * @param user the user to save
+     * @return the user as a JSON object
+     */
     public static JSONObject getUserJSON(User user) {
         JSONObject userJSON = new JSONObject();
 
@@ -163,6 +193,11 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
 
         return userJSON;
     }
+    /**
+     * Saves all relief requests to the relief requests JSON file.
+     *
+     * @param requests the relief requests to save
+     */
     public static void saveReliefRequests(ArrayList<ReliefRequest> requests) {
         JSONArray requestsJSON = new JSONArray();
 
@@ -179,6 +214,12 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
             e.printStackTrace();
         }
     }
+    /**
+     * Turns a relief request into JSON, including its people, pets, and comments.
+     *
+     * @param request the relief request to save
+     * @return the relief request as a JSON object
+     */
     public static JSONObject getReliefRequestJSON(ReliefRequest request) {
         JSONObject requestJSON = new JSONObject();
 
@@ -209,6 +250,7 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
 
         return requestJSON;
     }
+    // Turns a request comment into JSON
     private static JSONObject getCommentJSON(RequestComment comment) {
     JSONObject commentJSON = new JSONObject();
 
@@ -220,6 +262,7 @@ private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
     return commentJSON;
 }
 
+// Turns a list of people into a JSON array
 private static JSONArray getPersonsJSON(ArrayList<Person> persons) {
     JSONArray personsJSON = new JSONArray();
     for (Person person : persons) {
@@ -228,6 +271,7 @@ private static JSONArray getPersonsJSON(ArrayList<Person> persons) {
     return personsJSON;
 }
 
+// Turns a list of pets into a JSON array
 private static JSONArray getPetsJSON(ArrayList<Pet> pets) {
     JSONArray petsJSON = new JSONArray();
     for (Pet pet : pets) {

@@ -2,6 +2,14 @@ package com.model;
 
 import java.io.File;
 
+/**
+ * Holds the file paths and JSON key names used to load and save data.
+ * DataLoader and DataWriter extend this class so they can share the same keys.
+ *
+ * @author Anish
+ * @author Sahil
+ */
+
 public abstract class DataConstants{
 
 protected static final String SHELTER_FILE_NAME = "jsonfiles" + File.separator + "Shelters.json";
