@@ -40,8 +40,14 @@ public class ReliefSystemUI {
         system.markUserSafe(SafetyCategory.HIGH_RISK);
         System.out.println("Safety status set to HIGH_RISK.");
 
+        ArrayList<Person> persons = new ArrayList<>();
+        persons.add(new Person("John", "Doe", 40));
+        persons.add(new Person("Jane", "Doe", 38));
+        persons.add(new Person("Emma", "Doe", 6));
+        persons.add(new Person("Liam", "Doe", 4));
+
         ReliefRequest request = system.submitReliefRequest(
-                johnsLocation, "Food and Water", 4);
+            johnsLocation, "Food and Water", persons, new ArrayList<>(), "803-555-0100");
 
         if (request == null) {
             System.out.println("The relief request was not submitted.");
@@ -54,7 +60,7 @@ public class ReliefSystemUI {
         system.addRequestComment("We have two small children and no power.");
         System.out.println("Comment added to the request.");
 
-        Shelter shelter = system.findSafeShelter(johnsLocation, 4);
+        Shelter shelter = system.findSafeShelter(johnsLocation, request.getPeopleCount());
 
         if (shelter == null) {
             System.out.println("No shelter with room was found.");
@@ -96,7 +102,7 @@ public class ReliefSystemUI {
         System.out.println("Open requests: " + openRequests.size());
         for (ReliefRequest open : openRequests) {
             System.out.println("  - " + open.getAssistance()
-                    + " for " + open.getPeople() + " people"
+                    + " for " + open.getPeopleCount() + " people"
                     + " (" + open.getStatus() + ")");
         }
 
