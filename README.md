@@ -23,7 +23,7 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 | Software Requirements Specification (SRS) | [requirements.pdf](docs/requirements.pdf) |
 | UML Class Diagram | [uml-class-diagram.pdf](docs/uml-class-diagram.pdf) |
 | UML Sequence Diagrams | [docs folder](docs) |
-| Use Case Diagram | [Lucidchart](https://lucid.app/lucidchart/9d2c787d-0d68-4b66-bd5d-54d205899ca5/edit?viewport_loc=-1555%2C2738%2C6859%2C3933%2Cpage1&invitationId=inv_7b456ea8-53b1-43e1-91af-369a79a15882) |
+| Use Case Diagram | [Lucidchart](https://lucid.app/lucidchart/041c5661-800d-40c6-bdbb-397913133d55/edit?viewport_loc=-33%2C-74%2C1144%2C732%2C0_0&invitationId=inv_20244d77-08f6-45f6-b59e-574fca3fab17) |
 | Functional Requirements Spreadsheet | [Requirements Spreadsheet](https://emailsc-my.sharepoint.com/:x:/g/personal/qrmurphy_email_sc_edu/IQDfv9UA8K3ITZQTtXJ2nSvXAbbut9_ley5XSkfzBaxgKuw?e=J2nEKe) |
 | Sample JSON Data | [jsonfiles](jsonfiles) |
 | SCRUM Project Board | [Project Board](https://github.com/users/shmoney2/projects/1) |
