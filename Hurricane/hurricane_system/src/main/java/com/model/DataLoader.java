@@ -79,7 +79,7 @@ public class DataLoader extends DataConstants {
                 }
 
                 // Load the pets staying at the shelter.
-                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS);
+                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS_ON_SITE);
 
                 if (petsJSON != null) {
                     for (Object petObject : petsJSON) {
