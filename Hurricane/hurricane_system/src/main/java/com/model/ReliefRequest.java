@@ -137,7 +137,7 @@ public class ReliefRequest {
 
     // Marks the request as resolved.
     public void complete() {
-        // Stub
+        status = ReliefRequestStatus.COMPLETE;
     }
 
     /**

@@ -10,7 +10,7 @@
     "assistance": "Need clean drinking water and non-perishable food rations.",
     "location": {
       "id": "876e4567-e89b-12d3-a456-426614174111",
-      "street1": "123 Main St",
+      "addressLine1": "123 Main St",
       "city": "Columbia",
       "state": "SC",
       "zipCode": "29201",

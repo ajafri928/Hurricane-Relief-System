@@ -1,7 +1,7 @@
 package com.model;
 
-import java.util.UUID;
 import java.util.Objects;
+import java.util.UUID;
 
 public class Pet {
     private UUID Id;

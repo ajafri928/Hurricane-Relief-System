@@ -145,6 +145,8 @@ public class User {
                 : new ArrayList<>(emergencyContacts);
     }
 
+    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
+
     @Override
 public String toString() {
     return "User {" +

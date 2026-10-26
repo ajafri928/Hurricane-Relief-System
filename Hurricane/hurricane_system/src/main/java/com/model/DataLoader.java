@@ -3,7 +3,7 @@ package com.model;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.UUID;
-
+import java.time.LocalDateTime;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -48,9 +48,49 @@ public class DataLoader extends DataConstants {
                         id, name, address, capacity, occupancy,
                         petFriendly, accessible, medicalStaff, vetStaff,
                         operationalStatus);
+                
+                // Load the shelter's amenities from the JSON array.
+                JSONArray amenitiesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_AMENITIES);
+
+                if (amenitiesJSON != null) {
+                    for (Object amenityObject : amenitiesJSON) {
+                        shelter.addAmenity(amenityObject.toString());
+                    }
+                }
+
+                // Load the shelter's resources from the JSON array.
+                JSONArray resourcesJSON = (JSONArray) shelterJSON.get(
+                        SHELTER_RESOURCES);
+
+                if (resourcesJSON != null) {
+                    for (Object resourceObject : resourcesJSON) {
+                        shelter.addResource(parseResource((JSONObject) resourceObject));
+                    }
+                }
+
+                // Load the people checked into the shelter.
+                JSONArray occupantsJSON = (JSONArray) shelterJSON.get(SHELTER_OCCUPANTS);
+
+                if (occupantsJSON != null) {
+                    for (Object personObject : occupantsJSON) {
+                        shelter.getOccupants().add(parsePerson((JSONObject) personObject));
+                    }
+                }
+
+                // Load the pets staying at the shelter.
+                JSONArray petsJSON = (JSONArray) shelterJSON.get(SHELTER_PETS);
+
+                if (petsJSON != null) {
+                    for (Object petObject : petsJSON) {
+                        shelter.getPetsOnSite().add(parsePet((JSONObject) petObject));
+                    }
+                }
 
                 shelters.add(shelter);
             }
+
+            reader.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -85,6 +125,9 @@ public class DataLoader extends DataConstants {
                 String firstName = getString(userJSON, USER_FIRST_NAME);
                 String lastName = getString(userJSON, USER_LAST_NAME);
                 String password = getString(userJSON, USER_PASSWORD);
+                VolunteerRole specialty = parseEnum(userJSON.get(USER_SPECIALTY), VolunteerRole.class);
+                String contactPhone = getString(userJSON, USER_CONTACT_PHONE);
+
 
                 JSONObject locationJSON = (JSONObject) userJSON.get(
                         USER_LOCATION);
@@ -112,7 +155,19 @@ public class DataLoader extends DataConstants {
                 User user = new User(
                         id, userName, firstName, lastName, password,
                         location, safety, roles);
+                user.setSpecialty(specialty);
+                user.setContactPhone(contactPhone);
 
+                JSONArray contactsJSON = (JSONArray) userJSON.get(USER_EMERGENCY_CONTACTS);
+                if (contactsJSON != null) {
+                    for (Object c : contactsJSON) {
+                        JSONObject contactJSON = (JSONObject) c;
+                        user.getEmergencyContacts().add(new EmergencyContact(
+                                getString(contactJSON, CONTACT_NAME),
+                                getString(contactJSON, CONTACT_PHONE),
+                                getString(contactJSON, CONTACT_RELATIONSHIP)));
+                    }
+                }
                 users.add(user);
             }
         } catch (Exception e) {

@@ -46,6 +46,18 @@ public class DataWriter extends DataConstants{
     }
     shelterJSON.put(SHELTER_RESOURCES, resourcesJSON);
 
+    JSONArray occupantsJSON = new JSONArray();
+    for (Person person : shelter.getOccupants()) {
+        occupantsJSON.add(getPersonJSON(person));
+    }
+    shelterJSON.put(SHELTER_OCCUPANTS, occupantsJSON);
+
+    JSONArray petsJSON = new JSONArray();
+    for (Pet pet : shelter.getPetsOnSite()) {
+        petsJSON.add(getPetJSON(pet));
+    }
+    shelterJSON.put(SHELTER_PETS, petsJSON);
+
     return shelterJSON;
 }
 
@@ -65,9 +77,49 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
     resourceJSON.put(RESOURCE_TYPE, resource.getType());
     resourceJSON.put(RESOURCE_UNIT, resource.getUnit());
     resourceJSON.put(RESOURCE_QUANTITY, resource.getQuantity());
-    resourceJSON.put(RESOURCE_AVAILABLE_UNTIL, resource.getAvailableUntil().toString());
+    resourceJSON.put(RESOURCE_AVAILABLE_UNTIL,
+            resource.getAvailableUntil() == null ? null : resource.getAvailableUntil().toString());
     resourceJSON.put(RESOURCE_LOW_STOCK_THRESHOLD, resource.getLowStockThreshold());
     return resourceJSON;
+}
+
+/**
+ * Turns a person into JSON. Public so other save code (like relief requests) can reuse it.
+ *
+ * @param person the person to save
+ * @return the person as a JSON object
+ */
+public static JSONObject getPersonJSON(Person person) {
+    JSONObject personJSON = new JSONObject();
+    personJSON.put(PERSON_ID, person.getId().toString());
+    personJSON.put(PERSON_FIRST_NAME, person.getFirstName());
+    personJSON.put(PERSON_LAST_NAME, person.getLastName());
+    personJSON.put(PERSON_AGE, person.getAge());
+    personJSON.put(PERSON_NEEDS_MEDICAL, person.needsMedicalAssistance());
+    return personJSON;
+}
+
+/**
+ * Turns a pet into JSON.
+ *
+ * @param pet the pet to save
+ * @return the pet as a JSON object
+ */
+public static JSONObject getPetJSON(Pet pet) {
+    JSONObject petJSON = new JSONObject();
+    petJSON.put(PET_ID, pet.getID().toString());
+    petJSON.put(PET_NAME, pet.getName());
+    petJSON.put(PET_SPECIES, pet.getSpecies());
+    return petJSON;
+}
+
+// Turns an emergency contact into JSON
+private static JSONObject getEmergencyContactJSON(EmergencyContact contact) {
+    JSONObject contactJSON = new JSONObject();
+    contactJSON.put(CONTACT_NAME, contact.getName());
+    contactJSON.put(CONTACT_PHONE, contact.getPhone());
+    contactJSON.put(CONTACT_RELATIONSHIP, contact.getRelationship());
+    return contactJSON;
 }
     public static void saveUsers(ArrayList<User> users) {
         JSONArray usersJSON = new JSONArray();
@@ -102,6 +154,12 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
             rolesJSON.add(role.toString());
         }
         userJSON.put(USER_ROLES, rolesJSON);
+
+        JSONArray contactsJSON = new JSONArray();
+        for (EmergencyContact contact : user.getEmergencyContacts()) {
+            contactsJSON.add(getEmergencyContactJSON(contact));
+        }
+        userJSON.put(USER_EMERGENCY_CONTACTS, contactsJSON);
 
         return userJSON;
     }
@@ -154,7 +212,8 @@ private static JSONObject getResourceJSON(ShelterResource resource) {
     private static JSONObject getCommentJSON(RequestComment comment) {
     JSONObject commentJSON = new JSONObject();
 
-    commentJSON.put(COMMENT_AUTHOR_ID, comment.getAuthor().getId().toString());
+    commentJSON.put(COMMENT_AUTHOR_ID,
+            comment.getAuthor() == null ? null : comment.getAuthor().getId().toString());
     commentJSON.put(COMMENT_TEXT, comment.getText());
     commentJSON.put(COMMENT_TIMESTAMP, comment.getTimeStamp().toString());
 
