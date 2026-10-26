@@ -1,6 +1,7 @@
 package com.model;
 
 public class PersistenceCheck {
+
     public static void main(String[] args) {
         System.out.println("\n===== PART 7: After a restart =====\n");
         System.out.println("This is a new run. Everything below was loaded from the JSON files.\n");
@@ -13,5 +14,33 @@ public class PersistenceCheck {
         }
         System.out.println(system.getCurrentUser().getFirstName()
                 + " signed in, so the accounts were saved.");
+
+        ReliefRequest carter = findCarterRequest();
+        if (carter == null) {
+            System.out.println("\nNo Carter request found. Run ReliefSystemUI first.");
+            return;
+        }
+
+        System.out.println("\nCarter request:");
+        System.out.println("  Status:       " + carter.getStatus());
+
+        User responder = carter.getResponder();
+        System.out.println("  Handled by:   " + (responder == null ? "nobody"
+                : responder.getFirstName() + " " + responder.getLastName()));
+
+        User submitter = carter.getSubmittedBy();
+        System.out.println("  Submitted by: " + (submitter == null ? "not recorded"
+                : submitter.getFirstName() + " " + submitter.getLastName()));
+    }
+
+    private static ReliefRequest findCarterRequest() {
+        for (ReliefRequest r : ReliefManagement.getInstance().getReliefRequests()) {
+            for (Person p : r.getRequestedPersons()) {
+                if ("Carter".equals(p.getLastName())) {
+                    return r;
+                }
+            }
+        }
+        return null;
     }
 }
