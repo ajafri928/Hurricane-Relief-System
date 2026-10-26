@@ -1,7 +1,18 @@
 package com.model;
 
+
+/**
+ * Step 7 of the Hurricane Scarlett demo. Run this as a new program after
+ * ReliefSystemUI, without resetting the JSON files. Everything it prints
+ * was loaded from disk, which shows the earlier changes were saved.
+ */
 public class PersistenceCheck {
 
+    /**
+     * Signs in from the saved accounts and prints what survived the restart.
+     *
+     * @param args not used
+     */
     public static void main(String[] args) {
         System.out.println("\n===== PART 7: After a restart =====\n");
         System.out.println("This is a new run. Everything below was loaded from the JSON files.\n");
@@ -36,6 +47,11 @@ public class PersistenceCheck {
         printOccupiedShelters();
     }
 
+    /**
+     * Finds the saved request that includes a member of the Carter family.
+     *
+     * @return the Carter request, or null if none was saved
+     */
     private static ReliefRequest findCarterRequest() {
         for (ReliefRequest r : ReliefManagement.getInstance().getReliefRequests()) {
             for (Person p : r.getRequestedPersons()) {
@@ -47,6 +63,11 @@ public class PersistenceCheck {
         return null;
     }
     
+    /**
+     * Prints the contact number, people, and pets saved on a request.
+     *
+     * @param carter the request to print
+     */
     private static void printFamily(ReliefRequest carter) {
         System.out.println("  Contact:      " + carter.getContactPhone());
         for (Person p : carter.getRequestedPersons()) {
@@ -56,6 +77,8 @@ public class PersistenceCheck {
             System.out.println("    - " + pet.getName() + " (" + pet.getSpecies() + ")");
         }
     }
+
+    /** Prints every shelter that has saved occupants or pets on site. */
     private static void printOccupiedShelters() {
         for (Shelter s : ShelterManagement.getInstance().getShelters()) {
             if (!s.getOccupants().isEmpty() || !s.getPetsOnSite().isEmpty()) {
