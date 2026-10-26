@@ -95,12 +95,18 @@ public class ReliefRequest {
        this.submittedBy = submittedBy;
    }
 
-    // Marks the request as submitted.
+    /**  Marks the request as submitted.
+     * 
+     */
     public void submit() {
         status = ReliefRequestStatus.SUBMITTED;
     }
 
-    // Cancels the request.
+    /**
+     * Changes the request's status.
+     *
+     * @param status the new status
+     */
     public void cancel() {
         // Stub: there's no CANCELLED status in ReliefRequestStatus yet
     }
@@ -114,7 +120,10 @@ public class ReliefRequest {
         this.status = status;
     }
 
-    // Escalates the request to 911.
+    /**
+     * Marks the request as escalated to 911.
+     * Does not contact emergency services.
+     */
     public void escalate() {
         status = ReliefRequestStatus.ESCALATED_TO_911;
     }
@@ -129,13 +138,19 @@ public class ReliefRequest {
         status = ReliefRequestStatus.ASSIGNED;
     }
 
-    // The responder drops the request so someone else can take it.
+    /**
+     * Marks the request as escalated to 911.
+     * Does not contact emergency services.
+     */
     public void decline() {
         responder = null;
         status = ReliefRequestStatus.SUBMITTED;
     }
 
-    // Marks the request as resolved.
+    /**
+     * Marks the request as complete.
+     * This method does not check user permissions.
+     */
     public void complete() {
         status = ReliefRequestStatus.COMPLETE;
     }
@@ -149,31 +164,38 @@ public class ReliefRequest {
         comments.add(comment);
     }
 
-    // Sets the user who submitted the request
+    /** Sets the user who submitted the request
+     * */
     public void setSubmittedBy(User submittedBy) { this.submittedBy = submittedBy; }
 
-    // Sets how urgent the request is
+    /** Sets how urgent the request is
+     * */
     public void setUrgency(UrgencyTier urgency) { this.urgency = urgency; }
 
-    // Sets whether anyone in the request has special needs
+    /** Sets whether anyone in the request has special needs
+     * */
     public void setSpecialNeeds(boolean specialNeeds) { this.specialNeeds = specialNeeds; }
 
-    // Returns a copy of the request's comments
+    /**  Returns a copy of the request's comments
+     * */
     public ArrayList<RequestComment> getComments() {
         return new ArrayList<>(comments);
     }
 
-    // Returns the user who submitted the request
+    /** Returns the user who submitted the request
+     * */
     public User getSubmittedBy() {
         return submittedBy;
     }
 
-    // Returns the responder who claimed the request, or null
+    /**  Returns the responder who claimed the request, or null
+     * */
     public User getResponder() {
         return responder;
     }
 
-    // Returns the shelter the request was sent to
+    /** Returns the shelter the request was sent to
+     * */
     public Shelter getDestinationShelter() {
         return destinationShelter;
     }
@@ -183,61 +205,85 @@ public class ReliefRequest {
         this.destinationShelter = destinationShelter;
     }
 
-    // Returns extra details about the request
+    /**  Returns extra details about the request
+     * */
     public String getDescription() {
         return description;
     }
 
-    // Returns true if anyone has special needs
+    /**  Returns true if anyone has special needs
+     * */
     public boolean hasSpecialNeeds() {
         return specialNeeds;
     }
 
-    // Returns the request's id
+    /**  Returns the request's id
+     * */
     public UUID getId() { return id; }
 
-    // Returns when the request was created
+    /**  Returns when the request was created
+     * */
     public String getCreatedAt() { return createdAt; }
 
-    // Returns where help is needed
+    /**  Returns where help is needed
+     * */
     public Location getLocation() { return location; }
 
-    // Returns the kind of help needed
+    /**  Returns the kind of help needed
+     * */
     public String getAssistance() { return assistance; }
 
-    // Returns the people who need help
+    /** Returns the people who need help
+     * */
     public ArrayList<Person> getRequestedPersons() { return requestedPersons; }
 
-    // Adds a person who needs help
+    /**  Adds a person who needs help
+     * */
     public void addPerson(Person person) { requestedPersons.add(person); }
 
-    // Returns the pets that need help
+    /** Returns the pets that need help
+     * */
     public ArrayList<Pet> getPets() { return pets; }
 
-    // Adds a pet that needs help
+    /**  Adds a pet that needs help
+     * */
     public void addPet(Pet pet) { pets.add(pet); }
 
-    // Returns how many people need help
+    /** Returns how many people need help
+     * */
     public int getPeopleCount() { return requestedPersons.size(); }
 
-    // Returns the phone number to reach the requester
+    /** Returns the phone number to reach the requester
+     * */
     public String getContactPhone() { return contactPhone; }
 
-    // Sets the phone number to reach the requester
+    /**  Sets the phone number to reach the requester
+     * */
     public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
 
-    // Sets the responder directly (used by DataLoader; use accept() to claim a request)
+    /**  Sets the responder directly (used by DataLoader; use accept() to claim a request)
+     * */
     public void setResponder(User responder) { this.responder = responder; }
 
-    // Returns the priority score
+    /** Returns the priority score
+     * */
     public int getPriorityScore() { return priorityScore; }
 
-    // Returns the urgency tier
+    /**  Returns the urgency tier
+     * */
     public UrgencyTier getUrgency() { return urgency; }
 
-    // Returns the current status
+    /** Returns the current status
+     * */
     public ReliefRequestStatus getStatus() { return status; }
 
+
+    /**
+     * Returns a formatted summary of the request.
+     *
+     * @return the request's ID, assistance, people count, priority score,
+     *         urgency, status, submitting user ID, and location
+     */
     @Override
     public String toString() {
         return "ReliefRequest {" +
