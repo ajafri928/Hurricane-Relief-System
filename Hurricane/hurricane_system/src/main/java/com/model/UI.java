@@ -3,8 +3,10 @@ package com.model;
 import com.location.Address;
 import com.location.MapTools;
 
+/** Demo that finds the closest shelter to a Charleston address and prints driving directions. */
 public class UI {
 
+        /** Finds the closest shelter and prints the directions. */
         public void run() {
                 // A Charleston address near the waterfront
                 Address userAddress = new Address(
@@ -69,6 +71,7 @@ public class UI {
                 }
         }
 
+        /** @param args not used */
         public static void main(String[] args) {
                 new UI().run();
         }
