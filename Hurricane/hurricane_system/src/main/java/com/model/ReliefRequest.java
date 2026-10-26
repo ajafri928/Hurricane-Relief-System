@@ -126,7 +126,7 @@ public class ReliefRequest {
      */
     public void accept(User responder) {
         this.responder = responder;
-        status = ReliefRequestStatus.CLAIMED;
+        status = ReliefRequestStatus.ASSIGNED;
     }
 
     // The responder drops the request so someone else can take it.

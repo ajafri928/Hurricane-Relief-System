@@ -5,6 +5,7 @@ import java.util.UUID;
 
 /**
  * Holds every user in the system. Singleton, so the whole app shares one list.
+ * 
  * @author Abaan Jafri
  */
 public class UserManagement {
@@ -67,7 +68,7 @@ public class UserManagement {
     // Makes a new user and adds them. Same parameters as the User constructor.
     // Returns false if username/password is blank or the username is taken.
     public boolean addUser(String userName, String firstName, String lastName,
-                           String password, Location location) {
+            String password, Location location) {
         if (userName == null || userName.isBlank() || password == null || password.isBlank()) {
             return false;
         }
