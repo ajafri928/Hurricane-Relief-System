@@ -1,7 +1,7 @@
 # 🌀 Lifeline Link — Hurricane Relief System
 **Team: Quinn and Friends** · CSCE 247 Software Engineering · University of South Carolina
 
-A Java application for coordinating disaster response during hurricane events. Victims submit relief requests describing what they need, which are automatically prioritized by urgency and claimed by volunteers or emergency professionals based on their skills. The system also tracks shelters with live occupancy and accessibility details, lets users mark themselves safe, and allows anyone to report hazards for administrator verification. Administrators oversee the response by approving requests, drawing evacuation zones, and broadcasting alerts.
+A Java application for coordinating disaster response during hurricane events. Victims submit relief requests describing what they need and who needs help, which are prioritized by urgency and claimed by volunteers or emergency professionals based on their specialty. The system matches families to shelters by driving distance, filtering on capacity, pet policy, and medical staffing. Shelter managers check people and pets in; administrators approve requests and broadcast alerts. Users can mark themselves safe and report hazards for verification.
 
 Built around a facade entry point with singleton managers for each subsystem, backed by JSON persistence.
 
@@ -62,13 +62,11 @@ A small JavaFX window should open.
 ```
 Hurricane-Relief-System/
 ├── docs/                    # SRS, UML class + sequence diagrams
-├── jsonfiles/               # JSON data (users, shelters, requests, hazards, events)
-├── Hurricane/
-│   └── hurricane_system/    # JavaFX Maven project
-│       ├── pom.xml
-│       └── src/main/
-│           ├── java/        # Java source code
-│           └── resources/   # FXML views
+├── jsonfiles/               # JSON data (users, shelters, requests, events)
+├── src/main/
+│   ├── java/                # Java source code
+│   └── resources/           # FXML views
+├── pom.xml
 └── README.md
 ```
 
