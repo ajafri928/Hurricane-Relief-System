@@ -242,6 +242,18 @@ public class DataLoader extends DataConstants {
                         request.setResponder(getUserById(
                                 users, getUuid(requestJSON, RELIEF_REQUEST_ASSIGNED_TO)));
 
+                JSONArray commentsJSON = (JSONArray) requestJSON.get(RELIEF_REQUEST_COMMENTS);
+                if (commentsJSON != null) {
+                    for (Object c : commentsJSON) {
+                        JSONObject commentJSON = (JSONObject) c;
+                        User author = getUserById(users, getUuid(commentJSON, COMMENT_AUTHOR_ID));
+                        LocalDateTime time = parseDateTime(getString(commentJSON, COMMENT_TIMESTAMP));
+                        request.addComment(new RequestComment(
+                                author, getString(commentJSON, COMMENT_TEXT),
+                                time == null ? LocalDateTime.now() : time));
+                    }
+                }
+
                 requests.add(request);
             }
         } catch (Exception e) {
@@ -315,8 +327,35 @@ public class DataLoader extends DataConstants {
                 latitude, longitude);
     }
 
+    // Reads a shelter resource (water, blankets, etc.)
+    private static ShelterResource parseResource(JSONObject resourceJSON) {
+        return new ShelterResource(
+                getString(resourceJSON, RESOURCE_TYPE),
+                getInt(resourceJSON, RESOURCE_QUANTITY),
+                parseDateTime(getString(resourceJSON, RESOURCE_AVAILABLE_UNTIL)),
+                getInt(resourceJSON, RESOURCE_LOW_STOCK_THRESHOLD),
+                getString(resourceJSON, RESOURCE_UNIT));
+    }
+
+    // Turns "2026-10-15T12:00:00" (with or without a trailing Z) into a LocalDateTime, or null
+    private static LocalDateTime parseDateTime(String text) {
+        if (text == null) {
+            return null;
+        }
+        try {
+            if (text.endsWith("Z")) {
+                text = text.substring(0, text.length() - 1);
+            }
+            return LocalDateTime.parse(text);
+        } catch (Exception e) {
+            System.err.println("Invalid date: " + text);
+            return null;
+        }
+    }
+
     private static Person parsePerson(JSONObject json) {
         UUID id = getUuid(json, PERSON_ID);
+        if (id == null) id = UUID.randomUUID();
         String firstName = getString(json, PERSON_FIRST_NAME);
         String lastName = getString(json, PERSON_LAST_NAME);
         int age = getInt(json, PERSON_AGE);
@@ -326,6 +365,7 @@ public class DataLoader extends DataConstants {
     
     private static Pet parsePet(JSONObject json) {
         UUID id = getUuid(json, PET_ID);
+        if (id == null) id = UUID.randomUUID();
         String name = getString(json, PET_NAME);
         String species = getString(json, PET_SPECIES);
         return new Pet(id, name, species);

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-
 // One person with an account in the system.
 public class User {
     private UUID id;
@@ -18,7 +17,6 @@ public class User {
     private List<EmergencyContact> emergencyContacts;
     private VolunteerRole specialty;
     private String contactPhone;
-
 
     // Makes a new user with a fresh id. Used for create account.
     public User(String userName, String firstName, String lastName, String password, Location location) {
@@ -34,7 +32,7 @@ public class User {
 
     // Rebuilds a saved user loaded from the JSON file.
     public User(UUID id, String userName, String firstName, String lastName, String password,
-                Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
+            Location location, SafetyCategory safety, ArrayList<UserRole> roles) {
         this.id = id;
         this.userName = userName;
         this.firstName = firstName;
@@ -80,7 +78,7 @@ public class User {
     public void Languages() {
         // Stub
     }
-    
+
     // Returns what kind of user this is. Admin will override this.
     public String getType() {
         return "USER";
@@ -95,15 +93,41 @@ public class User {
     }
 
     // Getters
-    public UUID getId() { return id; }
-    public String getUserName() { return userName; }
-    public String getFirstName() { return firstName; }
-    public String getLastName() { return lastName; }
-    public String getPassword() { return password; }
-    public Location getLocation() { return location; }
-    public SafetyCategory getSafety() { return safety; }
-    public List<UserRole> getRoles() { return roles; }
-    public List<EmergencyContact> getEmergencyContacts() { return emergencyContacts; }
+    public UUID getId() {
+        return id;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public SafetyCategory getSafety() {
+        return safety;
+    }
+
+    public List<UserRole> getRoles() {
+        return roles;
+    }
+
+    public List<EmergencyContact> getEmergencyContacts() {
+        return emergencyContacts;
+    }
 
     public void setUserName(String userName) {
         if (userName == null || userName.trim().isEmpty()) {
@@ -111,54 +135,65 @@ public class User {
         }
         this.userName = userName.trim();
     }
-    
+
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    
+
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    
+
     public void setPassword(String password) {
         if (password == null || password.isEmpty()) {
             throw new IllegalArgumentException("Password cannot be empty");
         }
         this.password = password;
     }
-    
+
     public void setLocation(Location location) {
         this.location = location;
     }
-    
+
     public void setSafety(SafetyCategory safety) {
         this.safety = safety;
     }
-    
+
     public void setRoles(List<UserRole> roles) {
         this.roles = (roles == null) ? new ArrayList<>() : new ArrayList<>(roles);
     }
-    
+
     public void setEmergencyContacts(List<EmergencyContact> emergencyContacts) {
         this.emergencyContacts = (emergencyContacts == null)
                 ? new ArrayList<>()
                 : new ArrayList<>(emergencyContacts);
     }
 
-    public void setContactPhone(String contactPhone) { this.contactPhone = contactPhone; }
+    public void setContactPhone(String contactPhone) {
+        this.contactPhone = contactPhone;
+    }
 
     @Override
-public String toString() {
-    return "User {" +
-            "\n  ID: " + id +
-            "\n  Username: '" + userName + '\'' +
-            "\n  Name: '" + firstName + " " + lastName + '\'' +
-            "\n  Safety: " + safety +
-            "\n  Roles: " + roles +
-            "\n  Location: " + (location != null ? location.toString() : "N/A") +
-            "\n}";
-}
-public VolunteerRole getSpecialty() { return specialty; }
-public String getContactPhone() { return contactPhone; }
-public void setSpecialty(VolunteerRole specialty) { this.specialty = specialty; }
+    public String toString() {
+        return "User {" +
+                "\n  ID: " + id +
+                "\n  Username: '" + userName + '\'' +
+                "\n  Name: '" + firstName + " " + lastName + '\'' +
+                "\n  Safety: " + safety +
+                "\n  Roles: " + roles +
+                "\n  Location: " + (location != null ? location.toString() : "N/A") +
+                "\n}";
+    }
+
+    public VolunteerRole getSpecialty() {
+        return specialty;
+    }
+
+    public String getContactPhone() {
+        return contactPhone;
+    }
+
+    public void setSpecialty(VolunteerRole specialty) {
+        this.specialty = specialty;
+    }
 }

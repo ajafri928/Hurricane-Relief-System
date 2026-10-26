@@ -51,8 +51,8 @@ protected static final String SHELTER_AMENITIES = "amenities";
 protected static final String SHELTER_RESOURCES = "shelterResources";
 
 protected static final String LOCATION_ID = "id";
-protected static final String LOCATION_STREET_1 = "addressLine1";
-protected static final String LOCATION_STREET_2 = "addressLine2";
+protected static final String LOCATION_STREET_1 = "street1";
+protected static final String LOCATION_STREET_2 = "street2";
 protected static final String LOCATION_CITY = "city";
 protected static final String LOCATION_STATE = "state";
 protected static final String LOCATION_ZIP_CODE = "zipCode";
@@ -73,6 +73,10 @@ protected static final String COMMENT_TIMESTAMP = "timestamp";
 
 protected static final String USER_SPECIALTY = "specialty";
 protected static final String USER_CONTACT_PHONE = "contactPhone";
+
+protected static final String CONTACT_NAME = "name";
+protected static final String CONTACT_PHONE = "phoneNumber";
+protected static final String CONTACT_RELATIONSHIP = "relationship";
 
 protected static final String RELIEF_REQUEST_PERSONS = "requestedPersons";
 protected static final String RELIEF_REQUEST_PETS = "pets";

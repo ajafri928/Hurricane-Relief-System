@@ -3,12 +3,12 @@ package com.model;
 import java.util.ArrayList;
 
 public class ShelterDriver {
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         ArrayList<Shelter> shelters = DataLoader.getShelters();
 
         System.out.println("Loaded " + shelters.size() + " shelters from JSON file.");
-        for (Shelter shelter: shelters){
+        for (Shelter shelter : shelters) {
             System.out.println(shelter);
         }
 

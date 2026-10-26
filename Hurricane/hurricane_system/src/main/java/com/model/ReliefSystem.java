@@ -17,21 +17,18 @@ public class ReliefSystem {
     private UserManagement userManagement;
     private ReliefManagement reliefManagement;
     private ShelterManagement shelterManagement;
-    //private RegionManagement regionManagement;
-    private HazardManagement hazardManagement;
     private HurricaneEventManagement eventManagement;
 
     private User currentUser;
     private ReliefRequest currentRequest;
     private Shelter currentShelter;
+    private ArrayList<HazardReport> hazardReports = new ArrayList<>();
 
     // Private so the facade can only be made through getInstance()
     private ReliefSystem() {
         userManagement = UserManagement.getInstance();
         reliefManagement = ReliefManagement.getInstance();
         shelterManagement = ShelterManagement.getInstance();
-        //regionManagement = RegionManagement.getInstance();
-        hazardManagement = HazardManagement.getInstance();
         eventManagement = HurricaneEventManagement.getInstance();
     }
 
@@ -60,7 +57,8 @@ public class ReliefSystem {
         if (!currentUser.getRoles().contains(UserRole.ADMIN)) {
             throw new IllegalStateException("This action requires an admin");
         }
-        // Admin is its own class (not a User subclass), so build one for the signed-in admin
+        // Admin is its own class (not a User subclass), so build one for the signed-in
+        // admin
         return new Admin(currentUser.getFirstName(), currentUser.getLastName());
     }
 
@@ -99,7 +97,7 @@ public class ReliefSystem {
      * @return the new User, or null if the username is taken or a field is blank
      */
     public User registerUser(String userName, String firstName, String lastName,
-                             String password, Location location) {
+            String password, Location location) {
         if (!userManagement.addUser(userName, firstName, lastName, password, location)) {
             return null;
         }
@@ -281,11 +279,6 @@ public class ReliefSystem {
         return reliefManagement.getRequestsByStatus(ReliefRequestStatus.SUBMITTED);
     }
 
-    /*public ArrayList<ReliefRequest> listRequestsByRegion(UUID regionId) {
-        return reliefManagement.getRequestsByRegion(regionId);
-    } */
-
-
     /**
      * Finds the closest shelter with room for the given number of people.
      *
@@ -294,9 +287,9 @@ public class ReliefSystem {
      * @return the nearest shelter with room, or null if none found
      */
     public Shelter findSafeShelter(Location location, int people,
-                               boolean needsPetFriendly, boolean needsMedical) {
-    return shelterManagement.findNearestAvailable(location, people,
-                                                  needsPetFriendly, needsMedical);
+            boolean needsPetFriendly, boolean needsMedical) {
+        return shelterManagement.findNearestAvailable(location, people,
+                needsPetFriendly, needsMedical);
     }
 
     /**
@@ -393,7 +386,7 @@ public class ReliefSystem {
         requireLogin();
         HazardReport report = new HazardReport(type, location, currentUser.getUserName());
         report.report();
-        hazardManagement.addHazard(report);
+        hazardReports.add(report);
         return report;
     }
 
@@ -404,7 +397,13 @@ public class ReliefSystem {
      */
     public void verifyHazard(UUID hazardId) {
         requireAdmin();
-        HazardReport hazard = hazardManagement.getHazard(hazardId);
+        HazardReport hazard = null;
+        for (HazardReport h : hazardReports) {
+            if (h.getId().equals(hazardId)) {
+                hazard = h;
+                break;
+            }
+        }
         if (hazard == null) {
             throw new IllegalArgumentException("No hazard with id " + hazardId);
         }
@@ -417,39 +416,14 @@ public class ReliefSystem {
      * @return the verified hazard reports
      */
     public ArrayList<HazardReport> listVerifiedHazards() {
-        return hazardManagement.getVerifiedHazards();
-    }
-
-    /**
-     * Lets an admin create a new geographic region.
-     *
-     * @param name     the region's name
-     * @param boundary the region's boundary
-     * @return the new region
-     */
-    /*public GeographicRegion createRegion(String name, String boundary) {
-        requireAdmin();
-        GeographicRegion region = new GeographicRegion(name, boundary);
-        regionManagement.addRegion(region);
-        return region;
-    } */
-
-    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
-    /**
-     * Lets an admin set a region's evacuation zone type.
-     *
-     * @param regionId the region's id
-     * @param zoneType the new zone type
-     */
-    /*public void setEvacuationStatus(UUID regionId, ZoneType zoneType) {
-        requireAdmin();
-        GeographicRegion region = regionManagement.getRegion(regionId);
-        if (region == null) {
-            throw new IllegalArgumentException("No region with id " + regionId);
+        ArrayList<HazardReport> verified = new ArrayList<>();
+        for (HazardReport h : hazardReports) {
+            if (h.isVerified()) {
+                verified.add(h);
+            }
         }
-        region.setZoneType(zoneType);
+        return verified;
     }
-        */
 
     /**
      * Lets an admin update where a hurricane is and where it is heading.
@@ -525,13 +499,24 @@ public class ReliefSystem {
     public void publishEmergencyAlert(String message) {
         requireAdmin().broadcastAlert(message);
     }
-    public void completeRequest(){
+
+    public void completeRequest() {
         requireLogin();
-        if (!currentUser.getRoles().contains(UserRole.SHELTER_MANAGER)){
-            throw new IllegalStateException("Your volunteer role does not have permission to complete relief requests.");
+        if (!currentUser.getRoles().contains(UserRole.SHELTER_MANAGER)) {
+            throw new IllegalStateException(
+                    "Your volunteer role does not have permission to complete relief requests.");
 
         }
         requireRequest().complete();
+    }
+    public void exportTripInfo(String filePath){
+        requireLogin();
+        TripExport.exportTrip(requireRequest(), currentUser,
+                requireShelter(), filePath);
+
+    }
+     public void checkInFamily(ArrayList<Person> persons, ArrayList<Pet> pets) {
+        requireShelter().checkIn(persons, pets);
     }
 
 }
