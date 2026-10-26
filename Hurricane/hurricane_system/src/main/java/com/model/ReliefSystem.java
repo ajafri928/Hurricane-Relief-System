@@ -509,5 +509,14 @@ public class ReliefSystem {
         }
         requireRequest().complete();
     }
+    public void exportTripInfo(String filePath){
+        requireLogin();
+        TripExport.exportTrip(requireRequest(), currentUser,
+                requireShelter(), filePath);
+
+    }
+     public void checkInFamily(ArrayList<Person> persons, ArrayList<Pet> pets) {
+        requireShelter().checkIn(persons, pets);
+    }
 
 }
