@@ -31,6 +31,8 @@ public class PersistenceCheck {
         User submitter = carter.getSubmittedBy();
         System.out.println("  Submitted by: " + (submitter == null ? "not recorded"
                 : submitter.getFirstName() + " " + submitter.getLastName()));
+        
+        printFamily(carter);
     }
 
     private static ReliefRequest findCarterRequest() {
@@ -43,4 +45,15 @@ public class PersistenceCheck {
         }
         return null;
     }
+    
+    private static void printFamily(ReliefRequest carter) {
+        System.out.println("  Contact:      " + carter.getContactPhone());
+        for (Person p : carter.getRequestedPersons()) {
+            System.out.println("    - " + p.getFullName() + ", age " + p.getAge());
+        }
+        for (Pet pet : carter.getPets()) {
+            System.out.println("    - " + pet.getName() + " (" + pet.getSpecies() + ")");
+        }
+    }
+
 }
