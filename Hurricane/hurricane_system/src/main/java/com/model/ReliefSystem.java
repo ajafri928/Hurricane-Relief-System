@@ -177,6 +177,7 @@ public class ReliefSystem {
             ArrayList<Person> persons, ArrayList<Pet> pets, String contactPhone) {
         requireLogin();
         ReliefRequest request = new ReliefRequest(location, assistance);
+        request.setSubmittedBy(currentUser);
         for (Person person : persons) {
             request.addPerson(person);
         }

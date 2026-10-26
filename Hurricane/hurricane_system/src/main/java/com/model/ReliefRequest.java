@@ -149,6 +149,9 @@ public class ReliefRequest {
         comments.add(comment);
     }
 
+    // Sets the user who submitted the request
+    public void setSubmittedBy(User submittedBy) { this.submittedBy = submittedBy; }
+
     // Sets how urgent the request is
     public void setUrgency(UrgencyTier urgency) { this.urgency = urgency; }
 
