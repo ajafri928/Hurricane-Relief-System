@@ -1,0 +1,45 @@
+========================================
+          RELIEF TRIP SHEET
+========================================
+
+Request ID: 484fbded-bdfc-412f-8bca-e0ba12d218ac
+Responder:  Rosa Delgado
+
+----------------------------------------
+PEOPLE TO TRANSPORT
+----------------------------------------
+  David Carter, age 41
+  Erin Carter, age 39
+  Sophie Carter, age 9   ** NEEDS MEDICAL ASSISTANCE **
+  Total people: 3
+
+----------------------------------------
+ACCOMPANYING PETS
+----------------------------------------
+  Buddy (Dog)
+
+----------------------------------------
+PICKUP
+----------------------------------------
+  Address: 18 Bogard Street, Charleston, SC 29403
+  Contact: 843-555-0164
+
+----------------------------------------
+DESTINATION SHELTER
+----------------------------------------
+  St. Julian Devine Family Shelter
+  Charleston, SC 29403
+  Pet friendly:  true
+  Medical staff: true
+
+----------------------------------------
+DIRECTIONS: YOU TO PICKUP
+----------------------------------------
+  Directions unavailable: MAP_API_KEY environment variable has not been set.
+
+----------------------------------------
+DIRECTIONS: PICKUP TO SHELTER
+----------------------------------------
+  Directions unavailable: MAP_API_KEY environment variable has not been set.
+
+========================================

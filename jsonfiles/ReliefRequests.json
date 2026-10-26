@@ -1,58 +1,5 @@
 [
   {
-    "id": "4e2a6b91-7c38-4d5f-9a20-6b1e8c3d7f45",
-    "requestDate": "2026-10-25T08:15:00",
-    "userId": "123e4567-e89b-12d3-a456-426614174000",
-    "assistance": "Transportation - Medical Evacuation",
-    "description": "The Carter family needs transportation to an open shelter. One adult requires medical monitoring, and the family has a dog.",
-    "location": {
-      "street1": "155 Jackson Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.8018,
-      "longitude": -79.9444
-    },
-    "requestedPersons": [
-      {
-        "id": "7b4e1c9a-2d86-4f53-8a70-6c1e9d3b5f24",
-        "firstName": "Michael",
-        "lastName": "Carter",
-        "age": 42,
-        "needsMedicalAssistance": false
-      },
-      {
-        "id": "3d8a6f1c-5b27-4e90-9c41-7a2d5f8e1b63",
-        "firstName": "Elena",
-        "lastName": "Carter",
-        "age": 39,
-        "needsMedicalAssistance": true
-      },
-      {
-        "id": "e1c7b4a9-6d32-4f58-8a20-5c9e3d1b7f46",
-        "firstName": "Owen",
-        "lastName": "Carter",
-        "age": 8,
-        "needsMedicalAssistance": false
-      }
-    ],
-    "pets": [
-      {
-        "id": "b5c2e9a7-1d68-4f53-9a40-6e3c8d1b7f24",
-        "name": "Bailey",
-        "species": "Dog"
-      }
-    ],
-    "contactPhone": "843-555-0201",
-    "assignedTo": null,
-    "specialNeeds": true,
-    "priorityScore": 10,
-    "urgency": "URGENT",
-    "status": "SUBMITTED",
-    "comments": []
-  },
-  {
     "id": "b7d1c4e8-2a95-4f63-8c70-5e9a1b6d3f24",
     "requestDate": "2026-10-25T08:40:00",
     "userId": "223e4567-e89b-12d3-a456-426614174001",
