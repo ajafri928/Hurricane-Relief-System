@@ -101,15 +101,6 @@ public class Admin{
     }
 
     /**
-     * Marks a region as a disaster zone on the map. (Not implemented yet.)
-     *
-     * @param region the region to mark
-     */
-    public void drawDisasterZone(GeographicRegion region){
-
-    }
-
-    /**
      * Bans a user from the system. (Not implemented yet.)
      *
      * @param user the user to ban
