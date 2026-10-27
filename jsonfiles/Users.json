@@ -1,128 +1,151 @@
 [
-  {
-    "id": "123e4567-e89b-12d3-a456-426614174000",
-    "userName": "johndoe",
-    "firstName": "John",
-    "lastName": "Doe",
-    "password": "password123",
-    "location": {
-      "id": "876e4567-e89b-12d3-a456-426614174111",
-      "street1": "123 Main St",
-      "street2": "Apt 4B",
-      "city": "Columbia",
-      "state": "SC",
-      "zipCode": "29201",
-      "latitude": 33.9988,
-      "longitude": -81.0453
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "password": "password123",
+        "specialty": null,
+        "safety": "SAFE",
+        "roles": [
+            "VICTIM",
+            "VOLUNTEER"
+        ],
+        "location": {
+            "zipCode": "29201",
+            "city": "Columbia",
+            "latitude": 33.9988,
+            "street1": "123 Main St",
+            "street2": "Apt 4B",
+            "state": "SC",
+            "longitude": -81.0453
+        },
+        "emergencyContacts": [
+            {
+                "phoneNumber": "555-0199",
+                "name": "Jane Doe",
+                "relationship": "Spouse"
+            }
+        ],
+        "id": "123e4567-e89b-12d3-a456-426614174000",
+        "userName": "johndoe",
+        "contactPhone": null
     },
-    "safety": "SAFE",
-    "roles": [
-      "VICTIM",
-      "VOLUNTEER"
-    ],
-    "emergencyContacts": [
-      {
-        "name": "Jane Doe",
-        "relationship": "Spouse",
-        "phoneNumber": "555-0199"
-      }
-    ]
-  },
-  {
-    "id": "223e4567-e89b-12d3-a456-426614174001",
-    "userName": "mrivera",
-    "firstName": "Maria",
-    "lastName": "Rivera",
-    "password": "volunteer456",
-    "location": {
-      "id": "976e4567-e89b-12d3-a456-426614174222",
-      "street1": "840 Harden St",
-      "street2": "",
-      "city": "Columbia",
-      "state": "SC",
-      "zipCode": "29205",
-      "latitude": 34.0012,
-      "longitude": -81.0147
+    {
+        "firstName": "Maria",
+        "lastName": "Rivera",
+        "password": "volunteer456",
+        "specialty": null,
+        "safety": "SAFE",
+        "roles": [
+            "VOLUNTEER"
+        ],
+        "location": {
+            "zipCode": "29205",
+            "city": "Columbia",
+            "latitude": 34.0012,
+            "street1": "840 Harden St",
+            "street2": "",
+            "state": "SC",
+            "longitude": -81.0147
+        },
+        "emergencyContacts": [
+            {
+                "phoneNumber": "555-0142",
+                "name": "Carlos Rivera",
+                "relationship": "Brother"
+            }
+        ],
+        "id": "223e4567-e89b-12d3-a456-426614174001",
+        "userName": "mrivera",
+        "contactPhone": null
     },
-    "safety": "SAFE",
-    "roles": [
-      "VOLUNTEER"
-    ],
-    "emergencyContacts": [
-      {
-        "name": "Carlos Rivera",
-        "relationship": "Brother",
-        "phoneNumber": "555-0142"
-      }
-    ]
-  },
-  {
-    "id": "333e4567-e89b-12d3-a456-426614174003",
-    "userName": "rosadelgado",
-    "firstName": "Rosa",
-    "lastName": "Delgado",
-    "password": "rosa2026",
-    "location": {
-      "street1": "823 Meeting Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.8027,
-      "longitude": -79.9479
+    {
+        "firstName": "Rosa",
+        "lastName": "Delgado",
+        "password": "rosa2026",
+        "specialty": "TRANSPORTATION",
+        "safety": "SAFE",
+        "roles": [
+            "VOLUNTEER"
+        ],
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.8027,
+            "street1": "823 Meeting Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9479
+        },
+        "emergencyContacts": [],
+        "id": "333e4567-e89b-12d3-a456-426614174003",
+        "userName": "rosadelgado",
+        "contactPhone": "843-555-0148"
     },
-    "safety": "SAFE",
-    "roles": [
-      "VOLUNTEER"
-    ],
-    "specialty": "TRANSPORTATION",
-    "contactPhone": "843-555-0148",
-    "emergencyContacts": []
-  },
-  {
-    "id": "444e4567-e89b-12d3-a456-426614174004",
-    "userName": "felixmanager",
-    "firstName": "Felix",
-    "lastName": "Carter",
-    "password": "felix2026",
-    "location": {
-      "street1": "4800 Park Circle",
-      "street2": "",
-      "city": "North Charleston",
-      "state": "SC",
-      "zipCode": "29405",
-      "latitude": 32.8796,
-      "longitude": -79.9811
+    {
+        "firstName": "Felix",
+        "lastName": "Carter",
+        "password": "felix2026",
+        "specialty": null,
+        "safety": "SAFE",
+        "roles": [
+            "SHELTER_MANAGER"
+        ],
+        "location": {
+            "zipCode": "29405",
+            "city": "North Charleston",
+            "latitude": 32.8796,
+            "street1": "4800 Park Circle",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9811
+        },
+        "emergencyContacts": [],
+        "id": "444e4567-e89b-12d3-a456-426614174004",
+        "userName": "felixmanager",
+        "contactPhone": "843-555-0176"
     },
-    "safety": "SAFE",
-    "roles": [
-      "SHELTER_MANAGER"
-    ],
-    "specialty": null,
-    "contactPhone": "843-555-0176",
-    "emergencyContacts": []
-  },
-  {
-    "id": "555e4567-e89b-12d3-a456-426614174005",
-    "userName": "systemadmin",
-    "firstName": "Avery",
-    "lastName": "Brooks",
-    "password": "admin2026",
-    "location": {
-      "street1": "80 Broad Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29401",
-      "latitude": 32.7767,
-      "longitude": -79.9311
+    {
+        "firstName": "Avery",
+        "lastName": "Brooks",
+        "password": "admin2026",
+        "specialty": null,
+        "safety": "SAFE",
+        "roles": [
+            "ADMIN"
+        ],
+        "location": {
+            "zipCode": "29401",
+            "city": "Charleston",
+            "latitude": 32.7767,
+            "street1": "80 Broad Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9311
+        },
+        "emergencyContacts": [],
+        "id": "555e4567-e89b-12d3-a456-426614174005",
+        "userName": "systemadmin",
+        "contactPhone": "843-555-0181"
     },
-    "safety": "SAFE",
-    "roles": [
-      "ADMIN"
-    ],
-    "specialty": null,
-    "contactPhone": "843-555-0181",
-    "emergencyContacts": []
-  }
+    {
+        "firstName": "David",
+        "lastName": "Carter",
+        "password": "carter2026",
+        "specialty": null,
+        "safety": "HIGH_RISK",
+        "roles": [],
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.8018,
+            "street1": "155 Jackson Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9444
+        },
+        "emergencyContacts": [],
+        "id": "fc19d099-4e15-43ae-b607-86534b21a7d1",
+        "userName": "dcarter",
+        "contactPhone": null
+    }
 ]

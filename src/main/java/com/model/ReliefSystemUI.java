@@ -175,8 +175,9 @@ public class ReliefSystemUI {
 
         System.out.println("\nRosa claimed the request.");
         System.out.println("  Status is now " + system.getReliefStatus() + ".");
-        System.out.println("  Other volunteers can see Rosa is handling it.");
-    }
+        User handler = carterRequest.getResponder();
+        System.out.println("  Handled by: " + handler.getFirstName() + " "
+                + handler.getLastName());    }
 
     /** Part 4: Rosa exports a printable trip sheet. */
     public void exportTheTrip() {

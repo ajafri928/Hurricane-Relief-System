@@ -5,6 +5,7 @@ module com.relief_system {
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
     requires javafx.web;
+    requires junit;
 
     opens com.relief_system to javafx.fxml;
     exports com.relief_system;
