@@ -1,343 +1,391 @@
 [
-  {
-    "id": "a1a6c92c-4dd3-4aaf-bb06-1800a1d00101",
-    "name": "St. Julian Devine Family Shelter",
-    "location": {
-      "street1": "1 Cooper Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.8006,
-      "longitude": -79.9332
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [
+            {
+                "species": "Dog",
+                "name": "Buddy",
+                "id": "66dfd42e-5251-452d-872b-1e13e8c18e8e"
+            }
+        ],
+        "accessible": true,
+        "vetStaff": true,
+        "amenities": [
+            "Cots",
+            "Family Sleeping Area",
+            "Power Generators",
+            "Charging Stations"
+        ],
+        "occupancy": 150,
+        "medicalStaff": true,
+        "capacity": 180,
+        "name": "St. Julian Devine Family Shelter",
+        "petFriendly": true,
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.8006,
+            "street1": "1 Cooper Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9332
+        },
+        "id": "a1a6c92c-4dd3-4aaf-bb06-1800a1d00101",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-15T18:00",
+                "unit": "cases",
+                "quantity": 950,
+                "lowStockThreshold": 200,
+                "type": "Water Bottles"
+            }
+        ],
+        "occupants": [
+            {
+                "firstName": "David",
+                "lastName": "Carter",
+                "needsMedicalAssistance": false,
+                "id": "a4997eed-e9f4-4197-a695-a2de28e6ffb7",
+                "age": 41
+            },
+            {
+                "firstName": "Erin",
+                "lastName": "Carter",
+                "needsMedicalAssistance": false,
+                "id": "33125733-6e29-49e6-8467-854405569009",
+                "age": 39
+            },
+            {
+                "firstName": "Sophie",
+                "lastName": "Carter",
+                "needsMedicalAssistance": true,
+                "id": "b25b79ae-e14a-4159-88d2-ce8a4009a0ed",
+                "age": 9
+            }
+        ]
     },
-    "capacity": 180,
-    "occupancy": 147,
-    "petFriendly": true,
-    "accessible": true,
-    "medicalStaff": true,
-    "vetStaff": true,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Cots",
-      "Family Sleeping Area",
-      "Power Generators",
-      "Charging Stations"
-    ],
-    "shelterResources": [
-      {
-        "type": "Water Bottles",
-        "quantity": 950,
-        "unit": "cases",
-        "availableUntil": "2026-11-15T18:00:00",
-        "lowStockThreshold": 200
-      }
-    ]
-  },
-  {
-    "id": "b2b6c92c-4dd3-4aaf-bb06-1800a1d00102",
-    "name": "Arthur W. Christopher Community Shelter",
-    "location": {
-      "street1": "265 Fishburne Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.7904,
-      "longitude": -79.9594
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Cots",
+            "Showers",
+            "Wi-Fi"
+        ],
+        "occupancy": 45,
+        "medicalStaff": false,
+        "capacity": 120,
+        "name": "Arthur W. Christopher Community Shelter",
+        "petFriendly": true,
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.7904,
+            "street1": "265 Fishburne Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9594
+        },
+        "id": "b2b6c92c-4dd3-4aaf-bb06-1800a1d00102",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-12T18:00",
+                "unit": "boxes",
+                "quantity": 450,
+                "lowStockThreshold": 100,
+                "type": "Ready-to-Eat Meals"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 120,
-    "occupancy": 45,
-    "petFriendly": true,
-    "accessible": true,
-    "medicalStaff": false,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Cots",
-      "Showers",
-      "Wi-Fi"
-    ],
-    "shelterResources": [
-      {
-        "type": "Ready-to-Eat Meals",
-        "quantity": 450,
-        "unit": "boxes",
-        "availableUntil": "2026-11-12T18:00:00",
-        "lowStockThreshold": 100
-      }
-    ]
-  },
-  {
-    "id": "c3c6c92c-4dd3-4aaf-bb06-1800a1d00103",
-    "name": "Charleston Main Library Medical Shelter",
-    "location": {
-      "street1": "68 Calhoun Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29401",
-      "latitude": 32.7876,
-      "longitude": -79.9369
+    {
+        "operationalStatus": "AT_CAPACITY",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Medical Station",
+            "Wheelchair Access",
+            "Charging Stations"
+        ],
+        "occupancy": 250,
+        "medicalStaff": true,
+        "capacity": 250,
+        "name": "Charleston Main Library Medical Shelter",
+        "petFriendly": false,
+        "location": {
+            "zipCode": "29401",
+            "city": "Charleston",
+            "latitude": 32.7876,
+            "street1": "68 Calhoun Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9369
+        },
+        "id": "c3c6c92c-4dd3-4aaf-bb06-1800a1d00103",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-20T18:00",
+                "unit": "kits",
+                "quantity": 80,
+                "lowStockThreshold": 20,
+                "type": "First Aid Kits"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 250,
-    "occupancy": 250,
-    "petFriendly": false,
-    "accessible": true,
-    "medicalStaff": true,
-    "vetStaff": false,
-    "operationalStatus": "AT_CAPACITY",
-    "amenities": [
-      "Medical Station",
-      "Wheelchair Access",
-      "Charging Stations"
-    ],
-    "shelterResources": [
-      {
-        "type": "First Aid Kits",
-        "quantity": 80,
-        "unit": "kits",
-        "availableUntil": "2026-11-20T18:00:00",
-        "lowStockThreshold": 20
-      }
-    ]
-  },
-  {
-    "id": "d4d6c92c-4dd3-4aaf-bb06-1800a1d00104",
-    "name": "Bees Ferry West Ashley Shelter",
-    "location": {
-      "street1": "3035 Sanders Road",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29414",
-      "latitude": 32.8178,
-      "longitude": -80.0948
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Cots",
+            "Wi-Fi",
+            "Children's Area"
+        ],
+        "occupancy": 122,
+        "medicalStaff": false,
+        "capacity": 200,
+        "name": "Bees Ferry West Ashley Shelter",
+        "petFriendly": false,
+        "location": {
+            "zipCode": "29414",
+            "city": "Charleston",
+            "latitude": 32.8178,
+            "street1": "3035 Sanders Road",
+            "street2": "",
+            "state": "SC",
+            "longitude": -80.0948
+        },
+        "id": "d4d6c92c-4dd3-4aaf-bb06-1800a1d00104",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-10T18:00",
+                "unit": "individual",
+                "quantity": 500,
+                "lowStockThreshold": 75,
+                "type": "Blankets"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 200,
-    "occupancy": 122,
-    "petFriendly": false,
-    "accessible": true,
-    "medicalStaff": false,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Cots",
-      "Wi-Fi",
-      "Children's Area"
-    ],
-    "shelterResources": [
-      {
-        "type": "Blankets",
-        "quantity": 500,
-        "unit": "individual",
-        "availableUntil": "2026-11-10T18:00:00",
-        "lowStockThreshold": 75
-      }
-    ]
-  },
-  {
-    "id": "e5e6c92c-4dd3-4aaf-bb06-1800a1d00105",
-    "name": "West Ashley Community Shelter",
-    "location": {
-      "street1": "45 Windermere Boulevard",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29407",
-      "latitude": 32.781,
-      "longitude": -80.0119
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Medical Station",
+            "Showers",
+            "Power Generators"
+        ],
+        "occupancy": 95,
+        "medicalStaff": true,
+        "capacity": 145,
+        "name": "West Ashley Community Shelter",
+        "petFriendly": false,
+        "location": {
+            "zipCode": "29407",
+            "city": "Charleston",
+            "latitude": 32.781,
+            "street1": "45 Windermere Boulevard",
+            "street2": "",
+            "state": "SC",
+            "longitude": -80.0119
+        },
+        "id": "e5e6c92c-4dd3-4aaf-bb06-1800a1d00105",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-18T18:00",
+                "unit": "kits",
+                "quantity": 150,
+                "lowStockThreshold": 30,
+                "type": "Medical Supplies"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 145,
-    "occupancy": 95,
-    "petFriendly": false,
-    "accessible": true,
-    "medicalStaff": true,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Medical Station",
-      "Showers",
-      "Power Generators"
-    ],
-    "shelterResources": [
-      {
-        "type": "Medical Supplies",
-        "quantity": 150,
-        "unit": "kits",
-        "availableUntil": "2026-11-18T18:00:00",
-        "lowStockThreshold": 30
-      }
-    ]
-  },
-  {
-    "id": "f6f6c92c-4dd3-4aaf-bb06-1800a1d00106",
-    "name": "Main at Morrison Shelter",
-    "location": {
-      "street1": "1142 Morrison Drive",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.804,
-      "longitude": -79.9474
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Charging Stations",
+            "Wi-Fi",
+            "Cots"
+        ],
+        "occupancy": 82,
+        "medicalStaff": false,
+        "capacity": 90,
+        "name": "Main at Morrison Shelter",
+        "petFriendly": true,
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.804,
+            "street1": "1142 Morrison Drive",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9474
+        },
+        "id": "f6f6c92c-4dd3-4aaf-bb06-1800a1d00106",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-08T18:00",
+                "unit": "packages",
+                "quantity": 65,
+                "lowStockThreshold": 15,
+                "type": "Infant Supplies"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 90,
-    "occupancy": 82,
-    "petFriendly": true,
-    "accessible": true,
-    "medicalStaff": false,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Charging Stations",
-      "Wi-Fi",
-      "Cots"
-    ],
-    "shelterResources": [
-      {
-        "type": "Infant Supplies",
-        "quantity": 65,
-        "unit": "packages",
-        "availableUntil": "2026-11-08T18:00:00",
-        "lowStockThreshold": 15
-      }
-    ]
-  },
-  {
-    "id": "a7a6c92c-4dd3-4aaf-bb06-1800a1d00107",
-    "name": "John L. Dart Neighborhood Shelter",
-    "location": {
-      "street1": "1067 King Street",
-      "street2": "",
-      "city": "Charleston",
-      "state": "SC",
-      "zipCode": "29403",
-      "latitude": 32.8039,
-      "longitude": -79.9457
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Cots",
+            "Food Distribution",
+            "Charging Stations"
+        ],
+        "occupancy": 66,
+        "medicalStaff": false,
+        "capacity": 110,
+        "name": "John L. Dart Neighborhood Shelter",
+        "petFriendly": false,
+        "location": {
+            "zipCode": "29403",
+            "city": "Charleston",
+            "latitude": 32.8039,
+            "street1": "1067 King Street",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9457
+        },
+        "id": "a7a6c92c-4dd3-4aaf-bb06-1800a1d00107",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-14T18:00",
+                "unit": "boxes",
+                "quantity": 380,
+                "lowStockThreshold": 100,
+                "type": "Ready-to-Eat Meals"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 110,
-    "occupancy": 66,
-    "petFriendly": false,
-    "accessible": true,
-    "medicalStaff": false,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Cots",
-      "Food Distribution",
-      "Charging Stations"
-    ],
-    "shelterResources": [
-      {
-        "type": "Ready-to-Eat Meals",
-        "quantity": 380,
-        "unit": "boxes",
-        "availableUntil": "2026-11-14T18:00:00",
-        "lowStockThreshold": 100
-      }
-    ]
-  },
-  {
-    "id": "b8b6c92c-4dd3-4aaf-bb06-1800a1d00108",
-    "name": "Otranto Road Shelter",
-    "location": {
-      "street1": "2261 Otranto Road",
-      "street2": "",
-      "city": "North Charleston",
-      "state": "SC",
-      "zipCode": "29406",
-      "latitude": 32.9305,
-      "longitude": -80.0205
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": true,
+        "amenities": [
+            "Pet Area",
+            "Cots",
+            "Power Generators"
+        ],
+        "occupancy": 161,
+        "medicalStaff": false,
+        "capacity": 175,
+        "name": "Otranto Road Shelter",
+        "petFriendly": true,
+        "location": {
+            "zipCode": "29406",
+            "city": "North Charleston",
+            "latitude": 32.9305,
+            "street1": "2261 Otranto Road",
+            "street2": "",
+            "state": "SC",
+            "longitude": -80.0205
+        },
+        "id": "b8b6c92c-4dd3-4aaf-bb06-1800a1d00108",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-16T18:00",
+                "unit": "bags",
+                "quantity": 210,
+                "lowStockThreshold": 50,
+                "type": "Pet Food"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 175,
-    "occupancy": 161,
-    "petFriendly": true,
-    "accessible": true,
-    "medicalStaff": false,
-    "vetStaff": true,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Pet Area",
-      "Cots",
-      "Power Generators"
-    ],
-    "shelterResources": [
-      {
-        "type": "Pet Food",
-        "quantity": 210,
-        "unit": "bags",
-        "availableUntil": "2026-11-16T18:00:00",
-        "lowStockThreshold": 50
-      }
-    ]
-  },
-  {
-    "id": "c9c6c92c-4dd3-4aaf-bb06-1800a1d00109",
-    "name": "Wando Mount Pleasant Shelter",
-    "location": {
-      "street1": "1400 Carolina Park Boulevard",
-      "street2": "",
-      "city": "Mount Pleasant",
-      "state": "SC",
-      "zipCode": "29466",
-      "latitude": 32.9303,
-      "longitude": -79.779
+    {
+        "operationalStatus": "OPEN",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": false,
+        "amenities": [
+            "Medical Station",
+            "Family Sleeping Area",
+            "Showers"
+        ],
+        "occupancy": 150,
+        "medicalStaff": true,
+        "capacity": 220,
+        "name": "Wando Mount Pleasant Shelter",
+        "petFriendly": false,
+        "location": {
+            "zipCode": "29466",
+            "city": "Mount Pleasant",
+            "latitude": 32.9303,
+            "street1": "1400 Carolina Park Boulevard",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.779
+        },
+        "id": "c9c6c92c-4dd3-4aaf-bb06-1800a1d00109",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-15T18:00",
+                "unit": "cases",
+                "quantity": 1100,
+                "lowStockThreshold": 250,
+                "type": "Water Bottles"
+            }
+        ],
+        "occupants": []
     },
-    "capacity": 220,
-    "occupancy": 150,
-    "petFriendly": false,
-    "accessible": true,
-    "medicalStaff": true,
-    "vetStaff": false,
-    "operationalStatus": "OPEN",
-    "amenities": [
-      "Medical Station",
-      "Family Sleeping Area",
-      "Showers"
-    ],
-    "shelterResources": [
-      {
-        "type": "Water Bottles",
-        "quantity": 1100,
-        "unit": "cases",
-        "availableUntil": "2026-11-15T18:00:00",
-        "lowStockThreshold": 250
-      }
-    ]
-  },
-  {
-    "id": "d0d6c92c-4dd3-4aaf-bb06-1800a1d00110",
-    "name": "Felix C. Davis Community Shelter",
-    "location": {
-      "street1": "4800 Park Circle",
-      "street2": "",
-      "city": "North Charleston",
-      "state": "SC",
-      "zipCode": "29405",
-      "latitude": 32.8796,
-      "longitude": -79.9811
-    },
-    "capacity": 130,
-    "occupancy": 42,
-    "petFriendly": true,
-    "accessible": true,
-    "medicalStaff": true,
-    "vetStaff": true,
-    "operationalStatus": "CLOSED",
-    "amenities": [
-      "Pet Area",
-      "Medical Station",
-      "Wheelchair Access"
-    ],
-    "shelterResources": [
-      {
-        "type": "Hygiene Kits",
-        "quantity": 300,
-        "unit": "kits",
-        "availableUntil": "2026-11-13T18:00:00",
-        "lowStockThreshold": 75
-      }
-    ]
-  }
+    {
+        "operationalStatus": "CLOSED",
+        "petsOnSite": [],
+        "accessible": true,
+        "vetStaff": true,
+        "amenities": [
+            "Pet Area",
+            "Medical Station",
+            "Wheelchair Access"
+        ],
+        "occupancy": 42,
+        "medicalStaff": true,
+        "capacity": 130,
+        "name": "Felix C. Davis Community Shelter",
+        "petFriendly": true,
+        "location": {
+            "zipCode": "29405",
+            "city": "North Charleston",
+            "latitude": 32.8796,
+            "street1": "4800 Park Circle",
+            "street2": "",
+            "state": "SC",
+            "longitude": -79.9811
+        },
+        "id": "d0d6c92c-4dd3-4aaf-bb06-1800a1d00110",
+        "shelterResources": [
+            {
+                "availableUntil": "2026-11-13T18:00",
+                "unit": "kits",
+                "quantity": 300,
+                "lowStockThreshold": 75,
+                "type": "Hygiene Kits"
+            }
+        ],
+        "occupants": []
+    }
 ]
