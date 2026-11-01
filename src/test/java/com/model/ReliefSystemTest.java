@@ -695,6 +695,9 @@ public class ReliefSystemTest {
     }
 
     @Test
-    public void notifyRespondersRequiresSelectedRequest()
+    public void notifyRespondersRequiresSelectedRequest() {
+        assertIllegalState("Responders were notified with no request selected",
+                () -> system.notifyResponders());
+    }
 
 }
