@@ -331,4 +331,260 @@ public class ReliefSystemTest {
                 () -> system.shareUserLocation());
     }
 
+    // =====================================================================
+    // Requests: submit, select, status, claim, respond, escalate, comments
+    // =====================================================================
+
+    @Test
+    public void submitStoresPeoplePetsAndContact() {
+        signIn("johndoe", "password123");
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Test", "Adult", 40));
+        people.add(new Person("Test", "Child", 9));
+        ArrayList<Pet> pets = new ArrayList<>();
+        pets.add(new Pet("Rex", "Dog"));
+
+        ReliefRequest request = system.submitReliefRequest(testLocation(),
+                "Transportation - test ride", people, pets, "555-0100");
+
+        assertEquals(2, request.getPeopleCount());
+        assertEquals(1, request.getPets().size());
+        assertEquals("555-0100", request.getContactPhone());
+        assertEquals(ReliefRequestStatus.SUBMITTED, system.getReliefStatus());
+        assertEquals("johndoe", request.getSubmittedBy().getUserName());
+    }
+
+    @Test
+    public void submitWithMedicalNeedIsUrgent() {
+        ArrayList<Person> people = new ArrayList<>();
+        Person child = new Person("Test", "Child", 9);
+        child.setNeedsMedicalAssistance(true);
+        people.add(child);
+
+        ReliefRequest request = makeRequest(people, new ArrayList<>());
+
+        assertEquals(UrgencyTier.URGENT, request.getUrgency());
+        assertTrue(request.hasSpecialNeeds());
+    }
+
+    @Test
+    public void submitWithoutMedicalNeedIsStandard() {
+        ReliefRequest request = makeRequest();
+        assertEquals(UrgencyTier.STANDARD, request.getUrgency());
+        assertFalse(request.hasSpecialNeeds());
+    }
+
+    @Test
+    public void submitRequiresSignIn() {
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Test", "Person", 30));
+
+        assertIllegalState("A request was submitted with nobody signed in",
+                () -> system.submitReliefRequest(testLocation(), "Transportation - test",
+                        people, new ArrayList<>(), "555-0100"));
+    }
+
+    @Test
+    public void selectRequestWithUnknownIdThrows() {
+        assertIllegalArgument("An unknown request id was accepted",
+                () -> system.selectRequest(UUID.randomUUID()));
+    }
+
+    @Test
+    public void getReliefStatusWithNoSelectionThrows() {
+        assertIllegalState("A status was returned with no request selected",
+                () -> system.getReliefStatus());
+    }
+
+    @Test
+    public void claimRequestAssignsVolunteer() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+
+        system.claimRequest();
+
+        assertEquals(ReliefRequestStatus.ASSIGNED, system.getReliefStatus());
+        assertEquals("rosadelgado", request.getResponder().getUserName());
+    }
+
+    @Test
+    public void claimRequestRequiresResponder() {
+        ReliefRequest request = makeRequest();
+        signIn("systemadmin", "admin2026");
+        system.selectRequest(request.getId());
+
+        assertIllegalState("A non-responder was able to claim a request",
+                () -> system.claimRequest());
+    }
+
+    @Test
+    public void respondToRequestMarksHelpEnRoute() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+        system.claimRequest();
+
+        system.respondToRequest();
+
+        assertEquals(ReliefRequestStatus.HELP_EN_ROUTE, system.getReliefStatus());
+    }
+
+    @Test
+    public void escalateRequestEscalates() {
+        ReliefRequest request = makeRequest();
+        signIn("johndoe", "password123");
+        system.selectRequest(request.getId());
+
+        system.escalateRequest();
+
+        assertEquals(ReliefRequestStatus.ESCALATED_TO_911, system.getReliefStatus());
+    }
+
+    @Test
+    public void addRequestCommentAddsComment() {
+        ReliefRequest request = makeRequest();
+        signIn("johndoe", "password123");
+        system.selectRequest(request.getId());
+        int before = system.getRequestComments().size();
+
+        system.addRequestComment("Water is rising");
+
+        ArrayList<RequestComment> comments = system.getRequestComments();
+        assertEquals(before + 1, comments.size());
+        assertEquals("Water is rising", comments.get(comments.size() - 1).getText());
+    }
+
+    @Test
+    public void addRequestCommentRequiresSignIn() {
+        ReliefRequest request = makeRequest();
+        system.selectRequest(request.getId());
+
+        assertIllegalState("A comment was added with nobody signed in",
+                () -> system.addRequestComment("Anonymous note"));
+    }
+
+    @Test
+    public void listOpenRequestsIncludesNewRequest() {
+        ReliefRequest request = makeRequest();
+        assertTrue(system.listOpenRequests().contains(request));
+    }
+
+    @Test
+    public void listOpenRequestsExcludesClaimedRequest() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+        system.claimRequest();
+
+        assertFalse(system.listOpenRequests().contains(request));
+    }
+
+    @Test
+    public void listRecommendedRequestsRequiresResponder() {
+        signIn("systemadmin", "admin2026");
+        assertIllegalState("A non-responder got recommended requests",
+                () -> system.listRecommendedRequests());
+    }
+
+    @Test
+    public void explainRecommendationRequiresSignIn() {
+        ReliefRequest request = makeRequest();
+        assertIllegalState("A recommendation was explained with nobody signed in",
+                () -> system.explainRecommendation(request));
+    }
+
+    // =====================================================================
+    // Shelters: find, select, assign, check in, inventory, export
+    // =====================================================================
+
+    @Test
+    public void findSafeShelterFindsPetFriendlyMedicalShelter() {
+        Shelter shelter = system.findSafeShelter(testLocation(), 3, true, true);
+        assertNotNull("No shelter was found", shelter);
+        assertTrue(shelter.isPetFriendly());
+        assertTrue(shelter.hasMedicalStaff());
+        assertTrue(shelter.getAvailableSpace() >= 3);
+    }
+
+    @Test
+    public void selectShelterWithUnknownIdThrows() {
+        assertIllegalArgument("An unknown shelter id was accepted",
+                () -> system.selectShelter(UUID.randomUUID()));
+    }
+
+    @Test
+    public void assignShelterToRequestSetsDestination() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+        Shelter shelter = firstShelter();
+
+        system.assignShelterToRequest(shelter.getId());
+
+        assertSame(shelter, request.getDestinationShelter());
+    }
+
+    @Test
+    public void checkInFamilyAddsOccupantsAndPets() {
+        signIn("felixmanager", "felix2026");
+        Shelter shelter = firstShelter();
+        system.selectShelter(shelter.getId());
+        int occupancyBefore = shelter.getOccupancy();
+        int occupantsBefore = shelter.getOccupants().size();
+        int petsBefore = shelter.getPetsOnSite().size();
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Test", "Adult", 40));
+        people.add(new Person("Test", "Child", 9));
+        ArrayList<Pet> pets = new ArrayList<>();
+        pets.add(new Pet("Rex", "Dog"));
+
+        system.checkInFamily(people, pets);
+
+        assertEquals(occupancyBefore + 2, shelter.getOccupancy());
+        assertEquals(occupantsBefore + 2, shelter.getOccupants().size());
+        assertEquals(petsBefore + 1, shelter.getPetsOnSite().size());
+    }
+
+    @Test
+    public void checkInFamilyWithNoShelterSelectedThrows() {
+        signIn("felixmanager", "felix2026");
+        ArrayList<Person> people = new ArrayList<>();
+        people.add(new Person("Test", "Guest", 30));
+
+        assertIllegalState("A family was checked in with no shelter selected",
+                () -> system.checkInFamily(people, new ArrayList<>()));
+    }
+
+    @Test
+    public void updateShelterInventoryReplacesSameType() {
+        Shelter shelter = firstShelter();
+        system.selectShelter(shelter.getId());
+        ArrayList<ShelterResource> resources = shelter.getShelterResources();
+        assertFalse("The first shelter has no resources to test with", resources.isEmpty());
+        int before = resources.size();
+
+        system.updateShelterInventory(resources.get(0));
+
+        assertEquals(before, shelter.getShelterResources().size());
+    }
+
+    @Test
+    public void getLowStockResourcesRequiresSelectedShelter() {
+        assertIllegalState("Low-stock resources were returned with no shelter selected",
+                () -> system.getLowStockResources());
+    }
+
+    @Test
+    public void exportTripInfoRequiresSelectedShelter() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+
+        assertIllegalState("A trip sheet was exported with no shelter selected",
+                () -> system.exportTripInfo("test-trip.txt"));
+    }
+
+    
+
 }
