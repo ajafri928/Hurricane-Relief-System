@@ -242,4 +242,93 @@ public class ReliefSystemTest {
         assertNotNull("A failed sign-in signed Felix out", system.getCurrentUser());
     }
 
+    // =====================================================================
+    // Accounts: registerUser, signIn, signOut, getCurrentUser
+    // =====================================================================
+
+    @Test
+    public void signInWithCorrectPasswordSucceeds() {
+        assertTrue(system.signIn("rosadelgado", "rosa2026"));
+        assertEquals("rosadelgado", system.getCurrentUser().getUserName());
+    }
+
+    @Test
+    public void signInWithWrongPasswordFails() {
+        assertFalse(system.signIn("rosadelgado", "wrong-password"));
+    }
+
+    @Test
+    public void signInWithUnknownUserFails() {
+        assertFalse(system.signIn("nobody" + System.nanoTime(), "pw123"));
+    }
+
+    @Test
+    public void signOutClearsUserAndSelection() {
+        ReliefRequest request = makeRequest();
+        signIn("johndoe", "password123");
+        system.selectRequest(request.getId());
+
+        system.signOut();
+
+        assertNull(system.getCurrentUser());
+        assertIllegalState("A request was still selected after signing out",
+                () -> system.getReliefStatus());
+    }
+
+    @Test
+    public void registerRejectsBlankPassword() {
+        assertNull("An account was created with a blank password",
+                system.registerUser("test" + System.nanoTime(), "Test", "User", "", testLocation()));
+    }
+
+    @Test
+    public void registerRejectsBlankUsername() {
+        assertNull("An account was created with a blank username",
+                system.registerUser("", "Test", "User", "pw123", testLocation()));
+    }
+
+    @Test
+    public void registeredUserCanSignIn() {
+        String name = "test" + System.nanoTime();
+        system.registerUser(name, "Test", "User", "pw123", testLocation());
+        assertTrue(system.signIn(name, "pw123"));
+    }
+
+    // =====================================================================
+    // Profile: addEmergencyContact, markUserSafe, shareUserLocation
+    // =====================================================================
+
+    @Test
+    public void addEmergencyContactRequiresSignIn() {
+        assertIllegalState("An emergency contact was added with nobody signed in",
+                () -> system.addEmergencyContact("Pat", "555-0199", "Friend"));
+    }
+
+    @Test
+    public void addEmergencyContactAddsContact() {
+        signIn("johndoe", "password123");
+        int before = system.getCurrentUser().getEmergencyContacts().size();
+        system.addEmergencyContact("Pat", "555-0199", "Friend");
+        assertEquals(before + 1, system.getCurrentUser().getEmergencyContacts().size());
+    }
+
+    @Test
+    public void markUserSafeRequiresSignIn() {
+        assertIllegalState("A safety status was set with nobody signed in",
+                () -> system.markUserSafe(SafetyCategory.HIGH_RISK));
+    }
+
+    @Test
+    public void markUserSafeSetsSafety() {
+        signIn("johndoe", "password123");
+        system.markUserSafe(SafetyCategory.HIGH_RISK);
+        assertEquals(SafetyCategory.HIGH_RISK, system.getCurrentUser().getSafety());
+    }
+
+    @Test
+    public void shareUserLocationRequiresSignIn() {
+        assertIllegalState("A location was shared with nobody signed in",
+                () -> system.shareUserLocation());
+    }
+
 }
