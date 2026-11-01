@@ -15,16 +15,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-/**
- * JUnit 4 tests for the ReliefSystem facade.
- *
- * The first section checks the ten rows of the team's potential-issues table.
- * The rest covers every public method: normal use, sign-in and role guards,
- * and bad input.
- *
- * These tests call signOut(), which saves to the JSON files. Run
- * "git restore jsonfiles/" after every test run.
- */
+
 public class ReliefSystemTest {
 
     private ReliefSystem system;
@@ -41,9 +32,6 @@ public class ReliefSystemTest {
         system.signOut();
     }
 
-    // =====================================================================
-    // Helpers
-    // =====================================================================
 
     /** A Charleston test address. */
     private Location testLocation() {
@@ -102,9 +90,6 @@ public class ReliefSystemTest {
         }
     }
 
-    // =====================================================================
-    // Potential issues table (rows 1 to 10)
-    // =====================================================================
 
     @Test
     public void volunteerCannotCompleteThroughUpdateRequestStatus() {
@@ -242,10 +227,6 @@ public class ReliefSystemTest {
         assertNotNull("A failed sign-in signed Felix out", system.getCurrentUser());
     }
 
-    // =====================================================================
-    // Accounts: registerUser, signIn, signOut, getCurrentUser
-    // =====================================================================
-
     @Test
     public void signInWithCorrectPasswordSucceeds() {
         assertTrue(system.signIn("rosadelgado", "rosa2026"));
@@ -294,9 +275,6 @@ public class ReliefSystemTest {
         assertTrue(system.signIn(name, "pw123"));
     }
 
-    // =====================================================================
-    // Profile: addEmergencyContact, markUserSafe, shareUserLocation
-    // =====================================================================
 
     @Test
     public void addEmergencyContactRequiresSignIn() {
@@ -330,10 +308,6 @@ public class ReliefSystemTest {
         assertIllegalState("A location was shared with nobody signed in",
                 () -> system.shareUserLocation());
     }
-
-    // =====================================================================
-    // Requests: submit, select, status, claim, respond, escalate, comments
-    // =====================================================================
 
     @Test
     public void submitStoresPeoplePetsAndContact() {
@@ -494,10 +468,6 @@ public class ReliefSystemTest {
                 () -> system.explainRecommendation(request));
     }
 
-    // =====================================================================
-    // Shelters: find, select, assign, check in, inventory, export
-    // =====================================================================
-
     @Test
     public void findSafeShelterFindsPetFriendlyMedicalShelter() {
         Shelter shelter = system.findSafeShelter(testLocation(), 3, true, true);
@@ -585,6 +555,146 @@ public class ReliefSystemTest {
                 () -> system.exportTripInfo("test-trip.txt"));
     }
 
-    
+    @Test
+    public void requestAdminActionsRefuseVolunteer() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+
+        assertIllegalState("A volunteer approved a request", () -> system.approveRequest());
+        assertIllegalState("A volunteer denied a request", () -> system.denyRequest());
+        assertIllegalState("A volunteer archived a request", () -> system.archiveRequest());
+    }
+
+    @Test
+    public void adminCanApproveRequest() {
+        ReliefRequest request = makeRequest();
+        signIn("systemadmin", "admin2026");
+        system.selectRequest(request.getId());
+
+        system.approveRequest();
+
+        assertEquals(ReliefRequestStatus.APPROVED, system.getReliefStatus());
+    }
+
+    @Test
+    public void adminCanDenyRequest() {
+        ReliefRequest request = makeRequest();
+        signIn("systemadmin", "admin2026");
+        system.selectRequest(request.getId());
+
+        system.denyRequest();
+
+        assertEquals(ReliefRequestStatus.DENIED, system.getReliefStatus());
+    }
+
+    @Test
+    public void changeShelterStatusRequiresAdmin() {
+        signIn("rosadelgado", "rosa2026");
+        system.selectShelter(firstShelter().getId());
+
+        assertIllegalState("A volunteer changed a shelter's status",
+                () -> system.changeShelterStatus("CLOSED"));
+    }
+
+    @Test
+    public void overrideUserRoleWithUnknownUserThrows() {
+        signIn("systemadmin", "admin2026");
+
+        assertIllegalArgument("An unknown user id was accepted",
+                () -> system.overrideUserRole(UUID.randomUUID(), UserRole.VOLUNTEER));
+    }
+
+    @Test
+    public void banUserWithUnknownUserThrows() {
+        signIn("systemadmin", "admin2026");
+
+        assertIllegalArgument("An unknown user id was accepted",
+                () -> system.banUser(UUID.randomUUID()));
+    }
+
+    @Test
+    public void userAdminActionsRefuseVolunteer() {
+        signIn("rosadelgado", "rosa2026");
+
+        assertIllegalState("A volunteer changed a user's role",
+                () -> system.overrideUserRole(UUID.randomUUID(), UserRole.VOLUNTEER));
+        assertIllegalState("A volunteer banned a user",
+                () -> system.banUser(UUID.randomUUID()));
+    }
+
+    @Test
+    public void publishEmergencyAlertRequiresAdmin() {
+        signIn("rosadelgado", "rosa2026");
+
+        assertIllegalState("A volunteer broadcast an emergency alert",
+                () -> system.publishEmergencyAlert("Test alert"));
+    }
+
+    @Test
+    public void updateHurricaneTrackRequiresAdmin() {
+        signIn("rosadelgado", "rosa2026");
+
+        assertIllegalState("A volunteer updated a hurricane track",
+                () -> system.updateHurricaneTrack(UUID.randomUUID(), testLocation(), "NW", "Inland"));
+    }
+
+    @Test
+    public void updateHurricaneTrackWithUnknownEventThrows() {
+        signIn("systemadmin", "admin2026");
+
+        assertIllegalArgument("An unknown hurricane id was accepted",
+                () -> system.updateHurricaneTrack(UUID.randomUUID(), testLocation(), "NW", "Inland"));
+    }
+
+
+    @Test
+    public void reportHazardRequiresSignIn() {
+        assertIllegalState("A hazard was reported with nobody signed in",
+                () -> system.reportHazard(HazardCategory.values()[0], testLocation()));
+    }
+
+    @Test
+    public void reportHazardStartsUnverified() {
+        signIn("johndoe", "password123");
+
+        HazardReport report = system.reportHazard(HazardCategory.values()[0], testLocation());
+
+        assertNotNull(report);
+        assertFalse(report.isVerified());
+        assertFalse(system.listVerifiedHazards().contains(report));
+    }
+
+    @Test
+    public void adminCanVerifyHazard() {
+        signIn("johndoe", "password123");
+        HazardReport report = system.reportHazard(HazardCategory.values()[0], testLocation());
+        system.signOut();
+        signIn("systemadmin", "admin2026");
+
+        system.verifyHazard(report.getId());
+
+        assertTrue(report.isVerified());
+        assertTrue(system.listVerifiedHazards().contains(report));
+    }
+
+    @Test
+    public void verifyHazardRequiresAdmin() {
+        signIn("rosadelgado", "rosa2026");
+
+        assertIllegalState("A volunteer verified a hazard",
+                () -> system.verifyHazard(UUID.randomUUID()));
+    }
+
+    @Test
+    public void verifyHazardWithUnknownIdThrows() {
+        signIn("systemadmin", "admin2026");
+
+        assertIllegalArgument("An unknown hazard id was accepted",
+                () -> system.verifyHazard(UUID.randomUUID()));
+    }
+
+    @Test
+    public void notifyRespondersRequiresSelectedRequest()
 
 }
