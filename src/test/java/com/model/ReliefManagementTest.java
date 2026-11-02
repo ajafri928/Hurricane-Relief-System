@@ -132,4 +132,91 @@ public class ReliefManagementTest {
             manager.removeReliefRequest(closedRequest.getId());
         }
     }
+    @Test
+    public void recommendationReasonIsEmptyWhenNothingMatches() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        User user = new User("generalUser", "General", "Volunteer",
+                "password", null);
+        user.setSpecialty(VolunteerRole.GENERAL);
+
+        ReliefRequest request = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Food and water supplies",
+                UrgencyTier.STANDARD);
+
+        assertEquals("", manager.getRecommendationReason(request, user));
+    }
+    @Test
+    public void recommendationReasonMentionsLifeThreateningUrgency() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        User user = new User("generalUser", "General", "Volunteer",
+                "password", null);
+        user.setSpecialty(VolunteerRole.GENERAL);
+
+        ReliefRequest request = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Food and water supplies",
+                UrgencyTier.LIFE_THREATENING);
+
+        String reason = manager.getRecommendationReason(request, user);
+
+        assertTrue(reason.contains("life-threatening"));
+    }
+    @Test
+    public void removeUnknownIdDoesNotRemoveAnExistingRequest() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        ReliefRequest request = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Supplies",
+                UrgencyTier.STANDARD);
+
+        manager.addReliefRequest(request);
+
+        try {
+            manager.removeReliefRequest(UUID.randomUUID());
+
+            assertSame(request, manager.getReliefRequest(request.getId()));
+        } finally {
+            manager.removeReliefRequest(request.getId());
+        }
+    }
+    @Test
+    public void specialtyMatchRanksAheadOfUrgencyWithoutSpecialtyMatch() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        User rosa = new User("rosa", "Rosa", "Delgado", "password", null);
+        rosa.setSpecialty(VolunteerRole.TRANSPORTATION);
+
+        ReliefRequest transportationRequest = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Transportation to an evacuation shelter",
+                UrgencyTier.STANDARD);
+
+        ReliefRequest emergencyFoodRequest = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Food supplies",
+                UrgencyTier.LIFE_THREATENING);
+
+        manager.addReliefRequest(transportationRequest);
+        manager.addReliefRequest(emergencyFoodRequest);
+
+        try {
+            ArrayList<ReliefRequest> recommended =
+                    manager.getRecommendedRequests(rosa);
+
+            assertTrue(recommended.indexOf(transportationRequest)
+                    < recommended.indexOf(emergencyFoodRequest));
+        } finally {
+            manager.removeReliefRequest(transportationRequest.getId());
+            manager.removeReliefRequest(emergencyFoodRequest.getId());
+        }
+    }
 }
