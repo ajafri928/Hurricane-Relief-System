@@ -26,25 +26,65 @@ public class ReliefManagementTest {
     }
 
     @Test
-    public void addFindAndRemoveRequestWorks() {
+    public void addReliefRequestMakesRequestAvailableForLookup() {
         ReliefManagement manager = ReliefManagement.getInstance();
-        UUID id = UUID.randomUUID();
 
         ReliefRequest request = makeRequest(
-                id, ReliefRequestStatus.SUBMITTED,
-                "Food and water", UrgencyTier.STANDARD);
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Supplies",
+                UrgencyTier.STANDARD);
+
+        manager.addReliefRequest(request);
 
         try {
-            manager.addReliefRequest(request);
-
-            assertSame(request, manager.getReliefRequest(id));
-
-            manager.removeReliefRequest(id);
-
-            assertNull(manager.getReliefRequest(id));
+            assertSame(request, manager.getReliefRequest(request.getId()));
         } finally {
-            manager.removeReliefRequest(id);
+            manager.removeReliefRequest(request.getId());
         }
+    }
+    @Test
+    public void getReliefRequestReturnsTheRequestWithMatchingId() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        ReliefRequest firstRequest = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Food",
+                UrgencyTier.STANDARD);
+
+        ReliefRequest secondRequest = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Transportation",
+                UrgencyTier.URGENT);
+
+        manager.addReliefRequest(firstRequest);
+        manager.addReliefRequest(secondRequest);
+
+        try {
+            assertSame(secondRequest,
+                    manager.getReliefRequest(secondRequest.getId()));
+        } finally {
+            manager.removeReliefRequest(firstRequest.getId());
+            manager.removeReliefRequest(secondRequest.getId());
+        }
+    }
+    @Test
+    public void removeReliefRequestRemovesTheMatchingRequest() {
+        ReliefManagement manager = ReliefManagement.getInstance();
+
+        ReliefRequest request = makeRequest(
+                UUID.randomUUID(),
+                ReliefRequestStatus.SUBMITTED,
+                "Shelter",
+                UrgencyTier.STANDARD);
+
+        manager.addReliefRequest(request);
+
+        manager.removeReliefRequest(request.getId());
+
+        assertNull(manager.getReliefRequest(request.getId()));
     }
 
     @Test

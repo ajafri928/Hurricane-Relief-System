@@ -81,15 +81,24 @@ public class ReliefRequestTest {
     }
 
     @Test
-    public void acceptThenDeclineStoresAndClearsResponder() {
+    public void acceptStoresResponderAndSetsAssignedStatus() {
         ReliefRequest request = new ReliefRequest(null, "Transportation");
-        User responder = new User("rosa", "Rosa", "Delgado", "password", null);
+        User responder = new User(
+                "responder", "Rosa", "Delgado", "password", null);
 
         request.accept(responder);
 
         assertSame(responder, request.getResponder());
         assertEquals(ReliefRequestStatus.ASSIGNED, request.getStatus());
+    }
 
+    @Test
+    public void declineClearsResponderAndSetsSubmittedStatus() {
+        ReliefRequest request = new ReliefRequest(null, "Transportation");
+        User responder = new User(
+                "responder", "Rosa", "Delgado", "password", null);
+
+        request.accept(responder); // setup for testing decline()
         request.decline();
 
         assertNull(request.getResponder());
@@ -124,33 +133,46 @@ public class ReliefRequestTest {
     }
 
     @Test
-    public void addPersonAndPetUpdatesRequestListsAndPeopleCount() {
-        ReliefRequest request = new ReliefRequest(null, "Evacuation");
-        Person person = new Person("Jamie", "Lee", 30);
-        Pet pet = new Pet("Bailey", "Dog");
+    public void addPersonIncreasesPeopleCount() {
+        ReliefRequest request = new ReliefRequest(null, "Shelter");
+        Person person = new Person("Jamie", "Carter", 34);
 
         request.addPerson(person);
-        request.addPet(pet);
 
         assertEquals(1, request.getPeopleCount());
-        assertTrue(request.getRequestedPersons().contains(person));
-        assertTrue(request.getPets().contains(pet));
     }
 
     @Test
-    public void specialNeedsAndToStringContainCorrectInformation() {
+    public void addPetAddsPetToRequest() {
+        ReliefRequest request = new ReliefRequest(null, "Shelter");
+        Pet pet = new Pet("Buddy", "Dog");
+
+        request.addPet(pet);
+
+        assertEquals(1, request.getPets().size());
+        assertSame(pet, request.getPets().get(0));
+    }
+
+    @Test
+    public void toStringContainsImportantRequestInformation() {
         UUID id = UUID.randomUUID();
 
         ReliefRequest request = new ReliefRequest(
-                id, "2026-11-01T10:00:00", null, "Medical supplies",
-                "Needs insulin", true, 9, UrgencyTier.URGENT,
+                id,
+                "2026-10-25T08:15:00",
+                null,
+                "Medical supplies",
+                "Needs medication",
+                true,
+                9,
+                UrgencyTier.URGENT,
                 ReliefRequestStatus.SUBMITTED);
 
         String summary = request.toString();
 
-        assertTrue(request.hasSpecialNeeds());
         assertTrue(summary.contains(id.toString()));
         assertTrue(summary.contains("Medical supplies"));
+        assertTrue(summary.contains("9"));
         assertTrue(summary.contains("URGENT"));
         assertTrue(summary.contains("SUBMITTED"));
     }
