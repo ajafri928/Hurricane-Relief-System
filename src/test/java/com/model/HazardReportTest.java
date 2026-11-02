@@ -51,4 +51,28 @@ public class HazardReportTest {
 
         assertTrue(report.isVerified());
     }
+    @Test
+    public void basicConstructorCreatesIndependentUnverifiedReports() {
+        HazardReport first = new HazardReport(
+                HazardCategory.FLOODING, null, "Resident");
+
+        HazardReport second = new HazardReport(
+                HazardCategory.FLOODING, null, "Resident");
+
+        assertNotNull(first.getId());
+        assertNotNull(second.getId());
+        assertNotEquals(first.getId(), second.getId());
+        assertFalse(first.isVerified());
+        assertFalse(second.isVerified());
+    }
+    @Test
+    public void verifyCanBeCalledMoreThanOnce() {
+        HazardReport report = new HazardReport(
+                HazardCategory.BLOCKED_ROAD, null, "Resident");
+
+        report.verify();
+        report.verify();
+
+        assertTrue(report.isVerified());
+    }
 }
