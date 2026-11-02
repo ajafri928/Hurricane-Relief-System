@@ -700,4 +700,64 @@ public class ReliefSystemTest {
                 () -> system.notifyResponders());
     }
 
+    @Test
+    public void checkInCitizenRequiresSelectedShelter() {
+        assertIllegalState("A citizen was checked in with no shelter selected",
+                () -> system.checkInCitizen("QR123"));
+    }
+
+    @Test
+    public void checkInCitizenDoesNotCrash() {
+        system.selectShelter(firstShelter().getId());
+        try {
+            system.checkInCitizen("QR123");
+        } catch (Exception e) {
+            fail("checkInCitizen threw an exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void checkOutCitizenRequiresSelectedShelter() {
+        assertIllegalState("A citizen was checked out with no shelter selected",
+                () -> system.checkOutCitizen(UUID.randomUUID()));
+    }
+
+    @Test
+    public void checkOutCitizenDoesNotCrash() {
+        system.selectShelter(firstShelter().getId());
+        try {
+            system.checkOutCitizen(UUID.randomUUID());
+        } catch (Exception e) {
+            fail("checkOutCitizen threw an exception: " + e.getMessage());
+        }
+    }
+
+    @Test
+    public void getLowStockResourcesReturnsList() {
+        system.selectShelter(firstShelter().getId());
+        ArrayList<ShelterResource> lowStock = system.getLowStockResources();
+        
+        assertNotNull("Low stock resources list should not be null", lowStock);
+    }
+
+    @Test
+    public void exportTripInfoSucceedsWithAllSelections() {
+        ReliefRequest request = makeRequest();
+        signIn("rosadelgado", "rosa2026");
+        system.selectRequest(request.getId());
+        system.selectShelter(firstShelter().getId());
+
+        try {
+            system.exportTripInfo("test-trip-export.txt");
+        } catch (Exception e) {
+            fail("exportTripInfo crashed: " + e.getMessage());
+        } finally {
+            // Delete the test text file so it doesn't clutter the repository
+            java.io.File file = new java.io.File("test-trip-export.txt");
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+    }
+
 }
