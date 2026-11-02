@@ -104,9 +104,10 @@ public class ShelterResourceTest {
 
     /** Documents the consequence of the zero default: low stock never fires. */
     @Test
-    public void resourceFromTwoArgConstructorNeverReportsLowStock() {
+    public void resourceWithOneUnitLeftShouldReportLowStock() {
         ShelterResource cots = new ShelterResource("Cots", 1);
-        assertFalse(cots.checkStockLevel());
+        assertTrue("a resource down to its last unit should be flagged low",
+                cots.checkStockLevel());
     }
 
     // ------------------------------------------------------------------

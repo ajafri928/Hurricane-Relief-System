@@ -230,10 +230,11 @@ public class LocationTest {
      * because the geocoder cannot resolve an empty address.
      */
     @Test
-    public void toAddressOnGpsOnlyLocationProducesEmptyAddress() {
+    public void toAddressShouldNotLoseCoordinates() {
         Location loc = new Location(32.7876, -79.9403);
         Address address = loc.toAddress();
-        assertNotNull(address);
+        assertNotNull("a GPS-only location must still produce a usable address",
+                address.getStreet());
     }
  
     // ------------------------------------------------------------------

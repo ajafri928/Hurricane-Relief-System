@@ -328,40 +328,39 @@ public class ShelterTest {
 
     /** The parameter is never read, so two different codes behave identically. */
     @Test
-    public void qrCheckInIgnoresTheQrCodeEntirely() {
-        Shelter a = shelter(100, 0);
-        Shelter b = shelter(100, 0);
-        a.checkIn("QR-123");
-        b.checkIn("completely-different-code");
-        assertEquals(a.getOccupancy(), b.getOccupancy());
+   public void qrCheckInShouldRecordWhoCheckedIn() {
+        Shelter s = shelter(100, 0);
+        s.checkIn("QR-123");
+        assertFalse("the shelter must record which person checked in",
+                s.getOccupants().isEmpty());
     }
 
     /** Reveals that the QR path and the group path track different state. */
     @Test
-    public void qrCheckInDoesNotAddAnyoneToTheOccupantList() {
+    public void qrCheckInShouldAddThePersonToTheOccupantList() {
         Shelter s = shelter(100, 0);
         s.checkIn("QR-123");
-        assertEquals(1, s.getOccupancy());
-        assertTrue(s.getOccupants().isEmpty());
+        assertEquals("occupancy and the occupant list must agree",
+                s.getOccupancy(), s.getOccupants().size());
     }
 
     /** Unlike the group version this path has no capacity guard. */
     @Test
-    public void qrCheckInCanExceedCapacity() {
+    public void qrCheckInShouldNotExceedCapacity() {
         Shelter s = shelter(2, 2);
         s.checkIn("QR-123");
-        assertEquals(3, s.getOccupancy());
-        assertEquals(-1, s.getAvailableSpace());
+        assertEquals("a full shelter must not accept another person",
+                2, s.getOccupancy());
     }
 
     /** The same missing guard in the other direction. */
     @Test
-    public void qrCheckOutCanDriveOccupancyNegative() {
+    public void qrCheckOutShouldNotDriveOccupancyNegative() {
         Shelter s = shelter(100, 0);
         s.checkOut("QR-123");
-        assertEquals(-1, s.getOccupancy());
+        assertEquals("occupancy must never fall below zero",
+                0, s.getOccupancy());
     }
-
     // ------------------------------------------------------------------
     // getLowStockResources
     // ------------------------------------------------------------------
