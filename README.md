@@ -33,6 +33,7 @@ Built around a facade entry point with singleton managers for each subsystem, ba
 
 ## Prototype Section
 - [View the prototype (PDF)](https://github.com/ajafri928/Hurricane-Relief-System/blob/main/docs/Lifeline_Link_Prototype.pdf)
+- [Walkthrough of the Figma layers (YouTube)](https://youtu.be/RmfdEAXX1ig)
 
 ---
 
