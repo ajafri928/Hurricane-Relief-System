@@ -1,0 +1,392 @@
+.root {
+    -fx-background-color: #ffffff;
+    -fx-font-family: "Inter";
+    -fx-font-size: 14px;
+}
+
+.brand {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+.title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.subtitle {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+}
+
+.field-label {
+    -fx-text-fill: #374151;
+    -fx-font-size: 13px;
+}
+
+.hint {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+}
+
+.text-field, .password-field {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-padding: 10 12 10 12;
+    -fx-font-size: 14px;
+}
+
+.text-field:focused, .password-field:focused {
+    -fx-border-color: #1f4e9c;
+    -fx-border-width: 2;
+    -fx-padding: 9 11 9 11;
+}
+
+.primary-button {
+    -fx-background-color: #1f4e9c;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 12 0 12 0;
+    -fx-cursor: hand;
+}
+
+.primary-button:hover {
+    -fx-background-color: #183f80;
+}
+
+.primary-button:pressed {
+    -fx-background-color: #123266;
+}
+
+.link {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-weight: bold;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+    -fx-underline: false;
+}
+
+.link:hover {
+    -fx-underline: true;
+}
+
+.back-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #111827;
+    -fx-font-size: 20px;
+    -fx-padding: 0;
+    -fx-cursor: hand;
+}
+
+.error-box {
+    -fx-background-color: #fef2f2;
+    -fx-border-color: #fca5a5;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-text-fill: #b91c1c;
+    -fx-padding: 10 12 10 12;
+    -fx-font-size: 13px;
+}
+
+.scroll-pane, .scroll-pane > .viewport {
+    -fx-background-color: #ffffff;
+    -fx-background: #ffffff;
+}
+
+/* ---------- Welcome screen ---------- */
+
+.app-icon {
+    -fx-background-color: #1f4e9c;
+    -fx-background-radius: 16;
+}
+
+.icon-outline {
+    -fx-fill: transparent;
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 1.5;
+    -fx-stroke-line-join: round;
+    -fx-stroke-line-cap: round;
+}
+
+.icon-outline-small {
+    -fx-fill: transparent;
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 1.6;
+    -fx-stroke-line-cap: round;
+}
+
+.welcome-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+}
+
+.welcome-body {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 15px;
+    -fx-line-spacing: 3px;
+}
+
+.volunteer-card {
+    -fx-background-color: #e8eef9;
+    -fx-border-color: #1f4e9c;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 12 14 12 12;
+}
+
+.volunteer-icon {
+    -fx-background-color: #1f4e9c;
+    -fx-background-radius: 7;
+}
+
+.volunteer-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.volunteer-subtitle {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 12px;
+}
+
+.chevron {
+    -fx-fill: transparent;
+    -fx-stroke: #1f4e9c;
+    -fx-stroke-width: 2;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.secondary-button {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1f4e9c;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-padding: 11 0 11 0;
+    -fx-cursor: hand;
+}
+
+.secondary-button:hover {
+    -fx-background-color: #f3f6fc;
+}
+
+.text-link {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* ---------- Home screens ---------- */
+
+.home-root {
+    -fx-background-color: #f6f8fc;
+}
+
+.home-brand {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.home-greeting {
+    -fx-text-fill: #111827;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+.safety-label {
+    -fx-text-fill: #111827;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+}
+
+/* Safety badge: base shape, then one color class per safety level */
+.safety-badge {
+    -fx-border-width: 1.2;
+    -fx-border-radius: 20;
+    -fx-background-radius: 20;
+    -fx-padding: 4 14 4 12;
+}
+
+.badge-icon {
+    -fx-fill: transparent;
+    -fx-stroke-width: 1.5;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.badge-text {
+    -fx-font-size: 12px;
+}
+
+.badge-safe       { -fx-background-color: #f0fdf4; -fx-border-color: #16a34a; }
+.badge-safe .badge-text { -fx-text-fill: #15803d; }
+.badge-safe .badge-icon { -fx-stroke: #15803d; }
+
+.badge-caution    { -fx-background-color: #fffbeb; -fx-border-color: #d97706; }
+.badge-caution .badge-text { -fx-text-fill: #b45309; }
+.badge-caution .badge-icon { -fx-stroke: #b45309; }
+
+.badge-high-risk  { -fx-background-color: #fff7ed; -fx-border-color: #ea580c; }
+.badge-high-risk .badge-text { -fx-text-fill: #c2410c; -fx-font-weight: bold; }
+.badge-high-risk .badge-icon { -fx-stroke: #c2410c; }
+
+.badge-danger     { -fx-background-color: #dc2626; -fx-border-color: #b91c1c; }
+.badge-danger .badge-text { -fx-text-fill: #ffffff; -fx-font-weight: bold; }
+.badge-danger .badge-icon { -fx-stroke: #ffffff; }
+
+/* Hurricane card */
+.hurricane-card {
+    -fx-background-color: #e6edf9;
+    -fx-background-radius: 10;
+    -fx-padding: 14 16 14 16;
+}
+
+.hurricane-icon {
+    -fx-fill: transparent;
+    -fx-stroke: #1f4e9c;
+    -fx-stroke-width: 1.6;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.hurricane-name {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+}
+
+.hurricane-status {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 12px;
+}
+
+.section-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 21px;
+    -fx-font-weight: bold;
+}
+
+.section-body {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 14px;
+    -fx-line-spacing: 3px;
+}
+
+.get-help-button {
+    -fx-background-color: #c62828;
+    -fx-text-fill: #ffffff;
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10;
+    -fx-padding: 13 0 13 0;
+    -fx-cursor: hand;
+}
+
+.get-help-button:hover {
+    -fx-background-color: #a91f1f;
+}
+
+/* "You're marked safe" box */
+.marked-safe-box {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #1f4e9c;
+    -fx-border-width: 1.2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 11 0 11 0;
+}
+
+.marked-safe-icon {
+    -fx-fill: transparent;
+    -fx-stroke: #111827;
+    -fx-stroke-width: 1.8;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.marked-safe-text {
+    -fx-text-fill: #15803d;
+    -fx-font-size: 14px;
+}
+
+/* "No requests yet" card */
+.empty-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-padding: 22 16 22 16;
+}
+
+.empty-icon {
+    -fx-fill: transparent;
+    -fx-stroke: #374151;
+    -fx-stroke-width: 1.5;
+    -fx-stroke-line-join: round;
+}
+
+.empty-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.empty-body {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 13px;
+}
+
+/* Bottom navigation bar */
+.bottom-nav {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb transparent transparent transparent;
+    -fx-padding: 6 4 12 4;
+}
+
+.nav-label {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 11px;
+}
+
+.nav-active .nav-label {
+    -fx-text-fill: #111827;
+    -fx-font-weight: bold;
+}
+
+.nav-icon {
+    -fx-fill: transparent;
+    -fx-stroke: #4b5563;
+    -fx-stroke-width: 1.6;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.nav-icon-filled {
+    -fx-fill: #374151;
+}
+
+.nav-help-circle {
+    -fx-background-color: #c62828;
+    -fx-background-radius: 22;
+    -fx-translate-y: -6;
+}
+
+.nav-help-plus {
+    -fx-fill: transparent;
+    -fx-stroke: #ffffff;
+    -fx-stroke-width: 2.2;
+    -fx-stroke-line-cap: round;
+}
