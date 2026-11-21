@@ -1,0 +1,25 @@
+<? xml version = "1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+
+<Vbox styleClass = "home-root" xmlns="https://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+    stylesheets="@styles.css">
+    <children>
+
+    <Vbox spacing = '0.0' VBox.vgrow = "ALWAYS">
+        <padding>
+            <Insets top="28.0" right="24.0" bottom="20.0" left = "24.0" />
+        </padding>
+        <children>
+            <Label text="Lifeline Link" styleClass="home-brand" />
+            <Label text="Your safety" styleClass="safety-label" />
+            <Region Hbox.hgrow="ALWAYS" />
+            <Hbox styleClass="safety-badge, badge-caution" alignment="CENTER" spacing="6.0">
