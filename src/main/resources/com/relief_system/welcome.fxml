@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Priority?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<!-- Welcome screen. Buttons are not hooked up to anything yet. -->
+<VBox alignment="TOP_CENTER" spacing="0.0" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" stylesheets="@styles.css">
+   <padding>
+      <Insets top="40.0" right="28.0" bottom="28.0" left="28.0" />
+   </padding>
+   <children>
+      <Region VBox.vgrow="ALWAYS" />
+
+      <!-- App icon: blue rounded square with a house -->
+      <StackPane styleClass="app-icon" prefWidth="72.0" prefHeight="72.0"
+                 maxWidth="72.0" maxHeight="72.0">
+         <children>
+            <SVGPath styleClass="icon-outline" scaleX="1.4" scaleY="1.4"
+                     content="M3 10.5 L12 3 L21 10.5 M5 9 V20 H10 V14 H14 V20 H19 V9" />
+         </children>
+      </StackPane>
+
+      <Label text="Lifeline Link" styleClass="welcome-title">
+         <VBox.margin><Insets top="24.0" /></VBox.margin>
+      </Label>
+
+      <Label text="Request food, water, medical help or a ride to a shelter during a hurricane. Volunteers nearby will be matched to you."
+             styleClass="welcome-body" wrapText="true" textAlignment="CENTER" maxWidth="300.0">
+         <VBox.margin><Insets top="14.0" /></VBox.margin>
+      </Label>
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <!-- Volunteer card -->
+      <HBox styleClass="volunteer-card" alignment="CENTER_LEFT" spacing="12.0" maxWidth="Infinity">
+         <children>
+            <StackPane styleClass="volunteer-icon" prefWidth="34.0" prefHeight="34.0"
+                       minWidth="34.0" maxWidth="34.0" maxHeight="34.0">
+               <children>
+                  <SVGPath styleClass="icon-outline-small"
+                           content="M12 12 A3.5 3.5 0 1 0 12 5 A3.5 3.5 0 1 0 12 12 Z M5.5 19 C6 15.5 8.5 14 12 14 C15.5 14 18 15.5 18.5 19" />
+               </children>
+            </StackPane>
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Want to help others?" styleClass="volunteer-title" />
+                  <Label text="Sign up as a volunteer" styleClass="volunteer-subtitle" />
+               </children>
+            </VBox>
+            <SVGPath styleClass="chevron" content="M1 1 L6 6 L1 11" />
+         </children>
+      </HBox>
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <Button text="Create an Account" styleClass="primary-button" maxWidth="Infinity" />
+
+      <Button text="Log In" styleClass="secondary-button" maxWidth="Infinity">
+         <VBox.margin><Insets top="10.0" /></VBox.margin>
+      </Button>
+
+      <Label text="Request help without an account" styleClass="text-link">
+         <VBox.margin><Insets top="18.0" /></VBox.margin>
+      </Label>
+   </children>
+</VBox>
