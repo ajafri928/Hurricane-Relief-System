@@ -19,6 +19,10 @@ public class HurricaneEventManagement {
         }
         return hurricaneEventManagement;
     }
+        /** @return every hurricane event */
+    public ArrayList<HurricaneEvent> getHurricaneEvents() {
+        return hurricaneEvents;
+    }
 
     /** @param id event id @return the matching event, or null */
     public HurricaneEvent getHurricaneEvent(UUID id) {

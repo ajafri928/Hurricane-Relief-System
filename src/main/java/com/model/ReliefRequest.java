@@ -205,6 +205,11 @@ public class ReliefRequest {
         this.destinationShelter = destinationShelter;
     }
 
+        /** @param description extra details about the request */
+    public void setDescription(String description){ 
+        this.description = description;
+      }
+
     /**  Returns extra details about the request
      * */
     public String getDescription() {

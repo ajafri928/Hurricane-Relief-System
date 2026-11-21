@@ -157,6 +157,37 @@ public class ReliefSystem {
         currentUser.markSafe(category);
     }
 
+        /**
+     * Returns the relief requests the signed-in user has submitted.
+     *
+     * @return the signed-in user's requests (empty if they have none)
+     */
+    public ArrayList<ReliefRequest> getMyRequests() {
+        requireLogin();
+        ArrayList<ReliefRequest> mine = new ArrayList<>();
+        for (ReliefRequest request : reliefManagement.getReliefRequests()) {
+            User submitter = request.getSubmittedBy();
+            if (submitter != null && submitter.getId().equals(currentUser.getId())) {
+                mine.add(request);
+            }
+        }
+        return mine;
+    }
+
+    /**
+     * Returns the hurricane that is currently active.
+     *
+     * @return the first event whose status is ACTIVE, or null if there is none
+     */
+    public HurricaneEvent getActiveHurricane() {
+        for (HurricaneEvent event : eventManagement.getHurricaneEvents()) {
+            if ("ACTIVE".equalsIgnoreCase(event.getStatus())) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     /** Shares the signed-in user's location. */
     public void shareUserLocation() {
         requireLogin();
