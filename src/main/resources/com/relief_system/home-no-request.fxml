@@ -1,25 +1,80 @@
-<? xml version = "1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.SVGPath?>
 
+<VBox styleClass="home-root" prefWidth="400.0" prefHeight="760.0" stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.relief_system.HomeController">
+   <children>
+      <ScrollPane styleClass="home-scroll" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+         <content>
+            <VBox styleClass="home-content" spacing="14.0">
+               <padding>
+                  <Insets top="28.0" right="24.0" bottom="20.0" left="24.0" />
+               </padding>
+               <children>
 
-<Vbox styleClass = "home-root" xmlns="https://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-    stylesheets="@styles.css">
-    <children>
+                  <VBox spacing="4.0">
+                     <children>
+                        <Label text="Lifeline Link" styleClass="home-brand" />
+                        <Label fx:id="greetingLabel" text="Hi, Jamie" styleClass="home-greeting" />
+                     </children>
+                  </VBox>
 
-    <Vbox spacing = '0.0' VBox.vgrow = "ALWAYS">
-        <padding>
-            <Insets top="28.0" right="24.0" bottom="20.0" left = "24.0" />
-        </padding>
-        <children>
-            <Label text="Lifeline Link" styleClass="home-brand" />
-            <Label text="Your safety" styleClass="safety-label" />
-            <Region Hbox.hgrow="ALWAYS" />
-            <Hbox styleClass="safety-badge, badge-caution" alignment="CENTER" spacing="6.0">
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label text="Your safety" styleClass="safety-label" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="safetyBadge" styleClass="safety-badge, badge-caution" alignment="CENTER" spacing="6.0">
+                           <children>
+                              <SVGPath fx:id="safetyIcon" styleClass="badge-icon" content="M7 1.5 L13 12.5 H1 Z M7 5.5 V8.5 M7 10.3 V10.6" />
+                              <Label fx:id="safetyText" text="Caution" styleClass="badge-text" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+
+                  <VBox fx:id="requestCard" styleClass="request-summary-card" spacing="10.0">
+                     <children>
+                        <Label fx:id="requestHeader" text="Your Active Request" styleClass="request-summary-header" />
+                        <Label fx:id="requestTitle" text="Transportation - Medical Evacuation" styleClass="request-summary-title" wrapText="true" />
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+                              <HBox fx:id="statusChip" styleClass="status-chip, chip-pending" alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <SVGPath fx:id="statusIcon" styleClass="chip-icon" content="M7 1 A6 6 0 1 0 7 13 A6 6 0 1 0 7 1 Z M7 4 V7 L9.5 8.5" />
+                                    <Label fx:id="statusText" text="Pending match" styleClass="chip-text" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                        <Label fx:id="peopleLabel" text="3 people - 1 dog" styleClass="request-summary-line" />
+                        <HBox fx:id="volunteerRow" spacing="8.0" alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Volunteer" styleClass="request-summary-line" />
+                              <Label text="→" styleClass="request-summary-line" />
+                              <Label fx:id="volunteerName" text="Rosa Delgado" styleClass="request-summary-line" />
+                           </children>
+                        </HBox>
+                        <HBox fx:id="etaRow" spacing="8.0" alignment="CENTER_LEFT">
+                           <children>
+                              <Label text="Estimated arrival" styleClass="request-summary-line" />
+                              <Label text="→" styleClass="request-summary-line" />
+                              <Label text="Not available" styleClass="request-summary-line" />
+                           </children>
+                        </HBox>
+                        <Label fx:id="requestMessage" text="Your request is submitted. No volunteer is assigned yet."
+                               styleClass="request-summary-message" wrapText="true" />
+                        <Label text="View request →" styleClass="view-request-link" onMouseClicked="#handleViewRequest" />
+                     </children>
+                  </VBox>
+
+                  <HBox fx:id="hurricaneCard" styleClass="hurricane-card" alignment="CENTER_LEFT" spacing="12.0">
+                     <children>

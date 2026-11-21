@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<HBox styleClass="bottom-nav" alignment="BOTTOM_CENTER" stylesheets="@styles.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.relief_system.NavController">
+   <children>
+      <VBox fx:id="homeTab" styleClass="nav-item" alignment="CENTER" spacing="4.0" HBox.hgrow="ALWAYS"
+            maxWidth="Infinity" onMouseClicked="#goHome">
+         <children>
+            <SVGPath styleClass="nav-icon" content="M3 11 L12 3 L21 11 V21 H15 V15 H9 V21 H3 Z" />
+            <Label text="Home" styleClass="nav-label" />
+         </children>
+      </VBox>
+      <VBox fx:id="requestsTab" styleClass="nav-item" alignment="CENTER" spacing="4.0" HBox.hgrow="ALWAYS"
+            maxWidth="Infinity" onMouseClicked="#goMyRequests">
+         <children>
+            <SVGPath styleClass="nav-icon" content="M8 6 H21 M8 12 H21 M8 18 H21 M3.5 6 H4 M3.5 12 H4 M3.5 18 H4" />
+            <Label text="My Requests" styleClass="nav-label" />
+         </children>
+      </VBox>
+      <VBox fx:id="helpTab" styleClass="nav-item" alignment="CENTER" spacing="4.0" HBox.hgrow="ALWAYS"
+            maxWidth="Infinity" onMouseClicked="#goGetHelp">
+         <children>
+            <StackPane styleClass="nav-help-circle" prefWidth="44.0" prefHeight="44.0"
+                       minWidth="44.0" minHeight="44.0" maxWidth="44.0" maxHeight="44.0">
+               <children>
+                  <SVGPath styleClass="nav-help-plus" content="M12 5 V19 M5 12 H19" />
+               </children>
+            </StackPane>
+            <Label text="Get Help" styleClass="nav-label" />
+         </children>
+      </VBox>
+      <VBox fx:id="alertsTab" styleClass="nav-item" alignment="CENTER" spacing="4.0" HBox.hgrow="ALWAYS"
+            maxWidth="Infinity" onMouseClicked="#goAlerts">
+         <children>
+            <SVGPath styleClass="nav-icon" content="M6 17 V11 A6 6 0 0 1 18 11 V17 L20 19 H4 Z M10 21.5 H14" />
+            <Label text="Alerts" styleClass="nav-label" />
+         </children>
+      </VBox>
+      <VBox fx:id="profileTab" styleClass="nav-item" alignment="CENTER" spacing="4.0" HBox.hgrow="ALWAYS"
+            maxWidth="Infinity" onMouseClicked="#goProfile">
+         <children>
+            <SVGPath styleClass="nav-icon" content="M12 12 A4 4 0 1 0 12 4 A4 4 0 1 0 12 12 Z M4 21 C4.5 16.5 8 15 12 15 C16 15 19.5 16.5 20 21" />
+            <Label text="Profile" styleClass="nav-label" />
+         </children>
+      </VBox>
+   </children>
+</HBox>
