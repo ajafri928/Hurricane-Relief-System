@@ -1403,3 +1403,126 @@
     -fx-text-fill: #c62828;
     -fx-font-weight: bold;
 }
+.page-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+}
+
+.filter-tab {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #d1d5db;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 14px;
+    -fx-padding: 9 0 9 0;
+    -fx-cursor: hand;
+}
+
+.filter-tab-selected {
+    -fx-background-color: #1f4e9c;
+    -fx-border-color: #1f4e9c;
+    -fx-text-fill: #ffffff;
+    -fx-font-weight: bold;
+}
+
+.alert-section {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #6b7280;
+    -fx-padding: 8 0 0 0;
+}
+
+.alert-section-urgent { -fx-text-fill: #c62828; }
+
+.alert-card {
+    -fx-background-color: #ffffff;
+    -fx-border-color: #e5e7eb;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+}
+
+.alert-bar {
+    -fx-min-width: 5;
+    -fx-pref-width: 5;
+    -fx-max-width: 5;
+    -fx-background-radius: 10 0 0 10;
+}
+
+.alert-body { -fx-padding: 12 14 12 12; }
+
+.alert-icon-box { -fx-background-radius: 8; }
+
+.alert-icon {
+    -fx-fill: transparent;
+    -fx-stroke-width: 1.6;
+    -fx-stroke-line-cap: round;
+    -fx-stroke-line-join: round;
+}
+
+.alert-title {
+    -fx-text-fill: #111827;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}
+
+.alert-time {
+    -fx-text-fill: #6b7280;
+    -fx-font-size: 11px;
+}
+
+.alert-message {
+    -fx-text-fill: #4b5563;
+    -fx-font-size: 12px;
+}
+
+.alert-red .alert-bar { 
+    -fx-background-color: #c62828;
+ }
+.alert-red .alert-icon-box { 
+    -fx-background-color: #fee2e2; 
+}
+.alert-red .alert-icon { 
+    -fx-stroke: #c62828; 
+}
+
+.alert-orange .alert-bar {
+     -fx-background-color: #c2410c; 
+    }
+.alert-orange .alert-icon-box { 
+    -fx-background-color: #fef3c7; 
+}
+.alert-orange .alert-icon { 
+    -fx-stroke: #b45309; 
+}
+
+.alert-green .alert-bar { 
+    -fx-background-color: #15803d; 
+}
+.alert-green .alert-icon-box { 
+    -fx-background-color: #dcfce7; 
+}
+.alert-green .alert-icon {
+     -fx-stroke: #15803d; 
+    }
+
+.alert-blue .alert-bar { 
+    -fx-background-color: #1f4e9c;
+ }
+.alert-blue .alert-icon-box { 
+    -fx-background-color: #e6edf9; 
+}
+.alert-blue .alert-icon { 
+    -fx-stroke: #1f4e9c; 
+}
+
+.alert-grey .alert-bar { 
+    -fx-background-color: #9ca3af; 
+}
+.alert-grey .alert-icon-box { 
+    -fx-background-color: #f3f4f6; 
+}
+.alert-grey .alert-icon { 
+    -fx-stroke: #6b7280; 
+}
