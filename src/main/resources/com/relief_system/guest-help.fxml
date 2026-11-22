@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="6.0" prefWidth="400.0" prefHeight="760.0" stylesheets="@styles.css, @account.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.relief_system.GuestHelpController">
+   <padding>
+      <Insets top="24.0" right="24.0" bottom="24.0" left="24.0" />
+   </padding>
+   <children>
+      <Button text="←" styleClass="back-button" onAction="#back" />
+      <Label text="Get help without an account" styleClass="flow-heading" wrapText="true">
+         <VBox.margin><Insets top="16.0" /></VBox.margin>
+      </Label>
+      <Label text="Tell us who you are and how to reach you so a volunteer can find you."
+             styleClass="flow-subheading" wrapText="true" />
+      <Label fx:id="errorLabel" styleClass="error-box" wrapText="true" maxWidth="Infinity" visible="false" managed="false" />
+
+      <Label text="Your name" styleClass="field-label">
+         <VBox.margin><Insets top="10.0" /></VBox.margin>
+      </Label>
+      <TextField fx:id="nameField" />
+      <Label text="Phone number" styleClass="field-label">
+         <VBox.margin><Insets top="8.0" /></VBox.margin>
+      </Label>
+      <TextField fx:id="phoneField" />
+
+      <HBox styleClass="white-card" alignment="CENTER_LEFT">
+         <children>
+            <Label text="Use my current location" styleClass="field-heading" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+            <CheckBox styleClass="switch" />
+         </children>
+         <VBox.margin><Insets top="14.0" /></VBox.margin>
+      </HBox>
+
+      <HBox styleClass="danger-banner" alignment="CENTER_LEFT" spacing="10.0">
+         <children>
+            <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <Label text="Life in danger?" styleClass="danger-banner-title" />
+                  <Label text="Call 911 first." styleClass="danger-banner-text" />
+               </children>
+            </VBox>
+            <Button text="Call 911" styleClass="call-911-button" />
+         </children>
+         <VBox.margin><Insets top="8.0" /></VBox.margin>
+      </HBox>
+
+      <Label text="No account needed. We only use these details to match you with a volunteer for this request."
+             styleClass="info-note" wrapText="true" maxWidth="Infinity" />
+
+      <Region VBox.vgrow="ALWAYS" />
+      <Button text="Continue to Request" styleClass="primary-button" maxWidth="Infinity" onAction="#continueToRequest" />
+   </children>
+</VBox>
