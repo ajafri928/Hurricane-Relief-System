@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane prefWidth="400.0" prefHeight="760.0" stylesheets="@styles.css, @account.css"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.relief_system.RequestDetailsController">
+   <children>
+      <VBox styleClass="home-root">
+         <children>
+            <HBox styleClass="flow-header" alignment="CENTER_LEFT" spacing="12.0">
+               <padding>
+                  <Insets top="20.0" right="24.0" bottom="12.0" left="24.0" />
+               </padding>
+               <children>
+                  <Button text="←" styleClass="back-button" onAction="#back" />
+                  <Label fx:id="requestIdLabel" styleClass="flow-title" />
+               </children>
+            </HBox>
+            <ScrollPane styleClass="home-scroll" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox styleClass="home-content" spacing="14.0">
+                     <padding>
+                        <Insets top="8.0" right="24.0" bottom="20.0" left="24.0" />
+                     </padding>
+                     <children>
+                        <VBox styleClass="white-card" spacing="8.0">
+                           <children>
+                              <HBox fx:id="titleRow" alignment="TOP_LEFT" spacing="8.0" />
+                              <Label fx:id="subtitleLabel" styleClass="flow-subheading" wrapText="true" />
+                              <Label fx:id="submittedLabel" styleClass="hint" />
+                              <VBox fx:id="timeline" />
+                           </children>
+                        </VBox>
+                        <VBox fx:id="volunteerCard" styleClass="white-card" spacing="8.0">
+                           <children>
+                              <Label text="Your volunteer" styleClass="section-title" />
+                              <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label fx:id="volunteerInitials" styleClass="avatar, avatar-text" alignment="CENTER" minWidth="44.0" minHeight="44.0" />
+                                    <VBox spacing="2.0">
+                                       <children>
+                                          <Label fx:id="volunteerName" styleClass="field-heading" />
+                                          <Label fx:id="volunteerRole" styleClass="hint" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="shelterCard" styleClass="white-card" spacing="6.0">
+                           <children>
+                              <Label text="Destination shelter" styleClass="section-title" />
+                              <Label fx:id="shelterName" styleClass="field-heading" wrapText="true" />
+                              <Label fx:id="shelterAddress" styleClass="hint" wrapText="true" />
+                              <HBox spacing="6.0">
+                                 <children>
+                                    <Label fx:id="petsChip" text="Pets OK" styleClass="on-file-chip" />
+                                    <Label fx:id="medicalChip" text="Medical staff" styleClass="on-file-chip" />
+                                    <Label fx:id="spotsChip" styleClass="on-file-chip" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <VBox fx:id="peopleCard" styleClass="white-card" spacing="6.0">
+                           <children>
+                              <Label text="People and pets" styleClass="section-title" />
+                              <VBox fx:id="peopleList" spacing="6.0" />
+                           </children>
+                        </VBox>
+                        <Label fx:id="cancelLink" text="Cancel this request" styleClass="danger-link" onMouseClicked="#openCancel" />
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+         </children>
+      </VBox>
+      <VBox fx:id="cancelOverlay" styleClass="modal-dim" alignment="CENTER" visible="false" managed="false">
+         <padding>
+            <Insets top="24.0" right="24.0" bottom="24.0" left="24.0" />
+         </padding>
+         <children>
+            <VBox styleClass="modal-card" spacing="10.0" alignment="CENTER">
+               <children>
+                  <StackPane styleClass="modal-icon-circle">
+                     <children>
+                        <SVGPath styleClass="modal-icon" content="M7 1.5 L13 12.5 H1 Z M7 5.5 V8.5 M7 10.3 V10.6" />
+                     </children>
+                  </StackPane>
+                  <Label text="Cancel this request?" styleClass="modal-title" />
+                  <Label fx:id="cancelText" styleClass="modal-text" wrapText="true" />
+                  <Label fx:id="cancelSummary" styleClass="info-note" wrapText="true" maxWidth="Infinity" />
+                  <Button text="Yes, cancel request" styleClass="get-help-button" maxWidth="Infinity" onAction="#confirmCancel" />
+                  <Button text="Keep My Request" styleClass="secondary-button" maxWidth="Infinity" onAction="#closeCancel" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
