@@ -1,0 +1,534 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.shape.SVGPath?>
+
+<StackPane prefWidth="400.0" prefHeight="760.0" stylesheets="@styles.css"
+           xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="com.relief_system.RequestHelpController">
+   <children>
+      <VBox styleClass="home-root">
+         <children>
+
+            <VBox styleClass="flow-header" spacing="10.0">
+               <padding>
+                  <Insets top="20.0" right="20.0" bottom="10.0" left="20.0" />
+               </padding>
+               <children>
+                  <StackPane>
+                     <children>
+                        <Label text="Request Help" styleClass="flow-title" />
+                        <Button styleClass="icon-button" onAction="#handleClose" StackPane.alignment="CENTER_RIGHT">
+                           <graphic>
+                              <SVGPath styleClass="close-icon" content="M2 2 L14 14 M14 2 L2 14" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </StackPane>
+                  <HBox spacing="6.0">
+                     <children>
+                        <Region fx:id="progress1" styleClass="progress-segment" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                        <Region fx:id="progress2" styleClass="progress-segment" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                        <Region fx:id="progress3" styleClass="progress-segment" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                        <Region fx:id="progress4" styleClass="progress-segment" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                        <Region fx:id="progress5" styleClass="progress-segment" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT">
+                     <children>
+                        <Label fx:id="stepLabel" text="Step 1 of 5 · Help needed" styleClass="step-label" />
+                        <Region HBox.hgrow="ALWAYS" />
+                        <HBox fx:id="draftSavedLabel" alignment="CENTER_LEFT" spacing="4.0">
+                           <children>
+                              <SVGPath styleClass="draft-saved-icon" content="M1 6 L4.5 9.5 L11 2.5" />
+                              <Label text="Draft saved" styleClass="draft-saved-text" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+
+            <ScrollPane fx:id="stepScroll" styleClass="home-scroll" fitToWidth="true" hbarPolicy="NEVER" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox styleClass="home-content" spacing="12.0">
+                     <padding>
+                        <Insets top="6.0" right="20.0" bottom="20.0" left="20.0" />
+                     </padding>
+                     <children>
+                        <Label fx:id="errorLabel" styleClass="error-box" wrapText="true" maxWidth="Infinity" />
+
+                        <VBox fx:id="step1Pane" spacing="12.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label text="What do you need?" styleClass="flow-heading" />
+                                    <Label fx:id="needsCountLabel" text="Select all that apply · 0 selected" styleClass="flow-subheading" />
+                                 </children>
+                              </VBox>
+
+                              <HBox styleClass="danger-banner" alignment="CENTER_LEFT" spacing="10.0">
+                                 <children>
+                                    <SVGPath styleClass="danger-banner-icon" content="M9 1.5 L17 16 H1 Z M9 7 V11 M9 13.3 V13.5" />
+                                    <VBox spacing="2.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="In immediate danger?" styleClass="danger-banner-title" />
+                                          <Label fx:id="call911Text" text="Call 911 before anything else." styleClass="danger-banner-text" wrapText="true" />
+                                       </children>
+                                    </VBox>
+                                    <Button text="Call 911" styleClass="call-911-button" onAction="#handleCall911">
+                                       <graphic>
+                                          <SVGPath styleClass="call-911-icon" content="M3 1.5 L5.5 1.5 L6.8 4.8 L5.2 6 C5.9 7.6 7.4 9.1 9 9.8 L10.2 8.2 L13.5 9.5 L13.5 12 C13.5 12.8 12.8 13.5 12 13.5 C6.2 13.2 1.8 8.8 1.5 3 C1.5 2.2 2.2 1.5 3 1.5 Z" />
+                                       </graphic>
+                                    </Button>
+                                 </children>
+                              </HBox>
+
+                              <GridPane fx:id="needsGrid" hgap="10.0" vgap="10.0">
+                                 <columnConstraints>
+                                    <ColumnConstraints percentWidth="50.0" />
+                                    <ColumnConstraints percentWidth="50.0" />
+                                 </columnConstraints>
+                                 <children>
+                                    <VBox styleClass="need-tile" userData="Water" onMouseClicked="#toggleNeed" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M9 2 C9 2 3.5 8.5 3.5 11.5 A5.5 5.5 0 0 0 14.5 11.5 C14.5 8.5 9 2 9 2 Z" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Water" styleClass="need-name" />
+                                          <Label text="Drinking water" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Food" onMouseClicked="#toggleNeed" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M5 2 V8 M3 2 V6.5 C3 7.5 3.8 8.3 5 8.3 C6.2 8.3 7 7.5 7 6.5 V2 M5 8.3 V16 M12.5 16 V2 C11 2.5 10 4.5 10 7.5 C10 9 11 10 12.5 10" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Food" styleClass="need-name" />
+                                          <Label text="Meals, baby formula" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Shelter" onMouseClicked="#toggleNeed" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M2 8.5 L9 2.5 L16 8.5 M4 7 V15.5 H7.5 V11 H10.5 V15.5 H14 V7" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Shelter" styleClass="need-name" />
+                                          <Label text="Safe place to stay" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Medical" onMouseClicked="#toggleNeed" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M7 2.5 H11 V7 H15.5 V11 H11 V15.5 H7 V11 H2.5 V7 H7 Z" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Medical" styleClass="need-name" />
+                                          <Label text="First aid, medicine" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Rescue" onMouseClicked="#toggleNeed" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M9 2 A7 7 0 1 0 9 16 A7 7 0 1 0 9 2 Z M9 6 A3 3 0 1 0 9 12 A3 3 0 1 0 9 6 Z M4 4 L6.9 6.9 M14 4 L11.1 6.9 M4 14 L6.9 11.1 M14 14 L11.1 11.1" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Rescue" styleClass="need-name" />
+                                          <Label text="Trapped or stranded" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Supplies" onMouseClicked="#toggleNeed" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M9 1.5 L15.5 5 V13 L9 16.5 L2.5 13 V5 Z M2.5 5 L9 8.5 L15.5 5 M9 8.5 V16.5" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Supplies" styleClass="need-name" />
+                                          <Label text="Tarps, clothes, hygiene" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Power" onMouseClicked="#toggleNeed" GridPane.columnIndex="0" GridPane.rowIndex="3">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M10 1.5 L3.5 10 H9 L8 16.5 L14.5 8 H9 Z" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Power" styleClass="need-name" />
+                                          <Label text="Charging, generator" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                    <VBox styleClass="need-tile" userData="Other" onMouseClicked="#toggleNeed" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                                       <children>
+                                          <HBox>
+                                             <children>
+                                                <StackPane styleClass="need-icon-box"><children><SVGPath styleClass="need-icon" content="M4 9 H4.2 M9 9 H9.2 M14 9 H14.2" /></children></StackPane>
+                                                <Region HBox.hgrow="ALWAYS" />
+                                                <StackPane styleClass="need-check"><children><SVGPath styleClass="need-check-mark" content="M3 7 L6 10 L11 4" /></children></StackPane>
+                                             </children>
+                                          </HBox>
+                                          <Label text="Other" styleClass="need-name" />
+                                          <Label text="Something else" styleClass="need-desc" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </GridPane>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="step2Pane" spacing="10.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label text="Tell us more" styleClass="flow-heading" />
+                                    <Label text="This helps volunteers bring the right things." styleClass="flow-subheading" />
+                                 </children>
+                              </VBox>
+
+                              <Label text="How urgent is it?" styleClass="field-heading" />
+                              <HBox fx:id="urgencyOptions" spacing="8.0">
+                                 <children>
+                                    <Button text="Low" userData="LOW" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseUrgency" />
+                                    <Button text="Medium" userData="MEDIUM" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseUrgency" />
+                                    <Button text="High" userData="HIGH" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseUrgency" />
+                                    <Button text="Critical" userData="CRITICAL" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseUrgency" />
+                                 </children>
+                              </HBox>
+                              <HBox alignment="CENTER_LEFT" spacing="6.0">
+                                 <children>
+                                    <SVGPath styleClass="hint-icon" content="M7 1 A6 6 0 1 0 7 13 A6 6 0 1 0 7 1 Z M7 4 V7 L9.5 8.5" />
+                                    <Label fx:id="urgencyHint" text="Pick the option that fits best." styleClass="hint" />
+                                 </children>
+                              </HBox>
+
+                              <Label text="Describe your situation" styleClass="field-heading">
+                                 <VBox.margin><Insets top="6.0" /></VBox.margin>
+                              </Label>
+                              <TextArea fx:id="descriptionArea" styleClass="description-area" wrapText="true" prefRowCount="4"
+                                        promptText="What's happening? Who needs help and what do they need?" />
+                              <HBox alignment="CENTER_RIGHT">
+                                 <children>
+                                    <Label fx:id="descriptionCount" text="0/500" styleClass="hint" />
+                                 </children>
+                              </HBox>
+
+                              <Label text="Who needs help?" styleClass="field-heading" />
+                              <VBox styleClass="white-card" spacing="10.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label text="Adults" styleClass="counter-name" />
+                                                <Label text="Age 18+" styleClass="hint" />
+                                             </children>
+                                          </VBox>
+                                          <Button text="−" styleClass="stepper-button" onAction="#adultsMinus" />
+                                          <Label fx:id="adultsCount" text="1" styleClass="counter-value" />
+                                          <Button text="+" styleClass="stepper-button, stepper-plus" onAction="#adultsPlus" />
+                                       </children>
+                                    </HBox>
+                                    <Separator />
+                                    <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                       <children>
+                                          <VBox HBox.hgrow="ALWAYS">
+                                             <children>
+                                                <Label text="Children" styleClass="counter-name" />
+                                                <Label text="Under 18" styleClass="hint" />
+                                             </children>
+                                          </VBox>
+                                          <Button text="−" styleClass="stepper-button" onAction="#childrenMinus" />
+                                          <Label fx:id="childrenCount" text="0" styleClass="counter-value" />
+                                          <Button text="+" styleClass="stepper-button, stepper-plus" onAction="#childrenPlus" />
+                                       </children>
+                                    </HBox>
+                                 </children>
+                              </VBox>
+
+                              <Label text="Anyone with special needs?" styleClass="field-heading">
+                                 <VBox.margin><Insets top="6.0" /></VBox.margin>
+                              </Label>
+                              <FlowPane fx:id="specialNeedsOptions" hgap="8.0" vgap="8.0">
+                                 <children>
+                                    <Button text="Elderly" userData="Elderly" styleClass="chip-option" onAction="#toggleSpecialNeed" />
+                                    <Button text="Infant" userData="Infant" styleClass="chip-option" onAction="#toggleSpecialNeed" />
+                                    <Button text="Disability" userData="Disability" styleClass="chip-option" onAction="#toggleSpecialNeed" />
+                                    <Button text="Pets" userData="Pets" styleClass="chip-option" onAction="#toggleSpecialNeed" />
+                                 </children>
+                              </FlowPane>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="step3Pane" spacing="10.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label text="Where are you?" styleClass="flow-heading" />
+                                    <Label text="Volunteers will use this to find you." styleClass="flow-subheading" />
+                                 </children>
+                              </VBox>
+
+                              <HBox styleClass="address-status" alignment="CENTER_LEFT" spacing="8.0">
+                                 <children>
+                                    <SVGPath styleClass="location-icon" content="M8 4 A4 4 0 1 0 8 12 A4 4 0 1 0 8 4 Z M8 1 V3 M8 13 V15 M1 8 H3 M13 8 H15 M8 6.5 A1.5 1.5 0 1 0 8 9.5 A1.5 1.5 0 1 0 8 6.5 Z" />
+                                    <Label fx:id="mapStatus" text="Enter your address and we'll find it on the map." styleClass="address-status-text" wrapText="true" />
+                                 </children>
+                              </HBox>
+
+                              <Button text="Use my current location" styleClass="secondary-button, location-button" maxWidth="Infinity" onAction="#useMyLocation">
+                                 <graphic>
+                                    <SVGPath styleClass="location-icon" content="M8 4 A4 4 0 1 0 8 12 A4 4 0 1 0 8 4 Z M8 1 V3 M8 13 V15 M1 8 H3 M13 8 H15 M8 6.5 A1.5 1.5 0 1 0 8 9.5 A1.5 1.5 0 1 0 8 6.5 Z" />
+                                 </graphic>
+                              </Button>
+
+                              <Label text="Street address" styleClass="field-label" />
+                              <TextField fx:id="streetField" promptText="1420 Gervais St" />
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <VBox spacing="6.0" HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="City" styleClass="field-label" />
+                                          <TextField fx:id="cityField" promptText="Columbia" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="66.0" minWidth="66.0">
+                                       <children>
+                                          <Label text="State" styleClass="field-label" />
+                                          <TextField fx:id="stateField" promptText="SC" />
+                                       </children>
+                                    </VBox>
+                                    <VBox spacing="6.0" prefWidth="92.0" minWidth="92.0">
+                                       <children>
+                                          <Label text="ZIP" styleClass="field-label" />
+                                          <TextField fx:id="zipField" promptText="29201" />
+                                       </children>
+                                    </VBox>
+                                 </children>
+                              </HBox>
+
+                              <HBox alignment="CENTER_LEFT" spacing="12.0">
+                                 <VBox.margin><Insets top="6.0" /></VBox.margin>
+                                 <children>
+                                    <VBox HBox.hgrow="ALWAYS">
+                                       <children>
+                                          <Label text="I'm at this location now" styleClass="counter-name" />
+                                          <Label text="Turn off if you evacuated somewhere else" styleClass="hint" />
+                                       </children>
+                                    </VBox>
+                                    <CheckBox fx:id="atLocationSwitch" styleClass="switch" selected="true" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="step4Pane" spacing="10.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label text="How can we reach you?" styleClass="flow-heading" />
+                                    <Label text="We'll only use this for your request." styleClass="flow-subheading" />
+                                 </children>
+                              </VBox>
+
+                              <Label text="Phone number" styleClass="field-label" />
+                              <TextField fx:id="phoneField" promptText="(803) 555-0142" />
+
+                              <Label text="Best way to contact you" styleClass="field-heading">
+                                 <VBox.margin><Insets top="6.0" /></VBox.margin>
+                              </Label>
+                              <HBox fx:id="contactOptions" spacing="8.0">
+                                 <children>
+                                    <Button text="Call" userData="CALL" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseContact" />
+                                    <Button text="Text" userData="TEXT" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseContact" />
+                                    <Button text="Either" userData="EITHER" styleClass="option-button" maxWidth="Infinity" HBox.hgrow="ALWAYS" onAction="#chooseContact" />
+                                 </children>
+                              </HBox>
+
+                              <Label text="Backup contact (optional)" styleClass="field-label">
+                                 <VBox.margin><Insets top="6.0" /></VBox.margin>
+                              </Label>
+                              <TextField fx:id="backupField" promptText="Name and phone number" />
+
+                              <HBox styleClass="info-note" alignment="CENTER_LEFT" spacing="10.0">
+                                 <children>
+                                    <SVGPath styleClass="info-note-icon" content="M3 7 H13 V14 H3 Z M5 7 V5 A3 3 0 0 1 11 5 V7" />
+                                    <Label text="Your number is only shared with the volunteer assigned to your request."
+                                           styleClass="info-note-text" wrapText="true" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+
+                        <VBox fx:id="step5Pane" spacing="10.0">
+                           <children>
+                              <VBox spacing="4.0">
+                                 <children>
+                                    <Label text="Review your request" styleClass="flow-heading" />
+                                    <Label text="Check your details before submitting." styleClass="flow-subheading" />
+                                 </children>
+                              </VBox>
+
+                              <VBox styleClass="white-card" spacing="8.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="HELP NEEDED" styleClass="review-heading" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label text="✎ Edit" userData="1" styleClass="card-link" onMouseClicked="#editStep" />
+                                       </children>
+                                    </HBox>
+                                    <FlowPane fx:id="reviewNeeds" hgap="8.0" vgap="8.0" />
+                                 </children>
+                              </VBox>
+
+                              <VBox styleClass="white-card" spacing="8.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="DETAILS" styleClass="review-heading" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label text="✎ Edit" userData="2" styleClass="card-link" onMouseClicked="#editStep" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="Urgency" styleClass="review-key" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="reviewUrgency" text="High" styleClass="urgency-chip" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="People" styleClass="review-key" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="reviewPeople" text="2 adults, 2 children" styleClass="review-value" />
+                                       </children>
+                                    </HBox>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="Special needs" styleClass="review-key" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label fx:id="reviewSpecial" text="Elderly, Pets" styleClass="review-value" />
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="reviewDescription" text="" styleClass="review-sub" wrapText="true" />
+                                 </children>
+                              </VBox>
+
+                              <VBox styleClass="white-card" spacing="4.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="LOCATION" styleClass="review-heading" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label text="✎ Edit" userData="3" styleClass="card-link" onMouseClicked="#editStep" />
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="reviewAddress" text="1420 Gervais St, Columbia, SC 29201" styleClass="review-main" wrapText="true" />
+                                    <Label fx:id="reviewAtLocation" text="You're at this location now" styleClass="review-sub" />
+                                 </children>
+                              </VBox>
+
+                              <VBox styleClass="white-card" spacing="4.0">
+                                 <children>
+                                    <HBox alignment="CENTER_LEFT">
+                                       <children>
+                                          <Label text="CONTACT" styleClass="review-heading" />
+                                          <Region HBox.hgrow="ALWAYS" />
+                                          <Label text="✎ Edit" userData="4" styleClass="card-link" onMouseClicked="#editStep" />
+                                       </children>
+                                    </HBox>
+                                    <Label fx:id="reviewContact" text="(803) 555-0142 · Prefers text" styleClass="review-main" />
+                                    <Label fx:id="reviewContactExtra" text="Backup: Erin Carter (803) 555-0100" styleClass="review-sub" wrapText="true" />
+                                 </children>
+                              </VBox>
+
+                              <CheckBox fx:id="confirmCheck" text="I confirm this information is accurate." styleClass="confirm-check"
+                                        onAction="#confirmChanged">
+                                 <VBox.margin><Insets top="4.0" /></VBox.margin>
+                              </CheckBox>
+                           </children>
+                        </VBox>
+                     </children>
+                  </VBox>
+               </content>
+            </ScrollPane>
+
+            <HBox styleClass="flow-footer" spacing="12.0">
+               <padding>
+                  <Insets top="12.0" right="20.0" bottom="18.0" left="20.0" />
+               </padding>
+               <children>
+                  <Button fx:id="backButton" text="Cancel" styleClass="secondary-button" prefWidth="110.0" onAction="#handleBack" />
+                  <Button fx:id="continueButton" text="Continue" styleClass="primary-button" maxWidth="Infinity"
+                          HBox.hgrow="ALWAYS" defaultButton="true" onAction="#handleContinue" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+
+      <StackPane fx:id="leaveOverlay" styleClass="modal-dim" visible="false">
+         <children>
+            <VBox styleClass="modal-card" alignment="TOP_CENTER" spacing="10.0" maxWidth="300.0" maxHeight="-Infinity">
+               <children>
+                  <StackPane styleClass="modal-icon-circle" prefWidth="48.0" prefHeight="48.0" maxWidth="48.0" maxHeight="48.0">
+                     <children>
+                        <SVGPath styleClass="modal-icon" content="M9 1.5 L17 16 H1 Z M9 7 V11 M9 13.3 V13.5" />
+                     </children>
+                  </StackPane>
+                  <Label text="Leave this request?" styleClass="modal-title" />
+                  <Label text="Your progress is saved as a draft. You can finish it anytime from Home."
+                         styleClass="modal-text" wrapText="true" textAlignment="CENTER" />
+                  <Button text="Keep editing" styleClass="primary-button" maxWidth="Infinity" onAction="#closeLeavePopup">
+                     <VBox.margin><Insets top="6.0" /></VBox.margin>
+                  </Button>
+                  <Button text="Save draft &amp; exit" styleClass="secondary-button" maxWidth="Infinity" onAction="#saveDraftAndExit" />
+                  <Label text="Discard request" styleClass="danger-link" onMouseClicked="#discardRequest">
+                     <VBox.margin><Insets top="4.0" /></VBox.margin>
+                  </Label>
+               </children>
+               <padding>
+                  <Insets top="22.0" right="20.0" bottom="18.0" left="20.0" />
+               </padding>
+            </VBox>
+         </children>
+      </StackPane>
+   </children>
+</StackPane>
