@@ -108,7 +108,7 @@ public class ReliefRequest {
      * @param status the new status
      */
     public void cancel() {
-        // Stub: there's no CANCELLED status in ReliefRequestStatus yet
+        status = ReliefRequestStatus.CANCELLED;
     }
 
     /**

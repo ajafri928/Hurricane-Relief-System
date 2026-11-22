@@ -85,6 +85,12 @@ public class ReliefSystem {
         }
         return currentShelter;
     }
+    /**
+     * Cancels the selected request. 
+     * */
+    public ReliefRequest getSelectedRequest() {
+        return currentRequest;
+    }
 
     /**
      * Creates a new user account.

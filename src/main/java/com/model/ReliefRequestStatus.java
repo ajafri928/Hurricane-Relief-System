@@ -8,5 +8,6 @@ public enum ReliefRequestStatus {
     COMPLETE,
     ESCALATED_TO_911,
     APPROVED,
-    DENIED
+    DENIED,
+    CANCELLED
 }
