@@ -1,0 +1,18 @@
+.field-error {
+    -fx-border-color: #c62828;
+}
+
+.field-error:focused {
+    -fx-border-color: #c62828;
+}
+
+.avatar {
+    -fx-background-color: #e6edf9;
+    -fx-background-radius: 22;
+}
+
+.avatar-text {
+    -fx-text-fill: #1f4e9c;
+    -fx-font-size: 14px;
+    -fx-font-weight: bold;
+}

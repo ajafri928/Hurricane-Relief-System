@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox spacing="6.0" prefWidth="400.0" prefHeight="760.0" stylesheets="@styles.css, @account.css"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.relief_system.LoginController">
+   <padding>
+      <Insets top="24.0" right="24.0" bottom="24.0" left="24.0" />
+   </padding>
+   <children>
+      <Button text="←" styleClass="back-button" onAction="#back" />
+      <Label text="Welcome back" styleClass="flow-heading">
+         <VBox.margin><Insets top="16.0" /></VBox.margin>
+      </Label>
+      <Label text="Log in to check your request or ask for help." styleClass="flow-subheading" wrapText="true" />
+
+      <VBox fx:id="errorBox" styleClass="error-box" spacing="2.0" visible="false" managed="false">
+         <children>
+            <Label text="That username or password did not match." styleClass="danger-banner-title" wrapText="true" />
+            <Label fx:id="errorDetail" styleClass="danger-banner-text" wrapText="true" />
+         </children>
+         <VBox.margin><Insets top="10.0" bottom="4.0" /></VBox.margin>
+      </VBox>
+
+      <Label text="Username" styleClass="field-label" />
+      <TextField fx:id="usernameField" />
+      <Label text="Password" styleClass="field-label">
+         <VBox.margin><Insets top="8.0" /></VBox.margin>
+      </Label>
+      <PasswordField fx:id="passwordField" onAction="#logIn" />
+      <Label fx:id="passwordError" text="Password not recognized." styleClass="danger-banner-title" visible="false" managed="false" />
+
+      <CheckBox text="Keep me logged in">
+         <VBox.margin><Insets top="10.0" /></VBox.margin>
+      </CheckBox>
+      <Button text="Forgot password?" styleClass="link" onAction="#forgotPassword">
+         <VBox.margin><Insets top="6.0" /></VBox.margin>
+      </Button>
+
+      <Region VBox.vgrow="ALWAYS" />
+
+      <Button text="Log in" styleClass="primary-button" maxWidth="Infinity" onAction="#logIn" />
+      <Button fx:id="resetButton" text="Reset my password" styleClass="secondary-button" maxWidth="Infinity"
+              onAction="#forgotPassword" visible="false" managed="false" />
+      <HBox alignment="CENTER" spacing="4.0">
+         <children>
+            <Label text="New here?" styleClass="flow-subheading" />
+            <Button text="Create an account" styleClass="link" onAction="#createAccount" />
+         </children>
+         <VBox.margin><Insets top="10.0" /></VBox.margin>
+      </HBox>
+      <Button text="Volunteer instead" styleClass="link" maxWidth="Infinity" onAction="#volunteer" />
+   </children>
+</VBox>

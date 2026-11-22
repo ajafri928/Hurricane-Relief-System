@@ -11,8 +11,8 @@
 <?import javafx.scene.shape.SVGPath?>
 
 <!-- Welcome screen. Buttons are not hooked up to anything yet. -->
-<VBox alignment="TOP_CENTER" spacing="0.0" xmlns="http://javafx.com/javafx/21"
-      xmlns:fx="http://javafx.com/fxml/1" stylesheets="@styles.css">
+<VBox alignment="TOP_CENTER" spacing="0.0" prefWidth="400.0" prefHeight="760.0" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.relief_system.WelcomeController" stylesheets="@styles.css">
    <padding>
       <Insets top="40.0" right="28.0" bottom="28.0" left="28.0" />
    </padding>
@@ -61,13 +61,13 @@
 
       <Region VBox.vgrow="ALWAYS" />
 
-      <Button text="Create an Account" styleClass="primary-button" maxWidth="Infinity" />
+      <Button text="Create an Account" styleClass="primary-button" maxWidth="Infinity" onAction="#createAccount" />
 
-      <Button text="Log In" styleClass="secondary-button" maxWidth="Infinity">
+      <Button text="Log In" styleClass="secondary-button" maxWidth="Infinity" onAction="#logIn">
          <VBox.margin><Insets top="10.0" /></VBox.margin>
       </Button>
 
-      <Label text="Request help without an account" styleClass="text-link">
+      <Label text="Request help without an account" styleClass="text-link" onMouseClicked="#guestHelp">
          <VBox.margin><Insets top="18.0" /></VBox.margin>
       </Label>
    </children>
